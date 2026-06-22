@@ -181,6 +181,17 @@ simulate:  HTTP → FlowAdminController → OpenRuleService.simulate
 
 ## 11. 后续衔接（非本阶段）
 
-- **M2b**：MySQL `FlowRepository`（ycr data-mp `BaseMapperX`/`BaseDO`）、Redis Pub/Sub 热更新、异步 `ExecutionLogger` 落库（`or_execute_log` + facts 脱敏 + checksum 版本化）、完整 admin（enable/rollback/versions/logs）。全部是“换端口实现 + 加 admin 端点”，不动 M2a 编排。
-- **ycr-starter-rule（ycr 侧）**：依赖公开 `io.openrule:openrule-spring`，端口绑 ycr 设施，响应/异常对齐 `R<T>`/`ErrorCode`；以 `ycr-scaffold-mvc` / `ycr-scaffold-ddd` 为验收参照。
+> **重要前提（2026-06-22 厘清）**：open-rule 与 ycr-framework **都将开源**，因此不存在“私有最后融合”——`ycr-starter-rule` 只是一个开源项目（ycr-framework）公开依赖另一个开源项目（`io.openrule:openrule-spring`）的正常组合。由此坐实：**open-rule 公开仓库保持零 ycr 依赖**；ycr 侧的 starter 才引 ycr 设施。M2b 与 ycr-starter-rule 是**同一组端口的两套适配实现**，互不替代。
+
+- **M2b（public，open-rule 仓库内）**：standalone 落地适配——MySQL `FlowDefinitionRepository`（**纯 JDBC/MyBatis，零 ycr 依赖**）、Redis Pub/Sub `FlowChangeNotifier`、异步落库 `ExecutionLogger`（`or_execute_log` + facts 脱敏 + checksum 版本化）、完整 admin（enable/rollback/versions/logs）。全部是“换端口实现 + 加 admin 端点”，不动 M2a 编排。
+- **ycr-starter-rule（ycr-framework 仓库内，public）**：依赖公开 `io.openrule:openrule-spring`，把端口绑到 ycr 设施——仓储用 ycr data-mp（`BaseMapperX`/`BaseDO`）、缓存用 ycr cache，响应/异常对齐 `R<T>`/`ErrorCode`；以 `ycr-scaffold-mvc` / `ycr-scaffold-ddd` 为验收参照。
 - **M3/M4/M5**：脚本/高级节点执行器、Python、Micrometer。M2a 的 `NodeExecutorRegistry` 自动收集机制已为新执行器预留——新增执行器 Bean 即自动接入，编排零改动。
+
+### 里程碑路线图（路线 B · 开源 MVP 优先，2026-06-22 定）
+
+`M2a → M4 → M3 → M2b → M5 → ycr-starter-rule`
+
+- 先把**能力**做厚再落地服务：M4（评分卡/决策表/决策树/子流程，纯 Java、零沙箱、风控刚需）**先于** M3（脚本，带 Groovy/GraalVM 沙箱、安全敏感）——安全高价值的先做，沙箱风险后置。
+- M2b 让公开项目可独立部署（标准中间件，零 ycr）。M5（Python + Micrometer）收尾。
+- `ycr-starter-rule` 作为开源组合最后做，随时可插（只依赖 M2a 起就稳定的 `openrule-spring` 端口）。
+- 依赖事实：M3/M4/M5 只依赖 M2a（registry/aggregators 自动收集 + FlowLoader），用内存 standalone 仓储即可跑，不阻塞于 M2b。
