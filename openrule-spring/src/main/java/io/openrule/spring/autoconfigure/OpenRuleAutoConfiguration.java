@@ -71,12 +71,6 @@ public class OpenRuleAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Map<AggregatePolicy, DecisionAggregator> aggregators(List<DecisionAggregator> list) {
-        return list.stream().collect(Collectors.toMap(DecisionAggregator::supportPolicy, a -> a));
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
     public NodeRunner nodeRunner(NodeExecutorRegistry registry, ExecutorService openRuleTimeoutPool) {
         return new NodeRunner(registry, openRuleTimeoutPool);
     }
@@ -96,8 +90,12 @@ public class OpenRuleAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public FlowExecutor flowExecutor(SerialStageExecutor serial, ParallelStageExecutor parallel,
-                                     Map<AggregatePolicy, DecisionAggregator> aggregators) {
-        return new FlowExecutor(serial, parallel, aggregators);
+                                     List<DecisionAggregator> aggregators) {
+        // 由 List 注入收集所有 DecisionAggregator Bean，在此构建 policy→aggregator 映射，
+        // 避免 Spring 对 Map<枚举,接口> 注入的歧义（不再依赖单独的 Map Bean）。
+        Map<AggregatePolicy, DecisionAggregator> map = aggregators.stream()
+                .collect(Collectors.toMap(DecisionAggregator::supportPolicy, a -> a));
+        return new FlowExecutor(serial, parallel, map);
     }
 
     @Bean
