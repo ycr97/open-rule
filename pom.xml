@@ -11,6 +11,7 @@
 
     <modules>
         <module>openrule-core</module>
+        <module>openrule-spring</module>
     </modules>
 
     <properties>
