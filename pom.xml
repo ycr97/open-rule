@@ -13,6 +13,7 @@
         <module>openrule-core</module>
         <module>openrule-spring</module>
         <module>openrule-api</module>
+        <module>openrule-jdbc</module>
     </modules>
 
     <properties>
@@ -41,6 +42,11 @@
             <dependency>
                 <groupId>io.openrule</groupId>
                 <artifactId>openrule-spring</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.openrule</groupId>
+                <artifactId>openrule-jdbc</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
