@@ -5,6 +5,7 @@ import io.openrule.api.FlowAdminController;
 import io.openrule.api.advice.OpenRuleExceptionAdvice;
 import io.openrule.spring.autoconfigure.OpenRuleAutoConfiguration;
 import io.openrule.spring.loader.FlowDefinitionJsonCodec;
+import io.openrule.spring.port.ExecutionLogQuery;
 import io.openrule.spring.service.OpenRuleService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,8 +24,9 @@ public class OpenRuleApiAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public FlowAdminController flowAdminController(OpenRuleService service, FlowDefinitionJsonCodec codec) {
-        return new FlowAdminController(service, codec);
+    public FlowAdminController flowAdminController(OpenRuleService service, FlowDefinitionJsonCodec codec,
+                                                  ExecutionLogQuery logQuery) {
+        return new FlowAdminController(service, codec, logQuery);
     }
 
     @Bean
