@@ -14,6 +14,7 @@ import io.openrule.core.spi.NodeExecutor;
 import io.openrule.spring.loader.FlowCompiler;
 import io.openrule.spring.loader.FlowDefinitionJsonCodec;
 import io.openrule.spring.loader.FlowLoader;
+import io.openrule.spring.port.ExecutionLogQuery;
 import io.openrule.spring.port.ExecutionLogger;
 import io.openrule.spring.port.FlowChangeNotifier;
 import io.openrule.spring.port.FlowDefinitionRepository;
@@ -111,8 +112,8 @@ public class OpenRuleAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public ExecutionLogger executionLogger() {
+    @ConditionalOnMissingBean({ExecutionLogger.class, ExecutionLogQuery.class})
+    public InMemoryExecutionLogger inMemoryExecutionLogger() {
         return new InMemoryExecutionLogger();
     }
 

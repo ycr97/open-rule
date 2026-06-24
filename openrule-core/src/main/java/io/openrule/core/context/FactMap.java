@@ -22,6 +22,11 @@ public class FactMap {
         return data.get(key);
     }
 
+    /** 返回不可变事实视图（审计快照用）。 */
+    public Map<String, Object> asMap() {
+        return data;
+    }
+
     public Object getByPath(String path) {
         if (path == null || path.isEmpty()) {
             return null;

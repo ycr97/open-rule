@@ -43,7 +43,7 @@ public class OpenRuleService {
         DecisionContext ctx = new DecisionContext(requestId, cmd.flowId(), cmd.bizId(), cmd.facts());
         CompiledFlow flow = flowLoader.loadActive(cmd.flowId());
         FlowResult result = flowExecutor.execute(ctx, flow);
-        safeLog(result, ctx);
+        safeLog(result, ctx, flow.getVersion());
         return new ExecutionOutcome(result, flow.getVersion());
     }
 
@@ -64,9 +64,9 @@ public class OpenRuleService {
     }
 
     /** C12：日志失败不影响主流程。 */
-    private void safeLog(FlowResult result, DecisionContext ctx) {
+    private void safeLog(FlowResult result, DecisionContext ctx, int flowVersion) {
         try {
-            executionLogger.log(result, ctx);
+            executionLogger.log(result, ctx, flowVersion);
         } catch (Exception ignored) {
             // 仅吞掉；M2b 接异步落库后在此加告警计数器
         }
