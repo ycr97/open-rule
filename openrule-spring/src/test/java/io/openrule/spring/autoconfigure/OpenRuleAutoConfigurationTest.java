@@ -48,6 +48,7 @@ class OpenRuleAutoConfigurationTest {
                 public io.openrule.core.definition.FlowDefinition save(io.openrule.core.definition.FlowDefinition d) { return d; }
                 public void enable(String f, int v) {}
                 public List<Integer> listVersions(String f) { return List.of(); }
+                public List<io.openrule.core.definition.FlowDefinition> findAllVersions(String f) { return List.of(); }
             };
         }
     }
