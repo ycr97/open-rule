@@ -17,7 +17,7 @@ public interface NodeExecutor {
     default void validate(NodeDefinition node) throws FlowValidationException {}
 
     default CompiledNode compile(NodeDefinition node) {
-        return new CompiledNode(node, null);
+        return new CompiledNode(node, null, this);
     }
 
     NodeResult execute(DecisionContext context, CompiledNode compiled);

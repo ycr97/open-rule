@@ -1,6 +1,7 @@
 package io.openrule.core;
 
 import io.openrule.core.aggregate.PriorityAggregator;
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.context.DecisionContext;
 import io.openrule.core.definition.FlowDefinition;
 import io.openrule.core.definition.NodeDefinition;
@@ -14,13 +15,11 @@ import io.openrule.core.enums.NodeType;
 import io.openrule.core.executor.OperatorNodeExecutor;
 import io.openrule.core.result.FlowResult;
 import io.openrule.core.runtime.CompiledFlow;
-import io.openrule.core.runtime.CompiledStage;
 import io.openrule.core.runtime.FlowExecutor;
 import io.openrule.core.runtime.NodeExecutorRegistry;
 import io.openrule.core.runtime.NodeRunner;
 import io.openrule.core.runtime.ParallelStageExecutor;
 import io.openrule.core.runtime.SerialStageExecutor;
-import io.openrule.core.spi.CompiledNode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,12 +33,14 @@ class EndToEndTest {
 
     private ExecutorService pool;
     private FlowExecutor flow;
+    private FlowCompiler compiler;
 
     @BeforeEach
     void setUp() {
         pool = Executors.newVirtualThreadPerTaskExecutor();
-        NodeRunner runner = new NodeRunner(
-                new NodeExecutorRegistry(List.of(new OperatorNodeExecutor())), pool);
+        NodeExecutorRegistry registry = new NodeExecutorRegistry(List.of(new OperatorNodeExecutor()));
+        NodeRunner runner = new NodeRunner(pool);
+        compiler = new FlowCompiler(registry);
         flow = new FlowExecutor(new SerialStageExecutor(runner),
                 new ParallelStageExecutor(runner, pool),
                 Map.of(AggregatePolicy.PRIORITY, new PriorityAggregator()));
@@ -74,11 +75,7 @@ class EndToEndTest {
                 .flowId("order_risk").flowName("订单风控").version(3).enabled(true)
                 .aggregatePolicy(AggregatePolicy.PRIORITY)
                 .stages(List.of(hard, scoring)).build();
-        List<CompiledStage> stages = def.getStages().stream()
-                .map(s -> new CompiledStage(s,
-                        s.getNodes().stream().map(n -> new CompiledNode(n, null)).toList()))
-                .toList();
-        return new CompiledFlow(def, stages);
+        return compiler.compile(def);
     }
 
     @Test

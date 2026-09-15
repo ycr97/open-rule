@@ -1,7 +1,9 @@
 package io.openrule.spring.autoconfigure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.openrule.core.aggregate.FirstTerminalAggregator;
 import io.openrule.core.aggregate.PriorityAggregator;
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.enums.AggregatePolicy;
 import io.openrule.core.executor.OperatorNodeExecutor;
 import io.openrule.core.runtime.FlowExecutor;
@@ -11,7 +13,6 @@ import io.openrule.core.runtime.ParallelStageExecutor;
 import io.openrule.core.runtime.SerialStageExecutor;
 import io.openrule.core.spi.DecisionAggregator;
 import io.openrule.core.spi.NodeExecutor;
-import io.openrule.spring.loader.FlowCompiler;
 import io.openrule.spring.loader.FlowDefinitionJsonCodec;
 import io.openrule.spring.loader.FlowLoader;
 import io.openrule.spring.port.ExecutionLogQuery;
@@ -66,14 +67,20 @@ public class OpenRuleAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    public FirstTerminalAggregator firstTerminalAggregator() {
+        return new FirstTerminalAggregator();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public NodeExecutorRegistry nodeExecutorRegistry(List<NodeExecutor> executors) {
         return new NodeExecutorRegistry(executors);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public NodeRunner nodeRunner(NodeExecutorRegistry registry, ExecutorService openRuleTimeoutPool) {
-        return new NodeRunner(registry, openRuleTimeoutPool);
+    public NodeRunner nodeRunner(ExecutorService openRuleTimeoutPool) {
+        return new NodeRunner(openRuleTimeoutPool);
     }
 
     @Bean

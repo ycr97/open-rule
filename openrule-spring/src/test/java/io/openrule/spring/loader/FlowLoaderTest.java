@@ -1,5 +1,6 @@
 package io.openrule.spring.loader;
 
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.definition.FlowDefinition;
 import io.openrule.core.definition.NodeDefinition;
 import io.openrule.core.definition.StageDefinition;

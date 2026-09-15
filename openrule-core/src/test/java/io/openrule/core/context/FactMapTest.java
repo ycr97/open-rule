@@ -1,9 +1,12 @@
 package io.openrule.core.context;
 
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FactMapTest {
 
@@ -38,6 +41,37 @@ class FactMapTest {
         src.put("b", 2);
         assertThat(fm.get("a")).isEqualTo(1);
         assertThat(fm.get("b")).isNull();
+    }
+
+    @Test
+    void isDeeplyImmutable_mutatingNestedSourceDoesNotLeak() {
+        Map<String, Object> order = new HashMap<>();
+        List<String> tags = new ArrayList<>(List.of("new"));
+        order.put("amount", 100);
+        order.put("tags", tags);
+        FactMap fm = new FactMap(Map.of("order", order));
+
+        order.put("amount", 999);
+        tags.add("mutated");
+
+        assertThat(fm.getByPath("order.amount")).isEqualTo(100);
+        assertThat(fm.getByPath("order.tags")).isEqualTo(List.of("new"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void nestedCollectionsExposedBySnapshotCannotBeModified() {
+        Map<String, Object> orderSource = new HashMap<>();
+        orderSource.put("tags", new ArrayList<>(List.of("new")));
+        FactMap fm = new FactMap(Map.of("order", orderSource));
+
+        Map<String, Object> order = (Map<String, Object>) fm.get("order");
+        List<String> tags = (List<String>) order.get("tags");
+
+        assertThatThrownBy(() -> order.put("amount", 999))
+                .isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(() -> tags.add("mutated"))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

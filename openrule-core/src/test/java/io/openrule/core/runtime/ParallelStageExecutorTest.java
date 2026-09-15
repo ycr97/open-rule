@@ -6,6 +6,7 @@ import io.openrule.core.definition.StageDefinition;
 import io.openrule.core.enums.ExecutionMode;
 import io.openrule.core.enums.FailPolicy;
 import io.openrule.core.enums.NodeType;
+import io.openrule.core.exception.RuleEngineException;
 import io.openrule.core.result.NodeResult;
 import io.openrule.core.result.StageResult;
 import io.openrule.core.spi.CompiledNode;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParallelStageExecutorTest {
 
@@ -50,11 +52,13 @@ class ParallelStageExecutorTest {
         }
     }
 
+    private NodeExecutor activeExecutor;
+
     private CompiledStage parallelStage(long timeout, List<NodeDefinition> defs) {
         StageDefinition sd = StageDefinition.builder()
                 .stageId("s2").executionMode(ExecutionMode.PARALLEL)
-                .stageTimeoutMillis(timeout).build();
-        return new CompiledStage(sd, defs.stream().map(d -> new CompiledNode(d, null)).toList());
+                .skipWhenStopped(true).stageTimeoutMillis(timeout).build();
+        return new CompiledStage(sd, defs.stream().map(activeExecutor::compile).toList());
     }
 
     private NodeDefinition def(String id) {
@@ -63,7 +67,8 @@ class ParallelStageExecutorTest {
     }
 
     private ParallelStageExecutor executor(NodeExecutor e) {
-        NodeRunner runner = new NodeRunner(new NodeExecutorRegistry(List.of(e)), pool);
+        activeExecutor = e;
+        NodeRunner runner = new NodeRunner(pool);
         return new ParallelStageExecutor(runner, pool);
     }
 
@@ -81,6 +86,45 @@ class ParallelStageExecutorTest {
         // 结果顺序恒按定义顺序
         assertThat(sr.getNodeResults().stream().map(NodeResult::getNodeId).toList())
                 .containsExactly("A", "B");
+    }
+
+    @Test
+    void sameOutputKey_isDeterministicAcrossOneThousandExecutions() {
+        var specs = Map.of(
+                "A", new TimedExecutor.Spec(0, "shared", "fromA", false),
+                "B", new TimedExecutor.Spec(0, "shared", "fromB", false));
+        ParallelStageExecutor executor = executor(new TimedExecutor(specs));
+        CompiledStage stage = parallelStage(2000, List.of(def("A"), def("B")));
+
+        for (int i = 0; i < 1000; i++) {
+            DecisionContext ctx = new DecisionContext("R-" + i, "f", "b", Map.of());
+            executor.execute(ctx, stage);
+            assertThat(ctx.variable("shared")).isEqualTo("fromB");
+        }
+    }
+
+    @Test
+    void abortPolicy_propagatesOutOfParallelStage() {
+        NodeExecutor failing = new NodeExecutor() {
+            @Override
+            public NodeType supportType() {
+                return NodeType.OPERATOR;
+            }
+
+            @Override
+            public NodeResult execute(DecisionContext context, CompiledNode compiled) {
+                throw new IllegalStateException("boom");
+            }
+        };
+        NodeDefinition aborting = NodeDefinition.builder()
+                .nodeId("ABORT").nodeType(NodeType.OPERATOR)
+                .failPolicy(FailPolicy.ABORT).timeoutMillis(2000).build();
+
+        assertThatThrownBy(() -> executor(failing).execute(
+                new DecisionContext("R", "f", "b", Map.of()),
+                parallelStage(2000, List.of(aborting))))
+                .isInstanceOf(RuleEngineException.class)
+                .hasMessageContaining("Node abort: ABORT");
     }
 
     @Test

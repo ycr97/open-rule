@@ -1,12 +1,12 @@
 package io.openrule.spring.service;
 
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.context.DecisionContext;
 import io.openrule.core.definition.FlowDefinition;
 import io.openrule.core.exception.RuleEngineException;
 import io.openrule.core.result.FlowResult;
 import io.openrule.core.runtime.CompiledFlow;
 import io.openrule.core.runtime.FlowExecutor;
-import io.openrule.spring.loader.FlowCompiler;
 import io.openrule.spring.loader.FlowLoader;
 import io.openrule.spring.model.ExecuteCommand;
 import io.openrule.spring.model.ExecutionOutcome;

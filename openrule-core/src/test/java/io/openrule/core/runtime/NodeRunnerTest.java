@@ -12,7 +12,6 @@ import io.openrule.core.spi.NodeExecutor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,6 +22,7 @@ class NodeRunnerTest {
 
     private ExecutorService pool;
     private DecisionContext ctx;
+    private NodeExecutor activeExecutor;
 
     @BeforeEach
     void setUp() {
@@ -48,14 +48,15 @@ class NodeRunnerTest {
     }
 
     private NodeRunner runnerWith(NodeExecutor e) {
-        return new NodeRunner(new NodeExecutorRegistry(List.of(e)), pool);
+        activeExecutor = e;
+        return new NodeRunner(pool);
     }
 
     private CompiledNode node(FailPolicy policy, long timeout, boolean stopOnHit, Decision onHit) {
         return new CompiledNode(NodeDefinition.builder()
                 .nodeId("N").nodeName("节点").nodeType(NodeType.OPERATOR)
                 .failPolicy(policy).timeoutMillis(timeout)
-                .stopOnHit(stopOnHit).decisionOnHit(onHit).build(), null);
+                .stopOnHit(stopOnHit).decisionOnHit(onHit).build(), null, activeExecutor);
     }
 
     @Test

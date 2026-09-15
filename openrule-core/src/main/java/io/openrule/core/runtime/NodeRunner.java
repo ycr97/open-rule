@@ -7,6 +7,7 @@ import io.openrule.core.enums.FailPolicy;
 import io.openrule.core.exception.RuleEngineException;
 import io.openrule.core.result.NodeResult;
 import io.openrule.core.spi.CompiledNode;
+import io.openrule.core.spi.NodeExecutor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -18,24 +19,32 @@ public class NodeRunner {
 
     private static final long DEFAULT_TIMEOUT_MS = 3000;
 
-    private final NodeExecutorRegistry registry;
     private final ExecutorService timeoutPool;
 
-    public NodeRunner(NodeExecutorRegistry registry, ExecutorService timeoutPool) {
-        this.registry = registry;
+    public NodeRunner(ExecutorService timeoutPool) {
         this.timeoutPool = timeoutPool;
     }
 
     public NodeResult run(DecisionContext ctx, CompiledNode compiled) {
+        return run(ctx, compiled, false);
+    }
+
+    NodeResult run(DecisionContext ctx, CompiledNode compiled, boolean runWhenStopped) {
         NodeDefinition def = compiled.getDefinition();
         long start = System.currentTimeMillis();
 
-        if (ctx.isStopped()) {
+        if (ctx.isStopped() && !runWhenStopped) {
             return skippedResult(def, start);
         }
 
+        NodeExecutor executor = compiled.getExecutor();
+        if (executor == null) {
+            throw new RuleEngineException(
+                    "Compiled node has no executor, compile it with FlowCompiler: " + def.getNodeId());
+        }
+
         try {
-            NodeResult result = executeWithTimeout(ctx, compiled, def);
+            NodeResult result = executeWithTimeout(ctx, compiled, def, executor);
             if (result.isHit() && def.getDecisionOnHit() != null && result.getDecision() == null) {
                 result = result.toBuilder().decision(def.getDecisionOnHit()).build();
             }
@@ -49,10 +58,10 @@ public class NodeRunner {
     }
 
     private NodeResult executeWithTimeout(DecisionContext ctx, CompiledNode compiled,
-                                          NodeDefinition def) throws Exception {
+                                          NodeDefinition def, NodeExecutor executor) throws Exception {
         long timeout = def.getTimeoutMillis() > 0 ? def.getTimeoutMillis() : DEFAULT_TIMEOUT_MS;
         Future<NodeResult> future = timeoutPool.submit(
-                () -> registry.getRequired(def.getNodeType()).execute(ctx, compiled));
+                () -> executor.execute(ctx, compiled));
         try {
             return future.get(timeout, TimeUnit.MILLISECONDS);
         } catch (TimeoutException te) {
