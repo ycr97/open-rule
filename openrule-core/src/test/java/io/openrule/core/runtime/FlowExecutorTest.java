@@ -28,6 +28,7 @@ class FlowExecutorTest {
 
     private ExecutorService pool;
     private FlowExecutor flowExecutor;
+    private HitExecutor hitExecutor;
 
     /** 命中即产出指定 decision + stop 的执行器。 */
     static class HitExecutor implements NodeExecutor {
@@ -43,7 +44,8 @@ class FlowExecutorTest {
     @BeforeEach
     void setUp() {
         pool = Executors.newVirtualThreadPerTaskExecutor();
-        NodeRunner runner = new NodeRunner(new NodeExecutorRegistry(List.of(new HitExecutor())), pool);
+        hitExecutor = new HitExecutor();
+        NodeRunner runner = new NodeRunner(pool);
         SerialStageExecutor serial = new SerialStageExecutor(runner);
         ParallelStageExecutor parallel = new ParallelStageExecutor(runner, pool);
         DecisionAggregator priority = new PriorityAggregator();
@@ -63,7 +65,7 @@ class FlowExecutorTest {
     private CompiledFlow compile(FlowDefinition def) {
         List<CompiledStage> stages = def.getStages().stream()
                 .map(s -> new CompiledStage(s,
-                        s.getNodes().stream().map(n -> new CompiledNode(n, null)).toList()))
+                        s.getNodes().stream().map(hitExecutor::compile).toList()))
                 .toList();
         return new CompiledFlow(def, stages);
     }
@@ -106,5 +108,69 @@ class FlowExecutorTest {
         // s1 命中 REJECT 并 stop → s2 跳过 → 最终仍是 REJECT，SCORE 未命中
         assertThat(fr.getDecision()).isEqualTo(Decision.REJECT);
         assertThat(fr.getHitNodes()).doesNotContain("SCORE");
+    }
+
+    @Test
+    void serialStageWithSkipWhenStoppedFalse_runsAfterPreviousStop() {
+        StageDefinition stopping = StageDefinition.builder()
+                .stageId("s1").order(100).executionMode(ExecutionMode.SERIAL).skipWhenStopped(true)
+                .nodes(List.of(node("STOP", Decision.REJECT, true))).build();
+        StageDefinition alwaysRun = StageDefinition.builder()
+                .stageId("s2").order(200).executionMode(ExecutionMode.SERIAL).skipWhenStopped(false)
+                .nodes(List.of(node("AUDIT", Decision.REVIEW, false))).build();
+        FlowDefinition def = FlowDefinition.builder()
+                .flowId("f").version(1).aggregatePolicy(AggregatePolicy.PRIORITY)
+                .stages(List.of(stopping, alwaysRun)).build();
+
+        FlowResult result = flowExecutor.execute(
+                new DecisionContext("R", "f", "BIZ", Map.of(
+                        "STOP.hit", true, "AUDIT.hit", true)),
+                compile(def));
+
+        assertThat(result.getHitNodes()).containsExactly("STOP", "AUDIT");
+    }
+
+    @Test
+    void parallelStageWithSkipWhenStoppedFalse_runsAfterPreviousStop() {
+        StageDefinition stopping = StageDefinition.builder()
+                .stageId("s1").order(100).executionMode(ExecutionMode.SERIAL).skipWhenStopped(true)
+                .nodes(List.of(node("STOP", Decision.REJECT, true))).build();
+        StageDefinition alwaysRun = StageDefinition.builder()
+                .stageId("s2").order(200).executionMode(ExecutionMode.PARALLEL).skipWhenStopped(false)
+                .stageTimeoutMillis(2000)
+                .nodes(List.of(node("AUDIT", Decision.REVIEW, false))).build();
+        FlowDefinition def = FlowDefinition.builder()
+                .flowId("f").version(1).aggregatePolicy(AggregatePolicy.PRIORITY)
+                .stages(List.of(stopping, alwaysRun)).build();
+
+        FlowResult result = flowExecutor.execute(
+                new DecisionContext("R", "f", "BIZ", Map.of(
+                        "STOP.hit", true, "AUDIT.hit", true)),
+                compile(def));
+
+        assertThat(result.getHitNodes()).containsExactly("STOP", "AUDIT");
+    }
+
+    @Test
+    void alwaysRunSerialStage_stillHonorsStopProducedInsideThatStage() {
+        StageDefinition stopping = StageDefinition.builder()
+                .stageId("s1").order(100).executionMode(ExecutionMode.SERIAL).skipWhenStopped(true)
+                .nodes(List.of(node("STOP", Decision.REJECT, true))).build();
+        StageDefinition alwaysRun = StageDefinition.builder()
+                .stageId("s2").order(200).executionMode(ExecutionMode.SERIAL).skipWhenStopped(false)
+                .nodes(List.of(
+                        node("AUDIT_STOP", Decision.REVIEW, true),
+                        node("NEVER", Decision.REVIEW, false)))
+                .build();
+        FlowDefinition def = FlowDefinition.builder()
+                .flowId("f").version(1).aggregatePolicy(AggregatePolicy.PRIORITY)
+                .stages(List.of(stopping, alwaysRun)).build();
+
+        FlowResult result = flowExecutor.execute(
+                new DecisionContext("R", "f", "BIZ", Map.of(
+                        "STOP.hit", true, "AUDIT_STOP.hit", true, "NEVER.hit", true)),
+                compile(def));
+
+        assertThat(result.getHitNodes()).containsExactly("STOP", "AUDIT_STOP");
     }
 }

@@ -2,6 +2,7 @@ package io.openrule.spring.loader;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.definition.FlowDefinition;
 import io.openrule.core.exception.RuleEngineException;
 import io.openrule.core.runtime.CompiledFlow;

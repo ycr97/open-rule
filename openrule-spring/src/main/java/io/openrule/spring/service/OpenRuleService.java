@@ -1,11 +1,12 @@
 package io.openrule.spring.service;
 
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.context.DecisionContext;
 import io.openrule.core.definition.FlowDefinition;
+import io.openrule.core.exception.RuleEngineException;
 import io.openrule.core.result.FlowResult;
 import io.openrule.core.runtime.CompiledFlow;
 import io.openrule.core.runtime.FlowExecutor;
-import io.openrule.spring.loader.FlowCompiler;
 import io.openrule.spring.loader.FlowLoader;
 import io.openrule.spring.model.ExecuteCommand;
 import io.openrule.spring.model.ExecutionOutcome;
@@ -13,6 +14,7 @@ import io.openrule.spring.port.ExecutionLogger;
 import io.openrule.spring.port.FlowChangeNotifier;
 import io.openrule.spring.port.FlowDefinitionRepository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class OpenRuleService {
         DecisionContext ctx = new DecisionContext(requestId, cmd.flowId(), cmd.bizId(), cmd.facts());
         CompiledFlow flow = flowLoader.loadActive(cmd.flowId());
         FlowResult result = flowExecutor.execute(ctx, flow);
-        safeLog(result, ctx);
+        safeLog(result, ctx, flow.getVersion());
         return new ExecutionOutcome(result, flow.getVersion());
     }
 
@@ -52,6 +54,26 @@ public class OpenRuleService {
         FlowDefinition saved = repository.save(def);
         changeNotifier.publishInvalidation(saved.getFlowId());
         return saved;
+    }
+
+    /** 该 flow 全部版本（升序）。 */
+    public List<FlowDefinition> listVersions(String flowId) {
+        return repository.findAllVersions(flowId);
+    }
+
+    /** 启用指定版本（切指针 + 失效缓存）；版本不存在抛 RuleEngineException。 */
+    public FlowDefinition enableVersion(String flowId, int version) {
+        repository.findByFlowIdAndVersion(flowId, version)
+                .orElseThrow(() -> new RuleEngineException(
+                        "Flow version not found: " + flowId + " v" + version));
+        repository.enable(flowId, version);
+        changeNotifier.publishInvalidation(flowId);
+        return repository.findByFlowIdAndVersion(flowId, version).orElseThrow();
+    }
+
+    /** 回滚 = 启用旧版本。 */
+    public FlowDefinition rollback(String flowId, int version) {
+        return enableVersion(flowId, version);
     }
 
     public ExecutionOutcome simulate(FlowDefinition draft, Map<String, Object> facts) {
@@ -64,9 +86,9 @@ public class OpenRuleService {
     }
 
     /** C12：日志失败不影响主流程。 */
-    private void safeLog(FlowResult result, DecisionContext ctx) {
+    private void safeLog(FlowResult result, DecisionContext ctx, int flowVersion) {
         try {
-            executionLogger.log(result, ctx);
+            executionLogger.log(result, ctx, flowVersion);
         } catch (Exception ignored) {
             // 仅吞掉；M2b 接异步落库后在此加告警计数器
         }

@@ -1,6 +1,7 @@
 package io.openrule.spring.service;
 
 import io.openrule.core.aggregate.PriorityAggregator;
+import io.openrule.core.compiler.FlowCompiler;
 import io.openrule.core.definition.FlowDefinition;
 import io.openrule.core.definition.NodeDefinition;
 import io.openrule.core.definition.StageDefinition;
@@ -16,7 +17,6 @@ import io.openrule.core.runtime.NodeExecutorRegistry;
 import io.openrule.core.runtime.NodeRunner;
 import io.openrule.core.runtime.ParallelStageExecutor;
 import io.openrule.core.runtime.SerialStageExecutor;
-import io.openrule.spring.loader.FlowCompiler;
 import io.openrule.spring.loader.FlowLoader;
 import io.openrule.spring.model.ExecuteCommand;
 import io.openrule.spring.model.ExecutionOutcome;
@@ -66,7 +66,7 @@ class OpenRuleServiceTest {
     void setUp() {
         pool = Executors.newVirtualThreadPerTaskExecutor();
         NodeExecutorRegistry registry = new NodeExecutorRegistry(List.of(new OperatorNodeExecutor()));
-        NodeRunner runner = new NodeRunner(registry, pool);
+        NodeRunner runner = new NodeRunner(pool);
         FlowExecutor flowExecutor = new FlowExecutor(new SerialStageExecutor(runner),
                 new ParallelStageExecutor(runner, pool),
                 Map.of(AggregatePolicy.PRIORITY, new PriorityAggregator()));

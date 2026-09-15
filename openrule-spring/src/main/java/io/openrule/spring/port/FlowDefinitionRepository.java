@@ -18,4 +18,7 @@ public interface FlowDefinitionRepository {
     void enable(String flowId, int version);
 
     List<Integer> listVersions(String flowId);
+
+    /** 返回该 flow 全部版本定义（按 version 升序）。 */
+    List<FlowDefinition> findAllVersions(String flowId);
 }

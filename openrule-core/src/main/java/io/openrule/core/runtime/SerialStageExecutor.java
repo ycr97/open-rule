@@ -18,12 +18,16 @@ public class SerialStageExecutor {
     }
 
     public StageResult execute(DecisionContext ctx, CompiledStage stage) {
+        boolean runWhenStopped = ctx.isStopped() && !stage.isSkipWhenStopped();
+        if (ctx.isStopped() && stage.isSkipWhenStopped()) {
+            return StageResult.skipped(stage.getStageId());
+        }
         List<NodeResult> results = new ArrayList<>();
 
         for (CompiledNode node : stage.getNodes()) {
-            if (ctx.isStopped()) break;
+            if (ctx.isStopped() && !runWhenStopped) break;
 
-            NodeResult result = nodeRunner.run(ctx, node);
+            NodeResult result = nodeRunner.run(ctx, node, runWhenStopped);
             results.add(result);
             ctx.addNodeResult(result);
 

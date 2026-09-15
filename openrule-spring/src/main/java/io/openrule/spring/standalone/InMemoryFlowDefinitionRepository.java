@@ -57,4 +57,10 @@ public class InMemoryFlowDefinitionRepository implements FlowDefinitionRepositor
         TreeMap<Integer, FlowDefinition> versions = store.get(flowId);
         return versions == null ? List.of() : new ArrayList<>(versions.keySet());
     }
+
+    @Override
+    public synchronized List<FlowDefinition> findAllVersions(String flowId) {
+        TreeMap<Integer, FlowDefinition> versions = store.get(flowId);
+        return versions == null ? List.of() : new ArrayList<>(versions.values());
+    }
 }

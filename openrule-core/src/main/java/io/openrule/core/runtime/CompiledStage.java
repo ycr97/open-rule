@@ -5,19 +5,25 @@ import io.openrule.core.enums.ExecutionMode;
 import io.openrule.core.spi.CompiledNode;
 import java.util.List;
 
-/** Stage 编译产物：定义 + 已编译节点（按 order 排序后）。 */
+/** Stage 编译产物：仅保存执行所需标量和不可变节点列表。 */
 public class CompiledStage {
-    private final StageDefinition definition;
+    private final String stageId;
+    private final ExecutionMode executionMode;
+    private final boolean skipWhenStopped;
+    private final long stageTimeoutMillis;
     private final List<CompiledNode> nodes;
 
     public CompiledStage(StageDefinition definition, List<CompiledNode> nodes) {
-        this.definition = definition;
-        this.nodes = nodes;
+        this.stageId = definition.getStageId();
+        this.executionMode = definition.getExecutionMode();
+        this.skipWhenStopped = definition.isSkipWhenStopped();
+        this.stageTimeoutMillis = definition.getStageTimeoutMillis();
+        this.nodes = List.copyOf(nodes);
     }
 
-    public String getStageId()              { return definition.getStageId(); }
-    public ExecutionMode getExecutionMode() { return definition.getExecutionMode(); }
-    public boolean isSkipWhenStopped()      { return definition.isSkipWhenStopped(); }
-    public long getStageTimeoutMillis()     { return definition.getStageTimeoutMillis(); }
+    public String getStageId()              { return stageId; }
+    public ExecutionMode getExecutionMode() { return executionMode; }
+    public boolean isSkipWhenStopped()      { return skipWhenStopped; }
+    public long getStageTimeoutMillis()     { return stageTimeoutMillis; }
     public List<CompiledNode> getNodes()    { return nodes; }
 }

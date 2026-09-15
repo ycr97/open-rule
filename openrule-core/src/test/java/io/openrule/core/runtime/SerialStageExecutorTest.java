@@ -37,10 +37,10 @@ class SerialStageExecutorTest {
         }
     }
 
-    private CompiledStage stage(List<NodeDefinition> defs) {
+    private CompiledStage stage(List<NodeDefinition> defs, NodeExecutor executor) {
         StageDefinition sd = StageDefinition.builder()
                 .stageId("s1").executionMode(ExecutionMode.SERIAL).skipWhenStopped(true).build();
-        return new CompiledStage(sd, defs.stream().map(d -> new CompiledNode(d, null)).toList());
+        return new CompiledStage(sd, defs.stream().map(executor::compile).toList());
     }
 
     private NodeDefinition def(String id) {
@@ -52,10 +52,10 @@ class SerialStageExecutorTest {
         DecisionContext ctx = new DecisionContext("R", "f", "b", Map.of());
         NodeResult r = NodeResult.builder().nodeId("A").outputs(Map.of("k", 1)).success(true).build();
         ScriptedExecutor exec = new ScriptedExecutor(Map.of("A", r));
-        NodeRunner runner = new NodeRunner(new NodeExecutorRegistry(List.of(exec)), pool);
+        NodeRunner runner = new NodeRunner(pool);
         SerialStageExecutor serial = new SerialStageExecutor(runner);
 
-        StageResult sr = serial.execute(ctx, stage(List.of(def("A"))));
+        StageResult sr = serial.execute(ctx, stage(List.of(def("A")), exec));
         assertThat(ctx.variable("k")).isEqualTo(1);
         assertThat(sr.getNodeResults()).hasSize(1);
     }
@@ -66,10 +66,10 @@ class SerialStageExecutorTest {
         NodeResult a = NodeResult.builder().nodeId("A").stop(true).success(true).build();
         NodeResult b = NodeResult.builder().nodeId("B").success(true).build();
         ScriptedExecutor exec = new ScriptedExecutor(Map.of("A", a, "B", b));
-        NodeRunner runner = new NodeRunner(new NodeExecutorRegistry(List.of(exec)), pool);
+        NodeRunner runner = new NodeRunner(pool);
         SerialStageExecutor serial = new SerialStageExecutor(runner);
 
-        StageResult sr = serial.execute(ctx, stage(List.of(def("A"), def("B"))));
+        StageResult sr = serial.execute(ctx, stage(List.of(def("A"), def("B")), exec));
         assertThat(ctx.isStopped()).isTrue();
         assertThat(sr.getNodeResults()).hasSize(1);  // B 未执行
     }
