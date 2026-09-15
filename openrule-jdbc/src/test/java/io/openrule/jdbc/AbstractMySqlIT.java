@@ -8,8 +8,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-/** 共享 MySQL 容器基类；Docker 缺席自动跳过（disabledWithoutDocker）。 */
-@Testcontainers(disabledWithoutDocker = true)
+/** 共享 MySQL 容器基类；IT 由 Failsafe integration profile 显式触发，Docker 缺席时构建直接失败。 */
+@Testcontainers
 public abstract class AbstractMySqlIT {
 
     @Container

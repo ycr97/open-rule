@@ -23,6 +23,9 @@
         <junit.version>5.10.3</junit.version>
         <assertj.version>3.26.3</assertj.version>
         <spring-boot.version>3.3.5</spring-boot.version>
+        <maven.surefire.version>3.3.1</maven.surefire.version>
+        <maven.failsafe.version>3.3.1</maven.failsafe.version>
+        <skipITs>true</skipITs>
     </properties>
 
     <dependencyManagement>
@@ -73,9 +76,26 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.1</version>
+                    <version>${maven.surefire.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/*IT.java</exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>integration</id>
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
+        </profile>
+    </profiles>
 </project>
