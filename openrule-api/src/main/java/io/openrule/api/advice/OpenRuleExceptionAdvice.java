@@ -28,4 +28,12 @@ public class OpenRuleExceptionAdvice {
                 ? HttpStatus.NOT_FOUND : HttpStatus.UNPROCESSABLE_ENTITY;
         return ResponseEntity.status(status).body(ErrorBody.of("RULE_ENGINE", msg));
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorBody> onChecksum(IllegalStateException e) {
+        if (e.getMessage() != null && e.getMessage().startsWith("OR-DEF-CHECKSUM"))
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ErrorBody.of("OR-DEF-CHECKSUM", e.getMessage()));
+        throw e;
+    }
 }

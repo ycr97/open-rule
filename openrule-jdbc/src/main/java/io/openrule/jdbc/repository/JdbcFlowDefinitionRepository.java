@@ -10,6 +10,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +30,12 @@ public class JdbcFlowDefinitionRepository implements FlowDefinitionRepository {
     }
 
     private FlowDefinition mapRow(ResultSet rs, int n) throws SQLException {
-        FlowDefinition def = codec.parse(rs.getString("definition_json"));
+        String raw = rs.getString("definition_json");
+        String expected = rs.getString("checksum");
+        if (expected == null || !MessageDigest.isEqual(ChecksumUtil.sha256Hex(raw).getBytes(StandardCharsets.US_ASCII),
+                expected.getBytes(StandardCharsets.US_ASCII)))
+            throw new IllegalStateException("OR-DEF-CHECKSUM: legacy definition checksum mismatch");
+        FlowDefinition def = codec.parse(raw);
         def.setVersion(rs.getInt("version"));
         def.setEnabled(rs.getBoolean("enabled"));
         return def;
@@ -71,13 +78,13 @@ public class JdbcFlowDefinitionRepository implements FlowDefinitionRepository {
 
     @Override
     public Optional<FlowDefinition> findActiveByFlowId(String flowId) {
-        return jdbc.query("SELECT definition_json,version,enabled FROM or_flow"
+        return jdbc.query("SELECT definition_json,version,enabled,checksum FROM or_flow"
                 + " WHERE flow_id=? AND enabled=1 LIMIT 1", this::mapRow, flowId).stream().findFirst();
     }
 
     @Override
     public Optional<FlowDefinition> findByFlowIdAndVersion(String flowId, int version) {
-        return jdbc.query("SELECT definition_json,version,enabled FROM or_flow"
+        return jdbc.query("SELECT definition_json,version,enabled,checksum FROM or_flow"
                 + " WHERE flow_id=? AND version=?", this::mapRow, flowId, version).stream().findFirst();
     }
 
@@ -89,7 +96,7 @@ public class JdbcFlowDefinitionRepository implements FlowDefinitionRepository {
 
     @Override
     public List<FlowDefinition> findAllVersions(String flowId) {
-        return jdbc.query("SELECT definition_json,version,enabled FROM or_flow"
+        return jdbc.query("SELECT definition_json,version,enabled,checksum FROM or_flow"
                 + " WHERE flow_id=? ORDER BY version", this::mapRow, flowId);
     }
 }

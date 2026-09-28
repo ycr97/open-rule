@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.openrule.jdbc.audit.JdbcExecutionLogQuery;
 import io.openrule.jdbc.audit.JdbcExecutionLogger;
 import io.openrule.jdbc.repository.JdbcFlowDefinitionRepository;
+import io.openrule.jdbc.studio.JdbcStudioStore;
 import io.openrule.spring.autoconfigure.OpenRuleAutoConfiguration;
 import io.openrule.spring.loader.FlowDefinitionJsonCodec;
 import io.openrule.spring.port.ExecutionLogQuery;
@@ -39,6 +40,12 @@ public class OpenRuleJdbcAutoConfiguration {
     public JdbcFlowDefinitionRepository jdbcFlowDefinitionRepository(
             DataSource dataSource, PlatformTransactionManager txm, FlowDefinitionJsonCodec codec) {
         return new JdbcFlowDefinitionRepository(new JdbcTemplate(dataSource), txm, codec);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public JdbcStudioStore jdbcStudioStore(DataSource dataSource, PlatformTransactionManager txm) {
+        return new JdbcStudioStore(new JdbcTemplate(dataSource), txm);
     }
 
     @Bean("openRuleAuditPool")

@@ -1,1 +1,2 @@
 io.openrule.spring.autoconfigure.OpenRuleAutoConfiguration
+io.openrule.spring.studio.StudioAutoConfiguration

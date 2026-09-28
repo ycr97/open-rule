@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JdbcFlowDefinitionRepositoryIT extends AbstractMySqlIT {
 
@@ -64,5 +65,13 @@ class JdbcFlowDefinitionRepositoryIT extends AbstractMySqlIT {
     void unknownFlow_empty() {
         assertThat(repo.findActiveByFlowId("nope")).isEmpty();
         assertThat(repo.listVersions("nope")).isEmpty();
+    }
+
+    @Test
+    void corruptedLegacyChecksumIsRejectedBeforeDecode() {
+        repo.save(flow());
+        jdbc.update("UPDATE or_flow SET checksum=? WHERE flow_id=? AND version=1", "0".repeat(64), "f");
+        assertThatThrownBy(() -> repo.findByFlowIdAndVersion("f", 1))
+                .hasMessageContaining("OR-DEF-CHECKSUM");
     }
 }

@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: ${STUDIO_JDBC_URL:jdbc:mysql://127.0.0.1:3306/openrule?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC}
+    username: ${STUDIO_DB_USER:openrule}
+    password: ${STUDIO_DB_PASSWORD:openrule}
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql,classpath:db/studio/V1__studio_tables.sql

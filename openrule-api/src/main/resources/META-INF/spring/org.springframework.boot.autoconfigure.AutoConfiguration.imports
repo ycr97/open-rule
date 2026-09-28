@@ -1,1 +1,2 @@
 io.openrule.api.autoconfigure.OpenRuleApiAutoConfiguration
+io.openrule.api.studio.StudioApiAutoConfiguration
