@@ -1,0 +1,743 @@
+{
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "flowId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+    },
+    "flowName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 0
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Stage"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "flowId",
+    "flowName",
+    "version",
+    "description",
+    "stages"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openrule.local/schema/studio-m1/draft.schema.json",
+  "$defs": {
+    "Value": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Value"
+          },
+          "minItems": 0
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Value"
+          }
+        }
+      ]
+    },
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "enum": [
+            "FACT",
+            "VARIABLE",
+            "NODE"
+          ]
+        },
+        "pointer": {
+          "type": "string",
+          "pattern": "^(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)$"
+        }
+      },
+      "required": [
+        "source",
+        "pointer"
+      ],
+      "additionalProperties": false
+    },
+    "Condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "compare"
+            },
+            "ref": {
+              "$ref": "#/$defs/Ref"
+            },
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "gt",
+                "gte",
+                "lt",
+                "lte",
+                "between",
+                "in",
+                "not-in",
+                "contains",
+                "not-contains",
+                "starts-with",
+                "ends-with"
+              ]
+            },
+            "value": {
+              "$ref": "#/$defs/Value"
+            }
+          },
+          "required": [
+            "kind",
+            "ref",
+            "op",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "is-present",
+                "is-missing",
+                "is-null",
+                "not-null"
+              ]
+            },
+            "ref": {
+              "$ref": "#/$defs/Ref"
+            }
+          },
+          "required": [
+            "kind",
+            "ref"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "all",
+                "any",
+                "not"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "kind",
+            "children"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+        },
+        "condition": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Condition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/Value"
+        },
+        "reasonCode": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "condition",
+        "value",
+        "reasonCode"
+      ],
+      "additionalProperties": false
+    },
+    "Bin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+        },
+        "condition": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Condition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "score": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasonCode": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "condition",
+        "score",
+        "reasonCode"
+      ],
+      "additionalProperties": false
+    },
+    "Characteristic": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Bin"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "bins"
+      ],
+      "additionalProperties": false
+    },
+    "OperatorConfig": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Condition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outputKey": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+        },
+        "reasonCode": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "condition",
+        "outputKey",
+        "reasonCode"
+      ],
+      "additionalProperties": false
+    },
+    "RuleSetConfig": {
+      "type": "object",
+      "properties": {
+        "outputKey": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+        },
+        "matchPolicy": {
+          "enum": [
+            "FIRST_MATCH",
+            "ALL_MATCH"
+          ]
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Rule"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "outputKey",
+        "matchPolicy",
+        "rules"
+      ],
+      "additionalProperties": false
+    },
+    "ScorecardConfig": {
+      "type": "object",
+      "properties": {
+        "outputKey": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+        },
+        "characteristics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Characteristic"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "outputKey",
+        "characteristics"
+      ],
+      "additionalProperties": false
+    },
+    "DecisionTableConfig": {
+      "type": "object",
+      "properties": {
+        "outputKey": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+        },
+        "hitPolicy": {
+          "const": "FIRST"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Rule"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "outputKey",
+        "hitPolicy",
+        "rules"
+      ],
+      "additionalProperties": false
+    },
+    "TerminalConfig": {
+      "type": "object",
+      "properties": {
+        "decisionCode": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasonCodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "scoreRef": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "decisionCode",
+        "reasonCodes",
+        "scoreRef"
+      ],
+      "additionalProperties": false
+    },
+    "Node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            },
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "order": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "configVersion": {
+              "const": 1
+            },
+            "timeoutMillis": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "failPolicy": {
+              "enum": [
+                "ABORT",
+                "CONTINUE"
+              ]
+            },
+            "type": {
+              "const": "openrule.operator"
+            },
+            "config": {
+              "$ref": "#/$defs/OperatorConfig"
+            }
+          },
+          "required": [
+            "nodeId",
+            "nodeName",
+            "order",
+            "configVersion",
+            "timeoutMillis",
+            "failPolicy",
+            "type",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            },
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "order": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "configVersion": {
+              "const": 1
+            },
+            "timeoutMillis": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "failPolicy": {
+              "enum": [
+                "ABORT",
+                "CONTINUE"
+              ]
+            },
+            "type": {
+              "const": "openrule.rule-set"
+            },
+            "config": {
+              "$ref": "#/$defs/RuleSetConfig"
+            }
+          },
+          "required": [
+            "nodeId",
+            "nodeName",
+            "order",
+            "configVersion",
+            "timeoutMillis",
+            "failPolicy",
+            "type",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            },
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "order": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "configVersion": {
+              "const": 1
+            },
+            "timeoutMillis": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "failPolicy": {
+              "enum": [
+                "ABORT",
+                "CONTINUE"
+              ]
+            },
+            "type": {
+              "const": "openrule.scorecard"
+            },
+            "config": {
+              "$ref": "#/$defs/ScorecardConfig"
+            }
+          },
+          "required": [
+            "nodeId",
+            "nodeName",
+            "order",
+            "configVersion",
+            "timeoutMillis",
+            "failPolicy",
+            "type",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            },
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "order": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "configVersion": {
+              "const": 1
+            },
+            "timeoutMillis": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "failPolicy": {
+              "enum": [
+                "ABORT",
+                "CONTINUE"
+              ]
+            },
+            "type": {
+              "const": "openrule.decision-table"
+            },
+            "config": {
+              "$ref": "#/$defs/DecisionTableConfig"
+            }
+          },
+          "required": [
+            "nodeId",
+            "nodeName",
+            "order",
+            "configVersion",
+            "timeoutMillis",
+            "failPolicy",
+            "type",
+            "config"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            },
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "order": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "configVersion": {
+              "const": 1
+            },
+            "timeoutMillis": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "type": {
+              "const": "openrule.terminal"
+            },
+            "config": {
+              "$ref": "#/$defs/TerminalConfig"
+            }
+          },
+          "required": [
+            "nodeId",
+            "nodeName",
+            "order",
+            "configVersion",
+            "timeoutMillis",
+            "type",
+            "config"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Stage": {
+      "type": "object",
+      "properties": {
+        "stageId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+        },
+        "stageName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "executionMode": {
+          "enum": [
+            "SERIAL",
+            "PARALLEL"
+          ]
+        },
+        "when": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Condition"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timeoutMillis": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Node"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "stageId",
+        "stageName",
+        "order",
+        "executionMode",
+        "when",
+        "timeoutMillis",
+        "nodes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "file": "order-admission-score-35.definition.json",
+    "checksum": "sha256:4cea6b48f1328fcf83cca15a0f1682e9859c85cd3b788ba507c98e2c67de8cb7"
+  },
+  {
+    "file": "order-admission-score-59.definition.json",
+    "checksum": "sha256:f220002bd3f6abe4eed754818e84a00ecec50b607abe03f004af247012dacc96"
+  },
+  {
+    "file": "order-admission-score-60.definition.json",
+    "checksum": "sha256:aa2519b805c495fe062186bdcce02f7cdbd1bc30ebe862b93ca636e17094a792"
+  },
+  {
+    "file": "order-admission.definition.json",
+    "checksum": "sha256:f32efdc7490d67e1df7ff0b63ff38f91cf5e963808eb46f4af135b4a1e31b0a7"
+  },
+  {
+    "rawJson": "{\"n\":1}",
+    "canonical": "{\"n\":1}",
+    "checksum": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd"
+  },
+  {
+    "rawJson": "{\"n\":1.0}",
+    "canonical": "{\"n\":1}",
+    "checksum": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd"
+  },
+  {
+    "rawJson": "{\"n\":1e0}",
+    "canonical": "{\"n\":1}",
+    "checksum": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd"
+  },
+  {
+    "rawJson": "{\"n\":9007199254740993}",
+    "canonical": "{\"n\":9007199254740993}",
+    "checksum": "sha256:4ac8309cc76123ef6c5325ef925fc873e9b5856ec4f844ef1462f9303960378a"
+  },
+  {
+    "rawJson": "{\"n\":0.1,\"m\":0.2}",
+    "canonical": "{\"m\":0.2,\"n\":0.1}",
+    "checksum": "sha256:50d31c29b9af663ee9616f3129cfc023a4d8907d800eaa91922f140547a73f84"
+  },
+  {
+    "rawJson": "{\"n\":0.3}",
+    "canonical": "{\"n\":0.3}",
+    "checksum": "sha256:399299ae7e87ca72e1e92fa63506ae95c4c338e80135e2069edb3594e72715c5"
+  }
+]

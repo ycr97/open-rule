@@ -1,0 +1,7 @@
+{
+  "rawFile": "v1-priority.raw.json",
+  "legacyChecksumHex": "ff7edd70ca7869ef2b057269365da8c74343f5e1d89600d6a1cc17f4a4f8109e",
+  "expectedSchemaVersion": 1,
+  "expectedLegacyDecisionForAmount50001": "REJECT",
+  "migration": "EXPLICIT_ONLY"
+}
