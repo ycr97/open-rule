@@ -74,4 +74,24 @@ class JdbcFlowDefinitionRepositoryIT extends AbstractMySqlIT {
         assertThatThrownBy(() -> repo.findByFlowIdAndVersion("f", 1))
                 .hasMessageContaining("OR-DEF-CHECKSUM");
     }
+    @Test void readsFrozenV1RawFixtureWithoutRewritingBytesOrChecksum() throws Exception {
+        java.nio.file.Path fixtures = java.nio.file.Path.of("../docs/contracts/studio-m1/fixtures/legacy");
+        String raw = java.nio.file.Files.readString(fixtures.resolve("v1-priority.raw.json"));
+        String checksum = new ObjectMapper().readTree(fixtures.resolve("v1-priority.meta.json").toFile())
+                .path("legacyChecksumHex").asText();
+        jdbc.update("INSERT INTO or_flow(flow_id,flow_name,version,enabled,aggregate_policy,definition_json,checksum) "
+                + "VALUES('order_risk','legacy',1,1,'PRIORITY',?,?)", raw, checksum);
+        FlowDefinition loaded = repo.findByFlowIdAndVersion("order_risk", 1).orElseThrow();
+        assertThat(loaded.getFlowId()).isEqualTo("order_risk");
+        try (var engine = io.openrule.core.OpenRuleEngine.create()) {
+            var result = engine.execute(loaded, new io.openrule.core.context.DecisionContext(
+                    "v1-legacy", "order_risk", "v1-order", java.util.Map.of("order", java.util.Map.of("amount", 50001))));
+            assertThat(result.getDecision()).isEqualTo(io.openrule.core.enums.Decision.REJECT);
+        }
+
+        assertThat(loaded.getStages().getFirst().getNodes().getFirst().getNodeId()).isEqualTo("AMOUNT_LIMIT");
+        assertThat(jdbc.queryForObject("SELECT definition_json FROM or_flow WHERE flow_id='order_risk'", String.class)).isEqualTo(raw);
+        assertThat(jdbc.queryForObject("SELECT checksum FROM or_flow WHERE flow_id='order_risk'", String.class)).isEqualTo(checksum);
+    }
+
 }

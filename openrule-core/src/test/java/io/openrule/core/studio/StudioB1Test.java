@@ -197,4 +197,19 @@ class StudioB1Test {
         for (int i = 0; i < 20 && !interrupted.get(); i++) Thread.sleep(5);
         assertThat(interrupted.get()).isTrue();
     }
+    @Test void runtimeProtectsParallelOutputConflictEvenWithDistinctDeclaredOutputs() {
+        Flow definition = flow(stage("parallel", 1, Mode.PARALLEL, null,
+                operator("first", 1, "one", compare(Source.FACT, "/x", "eq", true), FailPolicy.CONTINUE),
+                operator("second", 2, "two", compare(Source.FACT, "/x", "eq", true), FailPolicy.CONTINUE)),
+                stage("approve", 2, Mode.SERIAL, null, terminal("allow", "APPROVE")));
+        StudioEngine.NodeLogic collision = (node, stageId, facts, variables, prior) ->
+                new NodeResult(stageId, node.nodeId(), node.type(), Status.SUCCEEDED, true,
+                        Map.of("collision", true), List.of(), null, null, 0);
+        Result result = new StudioEngine(pool, Map.of("openrule.operator", collision))
+                .execute(definition, Map.of("x", true), 1000);
+        assertThat(result.errorCode()).isEqualTo("OR-OUTPUT-CONFLICT");
+        assertThat(result.decision()).isNull();
+        assertThat(result.variables()).isEmpty();
+    }
+
 }

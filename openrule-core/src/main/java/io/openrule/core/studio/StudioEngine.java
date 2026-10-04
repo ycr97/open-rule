@@ -157,7 +157,7 @@ public final class StudioEngine {
                 NodeResult result = extension.execute(node, stageId, facts, variables, prior);
                 if (result == null || !node.nodeId().equals(result.nodeId())
                         || !stageId.equals(result.stageId()) || result.status() == null
-                        || result.outputs() == null || result.outputs().containsKey(null) || result.details() == null)
+                        || result.outputs() == null || result.outputs().keySet().stream().anyMatch(java.util.Objects::isNull) || result.details() == null)
                     throw new IllegalStateException("Invalid node result from " + node.type());
                 return result;
             }

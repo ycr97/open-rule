@@ -2,6 +2,8 @@ package io.openrule.spring.studio;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -40,4 +42,87 @@ class StudioDocumentCodecTest {
         assertThatThrownBy(() -> codec.parse("{\"x\":9007199254740993,\"n\":1e-1001}"))
                 .isInstanceOf(StudioProblem.class);
     }
+    @Test void betweenBinLocationSurvivesStageNodeCharacteristicAndBinReordering() throws Exception {
+        for (boolean reordered : new boolean[] {false, true}) {
+            ObjectNode document = orderDocument();
+            ObjectNode stage = byId((ArrayNode) document.path("stages"), "stageId", "s_score");
+            ObjectNode node = byId((ArrayNode) stage.path("nodes"), "nodeId", "buyer_score");
+            ArrayNode characteristics = (ArrayNode) node.path("config").path("characteristics");
+            ObjectNode characteristic = byId(characteristics, "id", "c_refund");
+            ArrayNode bins = (ArrayNode) characteristic.path("bins");
+            ObjectNode bin = byId(bins, "id", "b_refund_high");
+            ((ObjectNode) bin.path("condition")).put("op", "between");
+            if (reordered) {
+                reverse((ArrayNode) document.path("stages"));
+                reverse((ArrayNode) stage.path("nodes"));
+                reverse(characteristics);
+                reverse(bins);
+            }
+            var issue = codec.validate(document).issues().getFirst();
+            assertThat(issue.stageId()).isEqualTo("s_score");
+            assertThat(issue.nodeId()).isEqualTo("buyer_score");
+            assertThat(issue.itemId()).isEqualTo("b_refund_high");
+            assertThat(issue.pointer()).isEqualTo(reordered
+                    ? "/stages/3/nodes/1/config/characteristics/0/bins/1/condition/value"
+                    : "/stages/2/nodes/0/config/characteristics/1/bins/0/condition/value");
+            assertThat(document.at(issue.pointer())).isEqualTo(bin.path("condition").path("value"));
+        }
+    }
+
+    @Test void parallelOutputLocationUsesActualProducerAndInputOrder() throws Exception {
+        for (boolean reordered : new boolean[] {false, true}) {
+            ObjectNode document = orderDocument();
+            ObjectNode stage = byId((ArrayNode) document.path("stages"), "stageId", "s_score");
+            ObjectNode score = byId((ArrayNode) stage.path("nodes"), "nodeId", "buyer_score");
+            ObjectNode table = byId((ArrayNode) stage.path("nodes"), "nodeId", "order_segment");
+            score.put("nodeId", "producer_a");
+            table.put("nodeId", "producer_b");
+            ((ObjectNode) score.path("config")).put("outputKey", "segment");
+            if (reordered) {
+                reverse((ArrayNode) document.path("stages"));
+                reverse((ArrayNode) stage.path("nodes"));
+                score.put("order", 2);
+                table.put("order", 1);
+            }
+            var issue = codec.validate(document).issues().getFirst();
+            assertThat(issue.stageId()).isEqualTo("s_score");
+            assertThat(issue.nodeId()).isEqualTo(reordered ? "producer_a" : "producer_b");
+            assertThat(issue.itemId()).isNull();
+            assertThat(issue.pointer()).isEqualTo(reordered
+                    ? "/stages/3/nodes/1/config/outputKey" : "/stages/2/nodes/1/config/outputKey");
+            assertThat(document.at(issue.pointer()).asText()).isEqualTo("segment");
+        }
+    }
+
+    @Test void nestedRuleConditionReportsChildValueAndRuleId() throws Exception {
+        ObjectNode document = orderDocument();
+        ObjectNode rule = (ObjectNode) document.at("/stages/0/nodes/1/config/rules/0");
+        JsonNode condition = rule.path("condition").deepCopy();
+        ((ObjectNode) condition).put("op", "between");
+        ObjectNode group = rule.putObject("condition");
+        group.put("kind", "all");
+        group.putArray("children").add(condition);
+        var issue = codec.validate(document).issues().getFirst();
+        assertThat(issue.pointer()).isEqualTo("/stages/0/nodes/1/config/rules/0/condition/children/0/value");
+        assertThat(issue.itemId()).isEqualTo("r_amount");
+    }
+
+    private ObjectNode orderDocument() throws Exception {
+        return (ObjectNode) codec.parse(Files.readString(Path.of(
+                "../docs/contracts/studio-m1/fixtures/valid/order-admission.definition.json")));
+    }
+
+    private static ObjectNode byId(ArrayNode items, String field, String id) {
+        for (JsonNode item : items) if (id.equals(item.path(field).asText())) return (ObjectNode) item;
+        throw new AssertionError("Missing " + id);
+    }
+
+    private static void reverse(ArrayNode items) {
+        java.util.List<JsonNode> copy = new java.util.ArrayList<>();
+        items.forEach(copy::add);
+        java.util.Collections.reverse(copy);
+        items.removeAll();
+        copy.forEach(items::add);
+    }
+
 }

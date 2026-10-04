@@ -117,40 +117,51 @@ public final class StudioConditions {
     }
 
     static void validate(Condition condition) {
-        if (condition == null) throw new IllegalArgumentException("condition is required");
+        validate(condition, "");
+    }
+
+    private static void validate(Condition condition, String pointer) {
+        if (condition == null) throw new ValidationFailure("condition is required", pointer);
         if (condition instanceof Group group) {
             if (!Set.of("all", "any", "not").contains(group.kind()) || group.children() == null
                     || group.children().isEmpty() || group.kind().equals("not") && group.children().size() != 1)
-                throw new IllegalArgumentException("Invalid condition group");
-            group.children().forEach(StudioConditions::validate);
+                throw new ValidationFailure("Invalid condition group", pointer + "/children");
+            for (int i = 0; i < group.children().size(); i++)
+                validate(group.children().get(i), pointer + "/children/" + i);
             return;
         }
         Ref ref = condition instanceof Compare c ? c.ref() : ((Presence) condition).ref();
         if (ref == null || ref.source() == null || ref.pointer() == null
                 || !ref.pointer().matches("(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)"))
-            throw new IllegalArgumentException("Invalid condition reference");
+            throw new ValidationFailure("Invalid condition reference", pointer + "/ref");
         if (ref.source() == Source.NODE && !ref.pointer().matches("/[^/]+/(?:status|hit)"))
-            throw new IllegalArgumentException("Invalid NODE reference");
+            throw new ValidationFailure("Invalid NODE reference", pointer + "/ref/pointer");
         if (condition instanceof Presence p) {
             if (!Set.of("is-present", "is-missing", "is-null", "not-null").contains(p.kind()))
-                throw new IllegalArgumentException("Invalid presence operation");
+                throw new ValidationFailure("Invalid presence operation", pointer + "/kind");
         } else {
             Compare c = (Compare) condition;
             if (!Set.of("eq", "ne", "gt", "gte", "lt", "lte", "between", "in", "not-in",
                     "contains", "not-contains", "starts-with", "ends-with").contains(c.op()))
-                throw new IllegalArgumentException("Invalid comparison operation");
+                throw new ValidationFailure("Invalid comparison operation", pointer + "/op");
             if ((c.op().equals("in") || c.op().equals("not-in")) && !(c.value() instanceof List<?>))
-                throw new IllegalArgumentException("Membership requires array");
+                throw new ValidationFailure("Membership requires array", pointer + "/value");
             if (c.op().equals("between") && (!(c.value() instanceof List<?> list) || list.size() != 2
                     || !(list.get(0) instanceof Number) || !(list.get(1) instanceof Number)
                     || ordered(list.get(0), list.get(1)) > 0))
-                throw new IllegalArgumentException("Invalid between bounds");
+                throw new ValidationFailure("Invalid between bounds", pointer + "/value");
         }
     }
 
     static void forEachRef(Condition condition, java.util.function.Consumer<Ref> consumer) {
         if (condition instanceof Group group) group.children().forEach(c -> forEachRef(c, consumer));
         else consumer.accept(condition instanceof Compare c ? c.ref() : ((Presence) condition).ref());
+    }
+
+    static final class ValidationFailure extends IllegalArgumentException {
+        private final String pointer;
+        ValidationFailure(String message, String pointer) { super(message); this.pointer = pointer; }
+        String pointer() { return pointer; }
     }
 
     private record Lookup(boolean present, Object value) { }

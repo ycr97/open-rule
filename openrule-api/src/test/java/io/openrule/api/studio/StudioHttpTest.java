@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.openrule.core.studio.StudioEngine;
+import io.openrule.core.studio.StudioModel;
 import io.openrule.spring.studio.StudioDocumentCodec;
 import io.openrule.spring.studio.StudioProblem;
 import io.openrule.spring.studio.StudioService;
@@ -198,6 +199,39 @@ class StudioHttpTest {
         JsonNode score60 = executeOrder(findCase(cases, "OA-12b"), "4", false);
         assertThat(score60.path("decision").path("decisionCode").asText()).isEqualTo("REVIEW");
         assertThat(score60.path("decision").path("score").asText()).isEqualTo("60");
+    }
+
+    @Test void buyerScoreNodeTimeoutContinuesToReviewButRequestBudgetReturns504() throws Exception {
+        Path fixtures = Path.of("../docs/contracts/studio-m1/fixtures/valid");
+        call(post("/api/v2/admin/flows"), "{\"flowId\":\"order_admission\",\"flowName\":\"订单准入\"}", 201);
+        ObjectNode document = (ObjectNode) codec.parse(Files.readString(fixtures.resolve("order-admission.definition.json")));
+        ((ObjectNode) document.at("/stages/2/nodes/0")).put("timeoutMillis", 10);
+        saveOrder(document, "1", "1");
+        StudioEngine.NodeLogic delayed = (node, stageId, facts, variables, prior) -> {
+            Thread.sleep(100);
+            return new StudioModel.NodeResult(stageId, node.nodeId(), node.type(), StudioModel.Status.SUCCEEDED,
+                    true, Map.of("riskScore", java.math.BigDecimal.TEN), List.of(), null, null, 100);
+        };
+        MockMvc controlled = standaloneSetup(new StudioController(new StudioService(store, codec,
+                new StudioEngine(pool, Map.of("openrule.scorecard", delayed)), 30000), codec))
+                .setControllerAdvice(new StudioProblemAdvice()).build();
+        String request = "{\"expectedRevision\":\"2\",\"requestId\":\"v1-timeout\",\"bizId\":\"v1-timeout\",\"facts\":"
+                + codec.json(codec.parse("{\"cases\":" + Files.readString(fixtures.resolve("order-admission.cases.json")) + "}")
+                .path("cases").get(0).path("facts")) + ",\"timeoutMillis\":3000}";
+        var continued = controlled.perform(post("/api/v2/admin/flows/order_admission/versions/1/simulations")
+                .contentType(MediaType.APPLICATION_JSON).content(request)).andReturn().getResponse();
+        assertThat(continued.getStatus()).isEqualTo(200);
+        JsonNode result = codec.parse(continued.getContentAsString());
+        assertThat(result.path("status").asText()).isEqualTo("DECIDED");
+        assertThat(result.path("decision").path("terminalNodeId").asText()).isEqualTo("data_review");
+        assertThat(result.path("nodeResults").get(3).path("status").asText()).isEqualTo("TIMED_OUT");
+        assertThat(result.path("nodeResults").get(3).path("failure").path("code").asText()).isEqualTo("OR-NODE-TIMEOUT");
+        var timeout = controlled.perform(post("/api/v2/admin/flows/order_admission/versions/1/simulations")
+                .contentType(MediaType.APPLICATION_JSON).content(request.replace("3000", "1"))).andReturn().getResponse();
+        assertThat(timeout.getStatus()).isEqualTo(504);
+        JsonNode failure = codec.parse(timeout.getContentAsString());
+        assertThat(failure.path("code").asText()).isEqualTo("OR-EXECUTION-TIMEOUT");
+        assertThat(failure.path("execution").path("decision").isNull()).isTrue();
     }
 
     private void publishOrderVariant(Path fixtures, String name, String version) throws Exception {

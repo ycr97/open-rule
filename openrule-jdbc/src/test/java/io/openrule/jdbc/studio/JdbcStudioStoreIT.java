@@ -122,6 +122,62 @@ class JdbcStudioStoreIT extends AbstractMySqlIT {
         assertThat(store.flows("", 1, 20).items().getFirst().currentDraftVersion()).isEqualTo(1);
     }
 
+    @Test void failureAfterVersionUpdateRollsBackPublishedRowAndHead() {
+        store.createFlow("test_flow", "Test", codec.json(codec.initial("test_flow", "Test")));
+        var before = store.save("test_flow", 1, 1, "Test", complete("test_flow"));
+        // Inject failure before the head write, after a real version UPDATE in the same MySQL transaction.
+        var faultingJdbc = new org.springframework.jdbc.core.JdbcTemplate(jdbc.getDataSource()) {
+            @Override public int update(String sql, Object... args) {
+                if (sql.startsWith("UPDATE or_studio_flow SET current_draft_version=NULL"))
+                    throw new org.springframework.dao.DataAccessResourceFailureException("V1 controlled publish failure");
+                return super.update(sql, args);
+            }
+        };
+        var faultingStore = new JdbcStudioStore(faultingJdbc, txm);
+        assertThatThrownBy(() -> faultingStore.publish("test_flow", 1, 2, "attempt", codec))
+                .hasMessageContaining("V1 controlled publish failure");
+        var after = store.version("test_flow", 1);
+        assertThat(after.status()).isEqualTo("DRAFT");
+        assertThat(after.revision()).isEqualTo(2);
+        assertThat(after.documentJson()).isEqualTo(before.documentJson());
+        assertThat(after.checksum()).isNull();
+        assertThat(after.changeNote()).isNull();
+        assertThat(store.flows("", 1, 20).items().getFirst().currentDraftVersion()).isEqualTo(1);
+        assertThat(store.flows("", 1, 20).items().getFirst().latestPublishedVersion()).isNull();
+        assertThat(store.publish("test_flow", 1, 2, "retry after recovery", codec).status()).isEqualTo("PUBLISHED");
+    }
+
+    @Test void publishRevalidatesSavedRevisionRatherThanEarlierValidContent() {
+        store.createFlow("test_flow", "Test", codec.json(codec.initial("test_flow", "Test")));
+        var valid = store.save("test_flow", 1, 1, "Test", complete("test_flow"));
+        assertThat(codec.validate(codec.parse(valid.documentJson())).valid()).isTrue();
+        store.save("test_flow", 1, 2, "Test", codec.json(codec.initial("test_flow", "Test")));
+        assertThatThrownBy(() -> store.publish("test_flow", 1, 2, "stale", codec))
+                .isInstanceOf(StudioProblem.class).extracting("code").isEqualTo("OR-REVISION-CONFLICT");
+        assertThatThrownBy(() -> store.publish("test_flow", 1, 3, "actual invalid revision", codec))
+                .isInstanceOf(StudioProblem.class).extracting("code").isEqualTo("OR-DEF-VALIDATION");
+        assertThat(store.version("test_flow", 1).revision()).isEqualTo(3);
+        assertThat(store.version("test_flow", 1).status()).isEqualTo("DRAFT");
+    }
+
+    @Test void jdbcRoundTripPreservesLongDecimalsBigIntegersNullAndCanonicalChecksum() throws Exception {
+        var document = codec.parse(java.nio.file.Files.readString(java.nio.file.Path.of(
+                "../docs/contracts/studio-m1/fixtures/valid/order-admission.definition.json")));
+        ((ObjectNode) document).put("flowId", "test_flow");
+        ((ObjectNode) document.at("/stages/2/nodes/0/config/characteristics/0/bins/1"))
+                .put("score", new java.math.BigDecimal("0.123456789012345678901234567890123456789"));
+        ((ObjectNode) document.at("/stages/2/nodes/1/config/rules/0"))
+                .put("value", new java.math.BigInteger("9007199254740993"));
+        store.createFlow("test_flow", "Test", codec.json(codec.initial("test_flow", "Test")));
+        store.save("test_flow", 1, 1, "Test", codec.json(document));
+        var published = store.publish("test_flow", 1, 2, "precision", codec);
+        var restarted = new JdbcStudioStore(jdbc, txm);
+        assertThat(codec.parse(restarted.version("test_flow", 1).documentJson())).isEqualTo(document);
+        assertThat(published.checksum()).isEqualTo(codec.checksum(document));
+        assertThat(document.at("/stages/0/when").isNull()).isTrue();
+        assertThat(document.at("/absent").isMissingNode()).isTrue();
+    }
+
     private void race(Runnable action) throws Exception {
         CountDownLatch start = new CountDownLatch(1);
         try (var workers = Executors.newFixedThreadPool(2)) {

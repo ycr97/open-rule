@@ -1,6 +1,6 @@
 # Studio M1 验收映射
 
-状态：预期结果已冻结为 D0 测试输入，**尚未由 Java 运行时执行**。基础定义为 [`fixtures/valid/order-admission.definition.json`](fixtures/valid/order-admission.definition.json)，完整事实和逐例预期在 [`fixtures/valid/order-admission.cases.json`](fixtures/valid/order-admission.cases.json)。该文件每条记录含 `id`、精确定义文件、完整或故意缺失的 facts、status、决策码、原因、分数、segment 和 Terminal 节点。`OA-03`、`OA-12` 使用独立 Definition 文件，避免在运行期暗改规则。正常 facts 中 `/risk/blacklisted`、`/buyer/ageDays` 和 `/metrics/refundRate` 均由调用方直接提供；没有 Provider。
+状态：预期结果保持 D0 冻结输入；当前 Java、真实 HTTP/MySQL、浏览器与视觉验证结果见 [V1 总体验收报告](V1-ACCEPTANCE.md)（2026-10-04）。OA 的 19 个 fixture 子用例均已执行 SIMULATE/LIVE；ST-01～ST-13 的验证层级、命令和证据逐项列入报告。基础定义为 [`fixtures/valid/order-admission.definition.json`](fixtures/valid/order-admission.definition.json)，完整事实和逐例预期在 [`fixtures/valid/order-admission.cases.json`](fixtures/valid/order-admission.cases.json)。该文件每条记录含 `id`、精确定义文件、完整或故意缺失的 facts、status、决策码、原因、分数、segment 和 Terminal 节点。`OA-03`、`OA-12` 使用独立 Definition 文件，避免在运行期暗改规则。正常 facts 中 `/risk/blacklisted`、`/buyer/ageDays` 和 `/metrics/refundRate` 均由调用方直接提供；没有 Provider。
 
 | 验收编号 | Fixture / 期望重点 |
 | --- | --- |
@@ -19,13 +19,13 @@
 
 ST 与契约资产对应关系：
 
-| 编号 | D0 契约资产 / 后续实施验证 |
+| 编号 | D0 契约资产 / V1 实际验证映射 |
 | --- | --- |
 | ST-01 | `incomplete.draft.json` 通过 Draft Schema、未通过 Executable Schema；B2 保存/禁止发布 |
 | ST-02～ST-06 | OpenAPI 的 revision CAS、发布、读取、模拟操作及 ADR 生命周期；B2 MySQL 事务/重启测试 |
 | ST-07 | `parallel-terminal.definition.json`、`terminal-missing.definition.json` 及默认兜底编译约束；B1 编译测试 |
 | ST-08 | `future-node.definition.json`、`parallel-output.definition.json`；B1 静态校验与运行保护 |
-| ST-09 | OA-10/OA-12 分箱边界及运行时恰好命中一箱；B3 增加重叠/缺口执行测试 |
+| ST-09 | OA-10/OA-12 分箱边界及运行时恰好命中一箱；B3/V1 重叠/缺口静态及恰好命中一箱的执行回归 |
 | ST-10 | OpenAPI 精确版本 LIVE 与 DRAFT SIMULATE；B2 API 集成测试 |
 | ST-11 | `checksum-vectors.json`、OA-05b 小数边界；B1/B2 BigDecimal 和前端无损 JSON 适配 |
 | ST-12 | `v1-priority.raw.json`/meta 原始摘要、发布 CAS 与损坏定义错误；B2 JDBC 集成测试 |

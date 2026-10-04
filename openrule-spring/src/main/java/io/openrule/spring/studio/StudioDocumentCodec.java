@@ -13,6 +13,7 @@ import com.networknt.schema.Schema;
 import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
 import io.openrule.core.studio.StudioCompiler;
+import io.openrule.core.studio.StudioValidationException;
 import io.openrule.core.studio.StudioModel.*;
 
 import java.io.IOException;
@@ -100,38 +101,11 @@ public final class StudioDocumentCodec {
         if (!issues.isEmpty()) return new Report(false, issues);
         try {
             new StudioCompiler().compile(bind(document));
-        } catch (RuntimeException ex) {
-            return new Report(false, List.of(semanticIssue(document, ex.getMessage())));
+        } catch (StudioValidationException ex) {
+            return new Report(false, List.of(new Issue("OR-DEF-VALIDATION", "ERROR", ex.getMessage(),
+                    ex.pointer(), ex.stageId(), ex.nodeId(), ex.itemId())));
         }
         return new Report(true, List.of());
-    }
-
-    private Issue semanticIssue(JsonNode document, String message) {
-        int stageIndex = 0;
-        for (JsonNode stage : document.path("stages")) {
-            int nodeIndex = 0;
-            for (JsonNode node : stage.path("nodes")) {
-                String nodeId = node.path("nodeId").asText();
-                int characteristicIndex = 0;
-                for (JsonNode characteristic : node.path("config").path("characteristics")) {
-                    String itemId = characteristic.path("id").asText();
-                    if (message != null && !itemId.isBlank() && message.contains(itemId))
-                        return new Issue("OR-DEF-VALIDATION", "ERROR", message,
-                                "/stages/" + stageIndex + "/nodes/" + nodeIndex
-                                        + "/config/characteristics/" + characteristicIndex,
-                                stage.path("stageId").asText(), nodeId, itemId);
-                    characteristicIndex++;
-                }
-                if (message != null && message.contains(nodeId))
-                    return new Issue("OR-DEF-VALIDATION", "ERROR", message,
-                            "/stages/" + stageIndex + "/nodes/" + nodeIndex,
-                            stage.path("stageId").asText(), nodeId, null);
-                nodeIndex++;
-            }
-            stageIndex++;
-        }
-        return new Issue("OR-DEF-VALIDATION", "ERROR", message == null ? "Invalid definition" : message,
-                stageIndex == 0 ? "" : "/stages/" + (stageIndex - 1), null, null, null);
     }
 
     public Flow executable(JsonNode document) {
