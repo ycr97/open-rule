@@ -1,0 +1,283 @@
+{
+  "execution": {
+    "requestId": "m2-normal",
+    "traceId": "m2-trace-001",
+    "bizId": "ORDER-M2-001",
+    "purpose": "SIMULATE",
+    "flowId": "order_admission",
+    "version": "1",
+    "revision": "1",
+    "definitionChecksum": "sha256:f32efdc7490d67e1df7ff0b63ff38f91cf5e963808eb46f4af135b4a1e31b0a7",
+    "status": "DECIDED",
+    "decision": {
+      "decisionCode": "APPROVE",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ],
+      "score": "15",
+      "terminalNodeId": "approve"
+    },
+    "variables": {
+      "blacklisted": "[REDACTED]",
+      "restriction": "[REDACTED]",
+      "riskScore": "[REDACTED]",
+      "segment": "[REDACTED]"
+    },
+    "stageResults": [
+      {
+        "stageId": "s_base",
+        "status": "SUCCEEDED",
+        "skipReason": null
+      },
+      {
+        "stageId": "s_reject",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE"
+      },
+      {
+        "stageId": "s_score",
+        "status": "SUCCEEDED",
+        "skipReason": null
+      },
+      {
+        "stageId": "s_fallback",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE"
+      },
+      {
+        "stageId": "s_review",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE"
+      },
+      {
+        "stageId": "s_approve",
+        "status": "SUCCEEDED",
+        "skipReason": null
+      }
+    ],
+    "nodeResults": [
+      {
+        "stageId": "s_base",
+        "nodeId": "blacklist",
+        "type": "openrule.operator",
+        "status": "SUCCEEDED",
+        "skipReason": null,
+        "hit": false,
+        "outputs": {
+          "blacklisted": "[REDACTED]"
+        },
+        "reasonCodes": [],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_base",
+        "nodeId": "base_rules",
+        "type": "openrule.rule-set",
+        "status": "SUCCEEDED",
+        "skipReason": null,
+        "hit": false,
+        "outputs": {
+          "restriction": "[REDACTED]"
+        },
+        "reasonCodes": [],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_reject",
+        "nodeId": "reject",
+        "type": "openrule.terminal",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE",
+        "hit": false,
+        "outputs": {},
+        "reasonCodes": [],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_score",
+        "nodeId": "buyer_score",
+        "type": "openrule.scorecard",
+        "status": "SUCCEEDED",
+        "skipReason": null,
+        "hit": true,
+        "outputs": {
+          "riskScore": "[REDACTED]"
+        },
+        "reasonCodes": [
+          "ESTABLISHED_ACCOUNT",
+          "NORMAL_REFUND_RATE"
+        ],
+        "details": [
+          {
+            "kind": "SCORE",
+            "characteristicId": "c_age",
+            "binId": "b_age_old",
+            "score": "5",
+            "reasonCode": "ESTABLISHED_ACCOUNT"
+          },
+          {
+            "kind": "SCORE_BIN",
+            "characteristicId": "c_refund",
+            "binId": "b_refund_low",
+            "score": "10",
+            "reasonCode": "NORMAL_REFUND_RATE"
+          }
+        ],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_score",
+        "nodeId": "order_segment",
+        "type": "openrule.decision-table",
+        "status": "SUCCEEDED",
+        "skipReason": null,
+        "hit": true,
+        "outputs": {
+          "segment": "[REDACTED]"
+        },
+        "reasonCodes": [
+          "SMALL_ORDER"
+        ],
+        "details": [
+          {
+            "kind": "RULE",
+            "ruleId": "t_low",
+            "reasonCode": "SMALL_ORDER",
+            "value": "[REDACTED]"
+          }
+        ],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_fallback",
+        "nodeId": "data_review",
+        "type": "openrule.terminal",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE",
+        "hit": false,
+        "outputs": {},
+        "reasonCodes": [],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_review",
+        "nodeId": "risk_review",
+        "type": "openrule.terminal",
+        "status": "SKIPPED",
+        "skipReason": "WHEN_FALSE",
+        "hit": false,
+        "outputs": {},
+        "reasonCodes": [],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      },
+      {
+        "stageId": "s_approve",
+        "nodeId": "approve",
+        "type": "openrule.terminal",
+        "status": "SUCCEEDED",
+        "skipReason": null,
+        "hit": true,
+        "outputs": {},
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "details": [],
+        "failure": null,
+        "elapsedMillis": 0
+      }
+    ],
+    "elapsedMillis": 3
+  },
+  "factResolution": {
+    "mode": "HTTP",
+    "status": "COMPLETE",
+    "elapsedMillis": 12,
+    "fields": [
+      {
+        "path": "/buyer/ageDays",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "buyer_age_days",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "365",
+        "error": null
+      },
+      {
+        "path": "/metrics/refundRate",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "refund_rate",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "0.08",
+        "error": null
+      },
+      {
+        "path": "/order/amount",
+        "status": "resolved",
+        "source": "CALLER",
+        "factId": "order_amount",
+        "catalogRevision": "1",
+        "providerId": null,
+        "providerRevision": null,
+        "valueSummary": "680",
+        "error": null
+      },
+      {
+        "path": "/order/country",
+        "status": "resolved",
+        "source": "CALLER",
+        "factId": "order_country",
+        "catalogRevision": "1",
+        "providerId": null,
+        "providerRevision": null,
+        "valueSummary": "\"JP\"",
+        "error": null
+      },
+      {
+        "path": "/risk/blacklisted",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "risk_blacklisted",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "[REDACTED]",
+        "error": null
+      }
+    ],
+    "calls": [
+      {
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "traceId": "m2-trace-001",
+        "transport": "HTTP",
+        "status": "SUCCEEDED",
+        "attempted": true,
+        "requestedPaths": [
+          "/buyer/ageDays",
+          "/metrics/refundRate",
+          "/risk/blacklisted"
+        ],
+        "elapsedMillis": 10,
+        "error": null
+      }
+    ]
+  },
+  "totalElapsedMillis": 18
+}

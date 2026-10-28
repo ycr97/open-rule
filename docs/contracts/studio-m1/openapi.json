@@ -1,0 +1,3301 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenRule Studio M1 API",
+    "version": "2.0.0-d0",
+    "description": "Target contract; not implemented by current /api/v1 controllers."
+  },
+  "paths": {
+    "/api/v2/admin/flows": {
+      "get": {
+        "operationId": "listFlows",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createFlow",
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "flowId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "flowName": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "flowId",
+                  "flowName"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions": {
+      "get": {
+        "operationId": "listVersions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}": {
+      "get": {
+        "operationId": "getVersion",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "saveDraft",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expectedRevision": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "document": {
+                    "$ref": "#/components/schemas/DraftDocument"
+                  }
+                },
+                "required": [
+                  "expectedRevision",
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/drafts": {
+      "post": {
+        "operationId": "createDraft",
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sourceVersion": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  }
+                },
+                "required": [
+                  "sourceVersion"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}/validations": {
+      "post": {
+        "operationId": "validateDocument",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "$ref": "#/components/schemas/DraftDocument"
+                  }
+                },
+                "required": [
+                  "document"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}/simulations": {
+      "post": {
+        "operationId": "simulateVersion",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecutionRequestWithRevision"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}/publish": {
+      "post": {
+        "operationId": "publishVersion",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlowResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expectedRevision": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "changeNote": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "expectedRevision",
+                  "changeNote"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v2/flows/{flowId}/versions/{version}/executions": {
+      "post": {
+        "operationId": "executeVersion",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecutionRequest"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DraftDocument": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "const": 2
+          },
+          "flowId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+          },
+          "flowName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DraftDocument/$defs/Stage"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "flowId",
+          "flowName",
+          "version",
+          "description",
+          "stages"
+        ],
+        "additionalProperties": false,
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://openrule.local/schema/studio-m1/draft.schema.json",
+        "$defs": {
+          "Value": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Value"
+                },
+                "minItems": 0
+              },
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Value"
+                }
+              }
+            ]
+          },
+          "Ref": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "enum": [
+                  "FACT",
+                  "VARIABLE",
+                  "NODE"
+                ]
+              },
+              "pointer": {
+                "type": "string",
+                "pattern": "^(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)$"
+              }
+            },
+            "required": [
+              "source",
+              "pointer"
+            ],
+            "additionalProperties": false
+          },
+          "Condition": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "compare"
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Ref"
+                  },
+                  "op": {
+                    "enum": [
+                      "eq",
+                      "ne",
+                      "gt",
+                      "gte",
+                      "lt",
+                      "lte",
+                      "between",
+                      "in",
+                      "not-in",
+                      "contains",
+                      "not-contains",
+                      "starts-with",
+                      "ends-with"
+                    ]
+                  },
+                  "value": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Value"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ref",
+                  "op",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "is-present",
+                      "is-missing",
+                      "is-null",
+                      "not-null"
+                    ]
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Ref"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ref"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "all",
+                      "any",
+                      "not"
+                    ]
+                  },
+                  "children": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DraftDocument/$defs/Condition"
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "children"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "Rule": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "condition": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Condition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "value": {
+                "$ref": "#/components/schemas/DraftDocument/$defs/Value"
+              },
+              "reasonCode": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "condition",
+              "value",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "Bin": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "condition": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Condition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "score": {
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reasonCode": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "condition",
+              "score",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "Characteristic": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bins": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Bin"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "bins"
+            ],
+            "additionalProperties": false
+          },
+          "OperatorConfig": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Condition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "reasonCode": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "condition",
+              "outputKey",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "RuleSetConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "matchPolicy": {
+                "enum": [
+                  "FIRST_MATCH",
+                  "ALL_MATCH"
+                ]
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Rule"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "outputKey",
+              "matchPolicy",
+              "rules"
+            ],
+            "additionalProperties": false
+          },
+          "ScorecardConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "characteristics": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Characteristic"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "outputKey",
+              "characteristics"
+            ],
+            "additionalProperties": false
+          },
+          "DecisionTableConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "hitPolicy": {
+                "const": "FIRST"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Rule"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "outputKey",
+              "hitPolicy",
+              "rules"
+            ],
+            "additionalProperties": false
+          },
+          "TerminalConfig": {
+            "type": "object",
+            "properties": {
+              "decisionCode": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reasonCodes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "scoreRef": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "decisionCode",
+              "reasonCodes",
+              "scoreRef"
+            ],
+            "additionalProperties": false
+          },
+          "Node": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.operator"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/OperatorConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.rule-set"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/RuleSetConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.scorecard"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/ScorecardConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.decision-table"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/DecisionTableConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "type": {
+                    "const": "openrule.terminal"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/TerminalConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "Stage": {
+            "type": "object",
+            "properties": {
+              "stageId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "stageName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "executionMode": {
+                "enum": [
+                  "SERIAL",
+                  "PARALLEL"
+                ]
+              },
+              "when": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DraftDocument/$defs/Condition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timeoutMillis": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "nodes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DraftDocument/$defs/Node"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "stageId",
+              "stageName",
+              "order",
+              "executionMode",
+              "when",
+              "timeoutMillis",
+              "nodes"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "ExecutableDefinition": {
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "const": 2
+          },
+          "flowId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+          },
+          "flowName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExecutableDefinition/$defs/Stage"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "flowId",
+          "flowName",
+          "version",
+          "description",
+          "stages"
+        ],
+        "additionalProperties": false,
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://openrule.local/schema/studio-m1/executable.schema.json",
+        "$defs": {
+          "Value": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Value"
+                },
+                "minItems": 0
+              },
+              {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Value"
+                }
+              }
+            ]
+          },
+          "Ref": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "enum": [
+                  "FACT",
+                  "VARIABLE",
+                  "NODE"
+                ]
+              },
+              "pointer": {
+                "type": "string",
+                "pattern": "^(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)$"
+              }
+            },
+            "required": [
+              "source",
+              "pointer"
+            ],
+            "additionalProperties": false
+          },
+          "Condition": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "compare"
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/Ref"
+                  },
+                  "op": {
+                    "enum": [
+                      "eq",
+                      "ne",
+                      "gt",
+                      "gte",
+                      "lt",
+                      "lte",
+                      "between",
+                      "in",
+                      "not-in",
+                      "contains",
+                      "not-contains",
+                      "starts-with",
+                      "ends-with"
+                    ]
+                  },
+                  "value": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/Value"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ref",
+                  "op",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "is-present",
+                      "is-missing",
+                      "is-null",
+                      "not-null"
+                    ]
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/Ref"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ref"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "all",
+                      "any",
+                      "not"
+                    ]
+                  },
+                  "children": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ExecutableDefinition/$defs/Condition"
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "children"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "Rule": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "condition": {
+                "$ref": "#/components/schemas/ExecutableDefinition/$defs/Condition"
+              },
+              "value": {
+                "$ref": "#/components/schemas/ExecutableDefinition/$defs/Value"
+              },
+              "reasonCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "condition",
+              "value",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "Bin": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "condition": {
+                "$ref": "#/components/schemas/ExecutableDefinition/$defs/Condition"
+              },
+              "score": {
+                "type": "number"
+              },
+              "reasonCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "condition",
+              "score",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "Characteristic": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bins": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Bin"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "bins"
+            ],
+            "additionalProperties": false
+          },
+          "OperatorConfig": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "$ref": "#/components/schemas/ExecutableDefinition/$defs/Condition"
+              },
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "reasonCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "condition",
+              "outputKey",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          },
+          "RuleSetConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "matchPolicy": {
+                "enum": [
+                  "FIRST_MATCH",
+                  "ALL_MATCH"
+                ]
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Rule"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "outputKey",
+              "matchPolicy",
+              "rules"
+            ],
+            "additionalProperties": false
+          },
+          "ScorecardConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "characteristics": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Characteristic"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "outputKey",
+              "characteristics"
+            ],
+            "additionalProperties": false
+          },
+          "DecisionTableConfig": {
+            "type": "object",
+            "properties": {
+              "outputKey": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+              },
+              "hitPolicy": {
+                "const": "FIRST"
+              },
+              "rules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Rule"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "outputKey",
+              "hitPolicy",
+              "rules"
+            ],
+            "additionalProperties": false
+          },
+          "TerminalConfig": {
+            "type": "object",
+            "properties": {
+              "decisionCode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reasonCodes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "scoreRef": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "decisionCode",
+              "reasonCodes",
+              "scoreRef"
+            ],
+            "additionalProperties": false
+          },
+          "Node": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.operator"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/OperatorConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.rule-set"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/RuleSetConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.scorecard"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/ScorecardConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "failPolicy": {
+                    "enum": [
+                      "ABORT",
+                      "CONTINUE"
+                    ]
+                  },
+                  "type": {
+                    "const": "openrule.decision-table"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/DecisionTableConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "failPolicy",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "order": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "configVersion": {
+                    "const": 1
+                  },
+                  "timeoutMillis": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 2147483647
+                  },
+                  "type": {
+                    "const": "openrule.terminal"
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/TerminalConfig"
+                  }
+                },
+                "required": [
+                  "nodeId",
+                  "nodeName",
+                  "order",
+                  "configVersion",
+                  "timeoutMillis",
+                  "type",
+                  "config"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "Stage": {
+            "type": "object",
+            "properties": {
+              "stageId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+              },
+              "stageName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "executionMode": {
+                "enum": [
+                  "SERIAL",
+                  "PARALLEL"
+                ]
+              },
+              "when": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ExecutableDefinition/$defs/Condition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timeoutMillis": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "nodes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExecutableDefinition/$defs/Node"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "stageId",
+              "stageName",
+              "order",
+              "executionMode",
+              "when",
+              "timeoutMillis",
+              "nodes"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "ValidationIssue": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "const": "ERROR"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pointer": {
+            "type": "string",
+            "pattern": "^(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)$"
+          },
+          "stageId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "nodeId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "itemId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "severity",
+          "message",
+          "pointer",
+          "stageId",
+          "nodeId",
+          "itemId"
+        ],
+        "additionalProperties": false
+      },
+      "ValidationReport": {
+        "type": "object",
+        "properties": {
+          "valid": {
+            "type": "boolean"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationIssue"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "valid",
+          "issues"
+        ],
+        "additionalProperties": false
+      },
+      "FlowSummary": {
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "flowName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "PUBLISHED"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "definitionChecksum": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "flowId",
+          "flowName",
+          "version",
+          "status",
+          "revision",
+          "definitionChecksum"
+        ],
+        "additionalProperties": false
+      },
+      "FlowResource": {
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "flowName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "PUBLISHED"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "definitionChecksum": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "document": {
+            "$ref": "#/components/schemas/DraftDocument"
+          },
+          "validation": {
+            "$ref": "#/components/schemas/ValidationReport"
+          },
+          "changeNote": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "flowId",
+          "flowName",
+          "version",
+          "status",
+          "revision",
+          "definitionChecksum",
+          "document",
+          "validation",
+          "changeNote",
+          "updatedAt"
+        ],
+        "additionalProperties": false
+      },
+      "RuleDetail": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "RULE"
+          },
+          "ruleId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reasonCode": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {}
+        },
+        "required": [
+          "kind",
+          "ruleId",
+          "reasonCode",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "ScoreDetail": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "SCORE_BIN"
+          },
+          "characteristicId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "binId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "score": {
+            "type": "string",
+            "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$"
+          },
+          "reasonCode": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "characteristicId",
+          "binId",
+          "score",
+          "reasonCode"
+        ],
+        "additionalProperties": false
+      },
+      "NodeResult": {
+        "type": "object",
+        "properties": {
+          "stageId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nodeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "SUCCEEDED",
+              "FAILED",
+              "TIMED_OUT",
+              "CANCELLED",
+              "SKIPPED"
+            ]
+          },
+          "skipReason": {
+            "oneOf": [
+              {
+                "enum": [
+                  "WHEN_FALSE",
+                  "TERMINATED",
+                  "ABORTED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hit": {
+            "type": "boolean"
+          },
+          "reasonCodes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "outputs": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/RuleDetail"
+                },
+                {
+                  "$ref": "#/components/schemas/ScoreDetail"
+                }
+              ]
+            },
+            "minItems": 0
+          },
+          "failure": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "message": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "code",
+                  "message"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "elapsedMillis": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "stageId",
+          "nodeId",
+          "type",
+          "status",
+          "skipReason",
+          "hit",
+          "reasonCodes",
+          "outputs",
+          "details",
+          "failure",
+          "elapsedMillis"
+        ],
+        "additionalProperties": false
+      },
+      "StageResult": {
+        "type": "object",
+        "properties": {
+          "stageId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "SUCCEEDED",
+              "SKIPPED",
+              "FAILED"
+            ]
+          },
+          "skipReason": {
+            "oneOf": [
+              {
+                "enum": [
+                  "WHEN_FALSE",
+                  "TERMINATED",
+                  "ABORTED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "stageId",
+          "status",
+          "skipReason"
+        ],
+        "additionalProperties": false
+      },
+      "ExecutionResult": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "traceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bizId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "purpose": {
+            "enum": [
+              "SIMULATE",
+              "LIVE"
+            ]
+          },
+          "flowId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "revision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "definitionChecksum": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "status": {
+            "enum": [
+              "DECIDED",
+              "FAILED"
+            ]
+          },
+          "decision": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "decisionCode": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reasonCodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  },
+                  "score": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "terminalNodeId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "decisionCode",
+                  "reasonCodes",
+                  "score",
+                  "terminalNodeId"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "variables": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "stageResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StageResult"
+            },
+            "minItems": 0
+          },
+          "nodeResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NodeResult"
+            },
+            "minItems": 0
+          },
+          "elapsedMillis": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "requestId",
+          "traceId",
+          "bizId",
+          "purpose",
+          "flowId",
+          "version",
+          "revision",
+          "definitionChecksum",
+          "status",
+          "decision",
+          "variables",
+          "stageResults",
+          "nodeResults",
+          "elapsedMillis"
+        ],
+        "additionalProperties": false
+      },
+      "ErrorBody": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requestId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "traceId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationIssue"
+            },
+            "minItems": 0
+          },
+          "execution": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExecutionResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "requestId",
+          "traceId",
+          "issues",
+          "execution"
+        ],
+        "additionalProperties": false
+      },
+      "ExecutionRequest": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "bizId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "facts": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "timeoutMillis": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "requestId",
+          "bizId",
+          "facts",
+          "timeoutMillis"
+        ],
+        "additionalProperties": false
+      },
+      "ExecutionRequestWithRevision": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "bizId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "facts": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "timeoutMillis": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expectedRevision": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        },
+        "required": [
+          "requestId",
+          "bizId",
+          "facts",
+          "timeoutMillis",
+          "expectedRevision"
+        ],
+        "additionalProperties": false
+      },
+      "VersionPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FlowSummary"
+            },
+            "minItems": 0
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "pageSize",
+          "total"
+        ],
+        "additionalProperties": false
+      },
+      "FlowListItem": {
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "flowName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "currentDraft": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FlowSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latestPublished": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FlowSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "flowId",
+          "flowName",
+          "currentDraft",
+          "latestPublished"
+        ],
+        "additionalProperties": false
+      },
+      "FlowPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FlowListItem"
+            },
+            "minItems": 0
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "pageSize",
+          "total"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

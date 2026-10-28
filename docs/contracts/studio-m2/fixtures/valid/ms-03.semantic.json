@@ -1,0 +1,12 @@
+{
+  "factId": "unknown_binding",
+  "path": "/metrics/chargebackRate",
+  "name": "退款率",
+  "type": "number",
+  "sensitive": false,
+  "description": "订单准入演示字段",
+  "binding": {
+    "providerId": "unknown_provider",
+    "responsePointer": "/data/x"
+  }
+}

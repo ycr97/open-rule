@@ -1,0 +1,89 @@
+[
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "order_amount",
+      "path": "/order/amount",
+      "name": "订单金额",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": null
+    }
+  },
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "order_country",
+      "path": "/order/country",
+      "name": "收货国家",
+      "type": "string",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": null
+    }
+  },
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "buyer_id",
+      "path": "/buyer/id",
+      "name": "买家标识",
+      "type": "string",
+      "sensitive": true,
+      "description": "订单准入演示字段",
+      "binding": null
+    }
+  },
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "risk_blacklisted",
+      "path": "/risk/blacklisted",
+      "name": "黑名单标记",
+      "type": "boolean",
+      "sensitive": true,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile_mock",
+        "responsePointer": "/data/blacklisted"
+      }
+    }
+  },
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "buyer_age_days",
+      "path": "/buyer/ageDays",
+      "name": "账户天数",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile_mock",
+        "responsePointer": "/data/ageDays"
+      }
+    }
+  },
+  {
+    "revision": "1",
+    "updatedAt": "2026-10-07T00:00:00Z",
+    "document": {
+      "factId": "refund_rate",
+      "path": "/metrics/refundRate",
+      "name": "退款率",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile_mock",
+        "responsePointer": "/data/refundRate"
+      }
+    }
+  }
+]

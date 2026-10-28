@@ -1,0 +1,9 @@
+{
+  "factId": "order_amount",
+  "path": "/order/amount",
+  "name": "订单金额",
+  "type": "number",
+  "sensitive": false,
+  "description": "订单准入演示字段",
+  "binding": null
+}

@@ -1,0 +1,1029 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Studio M2-D0 wire types; select a $defs entry, not the root",
+  "description": "New endpoints only. Runtime semantics in README/design. No implementation claim.",
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{2,63}$"
+    },
+    "Revision": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,18}$",
+      "description": "Positive decimal string <= 9223372036854775807; semantic range check."
+    },
+    "Pointer": {
+      "type": "string",
+      "maxLength": 512,
+      "pattern": "^(?:|/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*)$"
+    },
+    "FactPath": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 512,
+      "pattern": "^/(?:[^~/]|~[01])+(?:/(?:[^~/]|~[01])+)*$",
+      "description": "Object leaf path. Semantic validation rejects numeric/dangerous tokens and prefix overlap."
+    },
+    "Millis": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 60000
+    },
+    "Elapsed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "ErrorInfo": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "Mapping": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "const": "CONSTANT"
+            },
+            "value": {}
+          },
+          "required": [
+            "source",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "const": "FACT"
+            },
+            "pointer": {
+              "$ref": "#/$defs/Pointer"
+            }
+          },
+          "required": [
+            "source",
+            "pointer"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "RequestMap": {
+      "type": "object",
+      "maxProperties": 64,
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/Mapping"
+      }
+    },
+    "MockConfig": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "outcome": {
+              "const": "RESPONSE"
+            },
+            "response": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "outcome",
+            "response"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "outcome": {
+              "enum": [
+                "TIMEOUT",
+                "ERROR"
+              ]
+            },
+            "response": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "outcome",
+            "response"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ProviderDocument": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "providerId": {
+              "$ref": "#/$defs/Id"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "description": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1024
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "requestMap": {
+              "$ref": "#/$defs/RequestMap"
+            },
+            "mock": {
+              "$ref": "#/$defs/MockConfig"
+            },
+            "type": {
+              "const": "HTTP"
+            },
+            "endpoint": {
+              "type": "string",
+              "maxLength": 2048,
+              "pattern": "^https?://[^/?#@\\s]+(?:/[^?#\\s]*)?$"
+            },
+            "connectTimeoutMillis": {
+              "$ref": "#/$defs/Millis"
+            },
+            "readTimeoutMillis": {
+              "$ref": "#/$defs/Millis"
+            },
+            "secretRef": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^env:OPENRULE_[A-Z0-9_]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "readOnly": {
+              "const": true
+            },
+            "allowSimulationHttp": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "providerId",
+            "name",
+            "description",
+            "enabled",
+            "requestMap",
+            "mock",
+            "type",
+            "endpoint",
+            "connectTimeoutMillis",
+            "readTimeoutMillis",
+            "secretRef",
+            "readOnly",
+            "allowSimulationHttp"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "providerId": {
+              "$ref": "#/$defs/Id"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "description": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 1024
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "requestMap": {
+              "$ref": "#/$defs/RequestMap"
+            },
+            "mock": {
+              "$ref": "#/$defs/MockConfig"
+            },
+            "type": {
+              "const": "MOCK"
+            }
+          },
+          "required": [
+            "providerId",
+            "name",
+            "description",
+            "enabled",
+            "requestMap",
+            "mock",
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Binding": {
+      "type": "object",
+      "properties": {
+        "providerId": {
+          "$ref": "#/$defs/Id"
+        },
+        "responsePointer": {
+          "$ref": "#/$defs/Pointer"
+        }
+      },
+      "required": [
+        "providerId",
+        "responsePointer"
+      ],
+      "additionalProperties": false
+    },
+    "FactDocument": {
+      "type": "object",
+      "properties": {
+        "factId": {
+          "$ref": "#/$defs/Id"
+        },
+        "path": {
+          "$ref": "#/$defs/FactPath"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "type": {
+          "enum": [
+            "number",
+            "string",
+            "boolean"
+          ]
+        },
+        "sensitive": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 1024
+        },
+        "binding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Binding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "factId",
+        "path",
+        "name",
+        "type",
+        "sensitive",
+        "description",
+        "binding"
+      ],
+      "additionalProperties": false
+    },
+    "FactResource": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "document": {
+          "$ref": "#/$defs/FactDocument"
+        }
+      },
+      "required": [
+        "revision",
+        "updatedAt",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "FactUpdate": {
+      "type": "object",
+      "properties": {
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "document": {
+          "$ref": "#/$defs/FactDocument"
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "FactPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactResource"
+          },
+          "minItems": 0
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "page",
+        "pageSize",
+        "total"
+      ],
+      "additionalProperties": false
+    },
+    "ProviderResource": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "document": {
+          "$ref": "#/$defs/ProviderDocument"
+        }
+      },
+      "required": [
+        "revision",
+        "updatedAt",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "ProviderUpdate": {
+      "type": "object",
+      "properties": {
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "document": {
+          "$ref": "#/$defs/ProviderDocument"
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "document"
+      ],
+      "additionalProperties": false
+    },
+    "ProviderPage": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProviderResource"
+          },
+          "minItems": 0
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "items",
+        "page",
+        "pageSize",
+        "total"
+      ],
+      "additionalProperties": false
+    },
+    "FactSimulationRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "bizId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "facts": {
+          "type": "object"
+        },
+        "timeoutMillis": {
+          "$ref": "#/$defs/Millis"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "factMode": {
+          "enum": [
+            "HTTP",
+            "MOCK"
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "bizId",
+        "facts",
+        "timeoutMillis",
+        "expectedRevision",
+        "factMode"
+      ],
+      "additionalProperties": false
+    },
+    "FactExecutionRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "bizId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "facts": {
+          "type": "object"
+        },
+        "timeoutMillis": {
+          "$ref": "#/$defs/Millis"
+        },
+        "factMode": {
+          "const": "HTTP"
+        }
+      },
+      "required": [
+        "requestId",
+        "bizId",
+        "facts",
+        "timeoutMillis",
+        "factMode"
+      ],
+      "additionalProperties": false
+    },
+    "MockTestRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "facts": {
+          "type": "object"
+        },
+        "expectedRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "timeoutMillis": {
+          "$ref": "#/$defs/Millis"
+        }
+      },
+      "required": [
+        "requestId",
+        "facts",
+        "expectedRevision",
+        "timeoutMillis"
+      ],
+      "additionalProperties": false
+    },
+    "FactUse": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "$ref": "#/$defs/Pointer"
+        },
+        "stageId": {
+          "$ref": "#/$defs/Id"
+        },
+        "nodeId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "itemId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "access": {
+          "enum": [
+            "VALUE",
+            "PRESENCE"
+          ]
+        },
+        "expectedTypes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "number",
+              "string",
+              "boolean",
+              "array",
+              "object",
+              "null"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "pointer",
+        "stageId",
+        "nodeId",
+        "itemId",
+        "access",
+        "expectedTypes"
+      ],
+      "additionalProperties": false
+    },
+    "RequiredFact": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/Pointer"
+        },
+        "expectedTypes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "number",
+              "string",
+              "boolean",
+              "array",
+              "object",
+              "null"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "typeConflict": {
+          "type": "boolean"
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactUse"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "path",
+        "expectedTypes",
+        "typeConflict",
+        "uses"
+      ],
+      "additionalProperties": false
+    },
+    "RequiredFactsResource": {
+      "type": "object",
+      "properties": {
+        "flowId": {
+          "$ref": "#/$defs/Id"
+        },
+        "version": {
+          "$ref": "#/$defs/Revision"
+        },
+        "revision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "definitionChecksum": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "requiredFacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequiredFact"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "flowId",
+        "version",
+        "revision",
+        "definitionChecksum",
+        "requiredFacts"
+      ],
+      "additionalProperties": false
+    },
+    "FieldResult": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/Pointer"
+        },
+        "status": {
+          "enum": [
+            "resolved",
+            "missing",
+            "failed"
+          ]
+        },
+        "source": {
+          "enum": [
+            "CALLER",
+            "PROVIDER",
+            "NONE"
+          ]
+        },
+        "factId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "catalogRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "providerId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "providerRevision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valueSummary": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 128
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "status",
+        "source",
+        "factId",
+        "catalogRevision",
+        "providerId",
+        "providerRevision",
+        "valueSummary",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "CallResult": {
+      "type": "object",
+      "properties": {
+        "providerId": {
+          "$ref": "#/$defs/Id"
+        },
+        "providerRevision": {
+          "$ref": "#/$defs/Revision"
+        },
+        "traceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "transport": {
+          "enum": [
+            "HTTP",
+            "MOCK"
+          ]
+        },
+        "status": {
+          "enum": [
+            "SUCCEEDED",
+            "PARTIAL",
+            "FAILED",
+            "TIMED_OUT",
+            "SKIPPED",
+            "CANCELLED"
+          ]
+        },
+        "attempted": {
+          "type": "boolean"
+        },
+        "requestedPaths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FactPath"
+          },
+          "minItems": 1
+        },
+        "elapsedMillis": {
+          "$ref": "#/$defs/Elapsed"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "providerId",
+        "providerRevision",
+        "traceId",
+        "transport",
+        "status",
+        "attempted",
+        "requestedPaths",
+        "elapsedMillis",
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "FactResolutionReport": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "HTTP",
+            "MOCK"
+          ]
+        },
+        "status": {
+          "enum": [
+            "COMPLETE",
+            "PARTIAL",
+            "UNRESOLVED",
+            "FAILED"
+          ]
+        },
+        "elapsedMillis": {
+          "$ref": "#/$defs/Elapsed"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldResult"
+          },
+          "minItems": 0
+        },
+        "calls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CallResult"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "mode",
+        "status",
+        "elapsedMillis",
+        "fields",
+        "calls"
+      ],
+      "additionalProperties": false
+    },
+    "FactExecutionResult": {
+      "type": "object",
+      "properties": {
+        "execution": {
+          "$ref": "../../studio-m1/openapi.json#/components/schemas/ExecutionResult"
+        },
+        "factResolution": {
+          "$ref": "#/$defs/FactResolutionReport"
+        },
+        "totalElapsedMillis": {
+          "$ref": "#/$defs/Elapsed"
+        }
+      },
+      "required": [
+        "execution",
+        "factResolution",
+        "totalElapsedMillis"
+      ],
+      "additionalProperties": false
+    },
+    "MockTestResult": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "traceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "factResolution": {
+          "$ref": "#/$defs/FactResolutionReport"
+        },
+        "totalElapsedMillis": {
+          "$ref": "#/$defs/Elapsed"
+        }
+      },
+      "required": [
+        "requestId",
+        "traceId",
+        "factResolution",
+        "totalElapsedMillis"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorBody": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "requestId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traceId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "../../studio-m1/openapi.json#/components/schemas/ValidationIssue"
+          },
+          "minItems": 0
+        },
+        "execution": {
+          "anyOf": [
+            {
+              "$ref": "../../studio-m1/openapi.json#/components/schemas/ExecutionResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factResolution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FactResolutionReport"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalElapsedMillis": {
+          "$ref": "#/$defs/Elapsed"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "requestId",
+        "traceId",
+        "issues",
+        "execution",
+        "factResolution",
+        "totalElapsedMillis"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "providerId": "risk_profile",
+  "name": "买家风险画像",
+  "description": "受控 HTTP 验收配置，非生产 SLA",
+  "enabled": true,
+  "type": "HTTP",
+  "endpoint": "http://127.0.0.1:19091/v1/buyer/batch",
+  "connectTimeoutMillis": 100,
+  "readTimeoutMillis": 300,
+  "secretRef": null,
+  "readOnly": true,
+  "allowSimulationHttp": true,
+  "requestMap": {
+    "buyerId": {
+      "source": "FACT",
+      "pointer": "/buyer/id"
+    },
+    "region": {
+      "source": "CONSTANT",
+      "value": "GLOBAL"
+    }
+  },
+  "mock": {
+    "outcome": "RESPONSE",
+    "response": {
+      "data": {
+        "blacklisted": false,
+        "ageDays": 365,
+        "refundRate": 0.08
+      }
+    }
+  }
+}

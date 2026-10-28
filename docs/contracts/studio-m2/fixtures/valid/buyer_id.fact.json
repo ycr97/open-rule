@@ -1,0 +1,9 @@
+{
+  "factId": "buyer_id",
+  "path": "/buyer/id",
+  "name": "买家标识",
+  "type": "string",
+  "sensitive": true,
+  "description": "订单准入演示字段",
+  "binding": null
+}

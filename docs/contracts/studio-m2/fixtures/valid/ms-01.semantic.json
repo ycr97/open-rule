@@ -1,0 +1,12 @@
+{
+  "factId": "invalid_path_01",
+  "path": "/metrics/0",
+  "name": "退款率",
+  "type": "number",
+  "sensitive": false,
+  "description": "订单准入演示字段",
+  "binding": {
+    "providerId": "risk_profile",
+    "responsePointer": "/data/refundRate"
+  }
+}

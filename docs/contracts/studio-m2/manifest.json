@@ -1,0 +1,219 @@
+{
+  "schemaCases": [
+    {
+      "file": "fixtures/valid/risk-profile.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/risk-profile.resource.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderResource",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/risk-profile-mock.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/risk-profile-secret.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/order_amount.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/order_country.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/buyer_id.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/risk_blacklisted.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/buyer_age_days.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/refund_rate.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/simulate-http.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactSimulationRequest",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/simulate-mock.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactSimulationRequest",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/live-http.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactExecutionRequest",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/provider-mock-test.request.json",
+      "schema": "schema/m2.schema.json#/$defs/MockTestRequest",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/provider-update.request.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderUpdate",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/fact-update.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactUpdate",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/order-admission.required-facts.json",
+      "schema": "schema/m2.schema.json#/$defs/RequiredFactsResource",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/normal.response.json",
+      "schema": "schema/m2.schema.json#/$defs/FactExecutionResult",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/mock-test.response.json",
+      "schema": "schema/m2.schema.json#/$defs/MockTestResult",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/deadline-before-core.error.json",
+      "schema": "schema/m2.schema.json#/$defs/ErrorBody",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/empty-facts.page.json",
+      "schema": "schema/m2.schema.json#/$defs/FactPage",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/providers.page.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderPage",
+      "valid": true
+    },
+    {
+      "file": "fixtures/invalid/live-mock.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactExecutionRequest",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/mode-missing.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactSimulationRequest",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/revision-number.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactSimulationRequest",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/unknown-field.request.json",
+      "schema": "schema/m2.schema.json#/$defs/FactSimulationRequest",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/plaintext-secret.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/java.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/bad-pointer.fact.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/mock-response-null.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/mixed-mapping.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/invalid/write-provider.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": false
+    },
+    {
+      "file": "fixtures/valid/ms-01.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-02.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-03.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-04.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-05.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/FactDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-06.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/FactUpdate",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-07.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderUpdate",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/ms-08.semantic.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderUpdate",
+      "valid": true
+    },
+    {
+      "file": "fixtures/valid/precision.provider.json",
+      "schema": "schema/m2.schema.json#/$defs/ProviderDocument",
+      "valid": true
+    },
+    {
+      "file": "fixtures/invalid/score-kind.response.json",
+      "schema": "schema/m2.schema.json#/$defs/FactExecutionResult",
+      "valid": false
+    }
+  ],
+  "executionCases": "fixtures/order-admission.cases.json",
+  "semanticCases": "fixtures/semantic.cases.json",
+  "requiredFacts": "fixtures/valid/order-admission.required-facts.json",
+  "m1Definition": "../studio-m1/fixtures/valid/order-admission.definition.json",
+  "fixtureOverlay": "recursive-object-overlay-null-preserved"
+}

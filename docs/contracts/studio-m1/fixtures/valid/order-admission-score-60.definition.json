@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 2,
+  "flowId": "order_admission",
+  "flowName": "订单准入决策",
+  "version": "1",
+  "description": "调用方提供完整 facts 的订单准入验收定义",
+  "stages": [
+    {
+      "stageId": "s_base",
+      "stageName": "基础准入",
+      "order": 1,
+      "executionMode": "SERIAL",
+      "when": null,
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "blacklist",
+          "nodeName": "黑名单校验",
+          "order": 1,
+          "type": "openrule.operator",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "condition": {
+              "kind": "compare",
+              "ref": {
+                "source": "FACT",
+                "pointer": "/risk/blacklisted"
+              },
+              "op": "eq",
+              "value": true
+            },
+            "outputKey": "blacklisted",
+            "reasonCode": "BUYER_BLACKLISTED"
+          },
+          "failPolicy": "CONTINUE"
+        },
+        {
+          "nodeId": "base_rules",
+          "nodeName": "订单准入规则",
+          "order": 2,
+          "type": "openrule.rule-set",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "outputKey": "restriction",
+            "matchPolicy": "FIRST_MATCH",
+            "rules": [
+              {
+                "id": "r_amount",
+                "condition": {
+                  "kind": "compare",
+                  "ref": {
+                    "source": "FACT",
+                    "pointer": "/order/amount"
+                  },
+                  "op": "gte",
+                  "value": 50000
+                },
+                "value": "HIGH_AMOUNT",
+                "reasonCode": "AMOUNT_EXCEEDS_LIMIT"
+              },
+              {
+                "id": "r_region",
+                "condition": {
+                  "kind": "compare",
+                  "ref": {
+                    "source": "FACT",
+                    "pointer": "/order/country"
+                  },
+                  "op": "in",
+                  "value": [
+                    "XX",
+                    "ZZ"
+                  ]
+                },
+                "value": "REGION",
+                "reasonCode": "REGION_RESTRICTED"
+              }
+            ]
+          },
+          "failPolicy": "ABORT"
+        }
+      ]
+    },
+    {
+      "stageId": "s_reject",
+      "stageName": "风险拦截",
+      "order": 2,
+      "executionMode": "SERIAL",
+      "when": {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "NODE",
+              "pointer": "/blacklist/hit"
+            },
+            "op": "eq",
+            "value": true
+          },
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "NODE",
+              "pointer": "/base_rules/hit"
+            },
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "reject",
+          "nodeName": "拒绝交易",
+          "order": 1,
+          "type": "openrule.terminal",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "decisionCode": "REJECT",
+            "reasonCodes": [
+              "ADMISSION_REJECTED"
+            ],
+            "scoreRef": null
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "s_score",
+      "stageName": "并行风险评估",
+      "order": 3,
+      "executionMode": "PARALLEL",
+      "when": null,
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "buyer_score",
+          "nodeName": "买家风险评分卡",
+          "order": 1,
+          "type": "openrule.scorecard",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "outputKey": "riskScore",
+            "characteristics": [
+              {
+                "id": "c_age",
+                "name": "账户注册时长",
+                "bins": [
+                  {
+                    "id": "b_age_new",
+                    "condition": {
+                      "kind": "compare",
+                      "ref": {
+                        "source": "FACT",
+                        "pointer": "/buyer/ageDays"
+                      },
+                      "op": "lt",
+                      "value": 30
+                    },
+                    "score": 30,
+                    "reasonCode": "NEW_ACCOUNT"
+                  },
+                  {
+                    "id": "b_age_old",
+                    "condition": {
+                      "kind": "compare",
+                      "ref": {
+                        "source": "FACT",
+                        "pointer": "/buyer/ageDays"
+                      },
+                      "op": "gte",
+                      "value": 30
+                    },
+                    "score": 5,
+                    "reasonCode": "ESTABLISHED_ACCOUNT"
+                  }
+                ]
+              },
+              {
+                "id": "c_refund",
+                "name": "近90天退款率",
+                "bins": [
+                  {
+                    "id": "b_refund_high",
+                    "condition": {
+                      "kind": "compare",
+                      "ref": {
+                        "source": "FACT",
+                        "pointer": "/metrics/refundRate"
+                      },
+                      "op": "gte",
+                      "value": 0.3
+                    },
+                    "score": 30,
+                    "reasonCode": "HIGH_REFUND_RATE"
+                  },
+                  {
+                    "id": "b_refund_low",
+                    "condition": {
+                      "kind": "compare",
+                      "ref": {
+                        "source": "FACT",
+                        "pointer": "/metrics/refundRate"
+                      },
+                      "op": "lt",
+                      "value": 0.3
+                    },
+                    "score": 10,
+                    "reasonCode": "NORMAL_REFUND_RATE"
+                  }
+                ]
+              }
+            ]
+          },
+          "failPolicy": "CONTINUE"
+        },
+        {
+          "nodeId": "order_segment",
+          "nodeName": "订单金额分层",
+          "order": 2,
+          "type": "openrule.decision-table",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "outputKey": "segment",
+            "hitPolicy": "FIRST",
+            "rules": [
+              {
+                "id": "t_high",
+                "condition": {
+                  "kind": "compare",
+                  "ref": {
+                    "source": "FACT",
+                    "pointer": "/order/amount"
+                  },
+                  "op": "gte",
+                  "value": 5000
+                },
+                "value": "HIGH",
+                "reasonCode": "LARGE_ORDER"
+              },
+              {
+                "id": "t_med",
+                "condition": {
+                  "kind": "compare",
+                  "ref": {
+                    "source": "FACT",
+                    "pointer": "/order/amount"
+                  },
+                  "op": "gte",
+                  "value": 1000
+                },
+                "value": "MEDIUM",
+                "reasonCode": "STANDARD_ORDER"
+              },
+              {
+                "id": "t_low",
+                "condition": {
+                  "kind": "compare",
+                  "ref": {
+                    "source": "FACT",
+                    "pointer": "/order/amount"
+                  },
+                  "op": "lt",
+                  "value": 1000
+                },
+                "value": "LOW",
+                "reasonCode": "SMALL_ORDER"
+              }
+            ]
+          },
+          "failPolicy": "CONTINUE"
+        }
+      ]
+    },
+    {
+      "stageId": "s_fallback",
+      "stageName": "数据异常复核",
+      "order": 4,
+      "executionMode": "SERIAL",
+      "when": {
+        "kind": "any",
+        "children": [
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "NODE",
+              "pointer": "/blacklist/status"
+            },
+            "op": "in",
+            "value": [
+              "FAILED",
+              "TIMED_OUT"
+            ]
+          },
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "NODE",
+              "pointer": "/buyer_score/status"
+            },
+            "op": "in",
+            "value": [
+              "FAILED",
+              "TIMED_OUT"
+            ]
+          },
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "NODE",
+              "pointer": "/order_segment/status"
+            },
+            "op": "in",
+            "value": [
+              "FAILED",
+              "TIMED_OUT"
+            ]
+          }
+        ]
+      },
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "data_review",
+          "nodeName": "数据异常转复核",
+          "order": 1,
+          "type": "openrule.terminal",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "decisionCode": "REVIEW",
+            "reasonCodes": [
+              "FACT_RESOLUTION_FAILED"
+            ],
+            "scoreRef": null
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "s_review",
+      "stageName": "高风险复核",
+      "order": 5,
+      "executionMode": "SERIAL",
+      "when": {
+        "kind": "all",
+        "children": [
+          {
+            "kind": "is-present",
+            "ref": {
+              "source": "VARIABLE",
+              "pointer": "/riskScore"
+            }
+          },
+          {
+            "kind": "compare",
+            "ref": {
+              "source": "VARIABLE",
+              "pointer": "/riskScore"
+            },
+            "op": "gte",
+            "value": 60
+          }
+        ]
+      },
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "risk_review",
+          "nodeName": "人工复核",
+          "order": 1,
+          "type": "openrule.terminal",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "decisionCode": "REVIEW",
+            "reasonCodes": [
+              "HIGH_RISK_SCORE"
+            ],
+            "scoreRef": "riskScore"
+          }
+        }
+      ]
+    },
+    {
+      "stageId": "s_approve",
+      "stageName": "默认决策",
+      "order": 6,
+      "executionMode": "SERIAL",
+      "when": null,
+      "timeoutMillis": 250,
+      "nodes": [
+        {
+          "nodeId": "approve",
+          "nodeName": "通过交易",
+          "order": 1,
+          "type": "openrule.terminal",
+          "configVersion": 1,
+          "timeoutMillis": 100,
+          "config": {
+            "decisionCode": "APPROVE",
+            "reasonCodes": [
+              "RISK_ACCEPTABLE"
+            ],
+            "scoreRef": "riskScore"
+          }
+        }
+      ]
+    }
+  ]
+}

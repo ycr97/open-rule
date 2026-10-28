@@ -1,0 +1,100 @@
+{
+  "code": "OR-EXECUTION-TIMEOUT",
+  "message": "Request deadline exhausted",
+  "requestId": "m2-budget",
+  "traceId": "m2-budget-trace",
+  "issues": [],
+  "execution": null,
+  "factResolution": {
+    "mode": "HTTP",
+    "status": "FAILED",
+    "elapsedMillis": 20,
+    "fields": [
+      {
+        "path": "/buyer/ageDays",
+        "status": "failed",
+        "source": "PROVIDER",
+        "factId": "buyer_age_days",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": null,
+        "error": {
+          "code": "OR-EXECUTION-TIMEOUT",
+          "message": "Request deadline exhausted"
+        }
+      },
+      {
+        "path": "/metrics/refundRate",
+        "status": "failed",
+        "source": "PROVIDER",
+        "factId": "refund_rate",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": null,
+        "error": {
+          "code": "OR-EXECUTION-TIMEOUT",
+          "message": "Request deadline exhausted"
+        }
+      },
+      {
+        "path": "/order/amount",
+        "status": "resolved",
+        "source": "CALLER",
+        "factId": "order_amount",
+        "catalogRevision": "1",
+        "providerId": null,
+        "providerRevision": null,
+        "valueSummary": "680",
+        "error": null
+      },
+      {
+        "path": "/order/country",
+        "status": "resolved",
+        "source": "CALLER",
+        "factId": "order_country",
+        "catalogRevision": "1",
+        "providerId": null,
+        "providerRevision": null,
+        "valueSummary": "\"JP\"",
+        "error": null
+      },
+      {
+        "path": "/risk/blacklisted",
+        "status": "failed",
+        "source": "PROVIDER",
+        "factId": "risk_blacklisted",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": null,
+        "error": {
+          "code": "OR-EXECUTION-TIMEOUT",
+          "message": "Request deadline exhausted"
+        }
+      }
+    ],
+    "calls": [
+      {
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "traceId": "m2-budget-trace",
+        "transport": "HTTP",
+        "status": "TIMED_OUT",
+        "attempted": true,
+        "requestedPaths": [
+          "/buyer/ageDays",
+          "/metrics/refundRate",
+          "/risk/blacklisted"
+        ],
+        "elapsedMillis": 20,
+        "error": {
+          "code": "OR-EXECUTION-TIMEOUT",
+          "message": "Request deadline exhausted"
+        }
+      }
+    ]
+  },
+  "totalElapsedMillis": 20
+}

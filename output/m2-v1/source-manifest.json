@@ -1,0 +1,2482 @@
+{
+  "time": "2026-10-28T06:07:07.178105+00:00",
+  "repositories": [
+    {
+      "root": "/Users/ycr/IdeaProjects/Sandbox/open-rule",
+      "HEAD": "348a48d209f0571049535f4b513eef556859876b",
+      "status": " M openrule-core/src/main/java/io/openrule/core/studio/StudioCompiler.java\n M openrule-core/src/main/java/io/openrule/core/studio/StudioEngine.java\n M openrule-spring/pom.xml\n M openrule-spring/src/main/java/io/openrule/spring/studio/StudioService.java\n M openrule-studio-server/pom.xml\n M openrule-studio-server/src/main/resources/application.yml\n?? docs/adr/0006-studio-m2-fact-resolution.md\n?? docs/contracts/studio-m2/ACCEPTANCE.md\n?? docs/contracts/studio-m2/B1-IMPLEMENTATION.md\n?? docs/contracts/studio-m2/B2-IMPLEMENTATION.md\n?? docs/contracts/studio-m2/README.md\n?? docs/contracts/studio-m2/V1-ACCEPTANCE.md\n?? docs/contracts/studio-m2/VALIDATION.md\n?? docs/contracts/studio-m2/checks/SchemaCheck.java\n?? docs/contracts/studio-m2/fixtures/catalog-mock.json\n?? docs/contracts/studio-m2/fixtures/catalog.json\n?? docs/contracts/studio-m2/fixtures/invalid/bad-pointer.fact.json\n?? docs/contracts/studio-m2/fixtures/invalid/java.provider.json\n?? docs/contracts/studio-m2/fixtures/invalid/live-mock.request.json\n?? docs/contracts/studio-m2/fixtures/invalid/mixed-mapping.provider.json\n?? docs/contracts/studio-m2/fixtures/invalid/mock-response-null.provider.json\n?? docs/contracts/studio-m2/fixtures/invalid/mode-missing.request.json\n?? docs/contracts/studio-m2/fixtures/invalid/plaintext-secret.provider.json\n?? docs/contracts/studio-m2/fixtures/invalid/revision-number.request.json\n?? docs/contracts/studio-m2/fixtures/invalid/score-kind.response.json\n?? docs/contracts/studio-m2/fixtures/invalid/unknown-field.request.json\n?? docs/contracts/studio-m2/fixtures/invalid/write-provider.provider.json\n?? docs/contracts/studio-m2/fixtures/order-admission.cases.json\n?? docs/contracts/studio-m2/fixtures/semantic.cases.json\n?? docs/contracts/studio-m2/fixtures/valid/buyer_age_days.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/buyer_id.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/deadline-before-core.error.json\n?? docs/contracts/studio-m2/fixtures/valid/empty-facts.page.json\n?? docs/contracts/studio-m2/fixtures/valid/fact-update.request.json\n?? docs/contracts/studio-m2/fixtures/valid/live-http.request.json\n?? docs/contracts/studio-m2/fixtures/valid/mock-test.response.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-01.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-02.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-03.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-04.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-05.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-06.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-07.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/ms-08.semantic.json\n?? docs/contracts/studio-m2/fixtures/valid/normal.response.json\n?? docs/contracts/studio-m2/fixtures/valid/order-admission.required-facts.json\n?? docs/contracts/studio-m2/fixtures/valid/order_amount.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/order_country.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/precision.provider.json\n?? docs/contracts/studio-m2/fixtures/valid/provider-mock-test.request.json\n?? docs/contracts/studio-m2/fixtures/valid/provider-update.request.json\n?? docs/contracts/studio-m2/fixtures/valid/providers.page.json\n?? docs/contracts/studio-m2/fixtures/valid/refund_rate.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/risk-profile-mock.provider.json\n?? docs/contracts/studio-m2/fixtures/valid/risk-profile-secret.provider.json\n?? docs/contracts/studio-m2/fixtures/valid/risk-profile.provider.json\n?? docs/contracts/studio-m2/fixtures/valid/risk-profile.resource.json\n?? docs/contracts/studio-m2/fixtures/valid/risk_blacklisted.fact.json\n?? docs/contracts/studio-m2/fixtures/valid/simulate-http.request.json\n?? docs/contracts/studio-m2/fixtures/valid/simulate-mock.request.json\n?? docs/contracts/studio-m2/manifest.json\n?? docs/contracts/studio-m2/openapi.json\n?? docs/contracts/studio-m2/schema/m2.schema.json\n?? docs/contracts/studio-m2/validate.py\n?? docs/design/2026-10-04-openrule-studio-m2-facts.md\n?? docs/plans/2026-10-04-openrule-studio-m2-delivery.md\n?? openrule-core/src/main/java/io/openrule/core/studio/RequiredFact.java\n?? openrule-core/src/main/java/io/openrule/core/studio/StudioCompiledPlan.java\n?? openrule-core/src/main/java/io/openrule/core/studio/StudioDeadline.java\n?? openrule-core/src/main/java/io/openrule/core/studio/StudioFactDependencies.java\n?? openrule-core/src/test/java/io/openrule/core/studio/StudioM2Test.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchRequest.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchResult.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactConfiguration.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactProvider.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactRedaction.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionReport.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionRequest.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionResult.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactResolver.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactTransportSupport.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/FactValues.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/HttpFactProvider.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/MockFactProvider.java\n?? openrule-spring/src/main/java/io/openrule/spring/fact/SecretResolver.java\n?? openrule-spring/src/test/java/io/openrule/spring/fact/FactFixtureTest.java\n?? openrule-spring/src/test/java/io/openrule/spring/fact/FactRuntimeTest.java\n?? openrule-spring/src/test/java/io/openrule/spring/fact/FactTestSupport.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/EnvironmentSecretResolver.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactController.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactDocuments.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactExecutionContext.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactHostConfiguration.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactProblemAdvice.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactService.java\n?? openrule-studio-server/src/main/java/io/openrule/studio/host/fact/JdbcFactStore.java\n?? openrule-studio-server/src/main/resources/db/studio/V2__fact_tables.sql\n?? openrule-studio-server/src/test/java/io/openrule/studio/host/fact/ControlledProvider.java\n?? openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactDocumentsTest.java\n?? openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactHostIT.java\n?? openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactRestartIT.java\n?? output/m2-b1/clean-verify-before-no-retry-guard.log\n?? output/m2-b1/clean-verify.log\n?? output/m2-b1/core-dependencies.log\n?? output/m2-b1/initial-http-test.log\n?? output/m2-b1/initial-sandbox-test.log\n?? output/m2-b1/java-version.log\n?? output/m2-b1/m1-contract.log\n?? output/m2-b1/m2-contract.log\n?? output/m2-b1/module-tests-before-no-retry-guard.log\n?? output/m2-b1/module-tests.log\n?? output/m2-b1/source-manifest.json\n?? output/m2-b2/before-sha256.json\n?? output/m2-b2/clean-verify-final.log\n?? output/m2-b2/clean-verify.log\n?? output/m2-b2/compile.log\n?? output/m2-b2/host-focused-it-2.log\n?? output/m2-b2/host-focused-it-3.log\n?? output/m2-b2/host-focused-it-4.log\n?? output/m2-b2/host-focused-it.log\n?? output/m2-b2/host-integration-complete.log\n?? output/m2-b2/host-integration-final.log\n?? output/m2-b2/jdbc-integration.log\n?? output/m2-b2/m1-contract.log\n?? output/m2-b2/m2-contract.log\n?? output/m2-b2/restart-evidence.json\n?? output/m2-b2/restart-java.log\n?? output/m2-b2/seed-demo.log\n?? output/m2-b2/source-manifest.json\n?? output/m2-b2/test-compile.log\n?? output/m2-b2/unicode-query-failure.log\n?? output/m2-b2/upstream-script-evidence.json\n?? output/m2-b2/upstream-script.log\n?? output/m2-v1/backend-verify.log\n?? output/m2-v1/browser-seed.json\n?? output/m2-v1/connect-linux.log\n?? output/m2-v1/connect-linux/packet-counters.txt\n?? output/m2-v1/connect-linux/requests-responses.json\n?? output/m2-v1/connect-linux/result.json\n?? output/m2-v1/connect-linux/rules-after.txt\n?? output/m2-v1/connect-probe-stopped.txt\n?? output/m2-v1/connect-timeout-final.log\n?? output/m2-v1/connect-timeout-retest.log\n?? output/m2-v1/connect-timeout.log\n?? output/m2-v1/environment.json\n?? output/m2-v1/evidence-index.json\n?? output/m2-v1/http-matrix.log\n?? output/m2-v1/http/database-config-rows.tsv\n?? output/m2-v1/http/provider-posts.json\n?? output/m2-v1/http/requests-responses.json\n?? output/m2-v1/http/results.json\n?? output/m2-v1/initial-workspace.json\n?? output/m2-v1/integration.log\n?? output/m2-v1/integrity-connect/database-precision.tsv\n?? output/m2-v1/integrity-connect/provider-posts.json\n?? output/m2-v1/integrity-connect/requests-responses.json\n?? output/m2-v1/integrity-connect/results.json\n?? output/m2-v1/integrity-retest.log\n?? output/m2-v1/integrity.log\n?? output/m2-v1/integrity/database-precision.tsv\n?? output/m2-v1/integrity/provider-posts.json\n?? output/m2-v1/integrity/requests-responses.json\n?? output/m2-v1/integrity/results.json\n?? output/m2-v1/it-restart-evidence.json\n?? output/m2-v1/it-restart-java.log\n?? output/m2-v1/it-seed-demo.log\n?? output/m2-v1/m1-contract.log\n?? output/m2-v1/m1-http-regression.log\n?? output/m2-v1/m1-run/docs\n?? output/m2-v1/m1-run/output/m2-v1/ui-helpers/docs\n?? output/m2-v1/m1-run/output/v1/extra-http-evidence.json\n?? output/m2-v1/m1-run/output/v1/extra-manifest.json\n?? output/m2-v1/m1-run/output/v1/http-evidence.json\n?? output/m2-v1/m1-run/output/v1/http-manifest.json\n?? output/m2-v1/m2-contract-final.log\n?? output/m2-v1/m2-contract.log\n?? output/m2-v1/mysql-before-restart.sql\n?? output/m2-v1/mysql-restart.log\n?? output/m2-v1/openrule-studio\n?? output/m2-v1/precision-config-original.tsv\n?? output/m2-v1/reports/openrule-api-surefire-reports/TEST-io.openrule.api.AdminApiTest.xml\n?? output/m2-v1/reports/openrule-api-surefire-reports/TEST-io.openrule.api.EndToEndApiTest.xml\n?? output/m2-v1/reports/openrule-api-surefire-reports/TEST-io.openrule.api.studio.StudioHttpTest.xml\n?? output/m2-v1/reports/openrule-api-surefire-reports/io.openrule.api.AdminApiTest.txt\n?? output/m2-v1/reports/openrule-api-surefire-reports/io.openrule.api.EndToEndApiTest.txt\n?? output/m2-v1/reports/openrule-api-surefire-reports/io.openrule.api.studio.StudioHttpTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.EndToEndTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.OpenRuleEngineTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.SanityTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.aggregate.FirstTerminalAggregatorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.aggregate.PriorityAggregatorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.compiler.FlowCompilerTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.compiler.FlowCompilerValidationTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.context.DecisionContextTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.context.FactMapTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.definition.DefinitionTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.enums.DecisionTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.executor.OperatorNodeExecutorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.result.NodeResultTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.runtime.FlowExecutorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.runtime.NodeExecutorRegistryTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.runtime.NodeRunnerTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.runtime.ParallelStageExecutorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.runtime.SerialStageExecutorTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.spi.CompiledTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.studio.StudioB1Test.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.studio.StudioB3NodeTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.studio.StudioFixtureTest.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/TEST-io.openrule.core.studio.StudioM2Test.xml\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.EndToEndTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.OpenRuleEngineTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.SanityTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.aggregate.FirstTerminalAggregatorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.aggregate.PriorityAggregatorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.compiler.FlowCompilerTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.compiler.FlowCompilerValidationTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.context.DecisionContextTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.context.FactMapTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.definition.DefinitionTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.enums.DecisionTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.executor.OperatorNodeExecutorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.result.NodeResultTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.runtime.FlowExecutorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.runtime.NodeExecutorRegistryTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.runtime.NodeRunnerTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.runtime.ParallelStageExecutorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.runtime.SerialStageExecutorTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.spi.CompiledTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.studio.StudioB1Test.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.studio.StudioB3NodeTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.studio.StudioFixtureTest.txt\n?? output/m2-v1/reports/openrule-core-surefire-reports/io.openrule.core.studio.StudioM2Test.txt\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/TEST-io.openrule.jdbc.audit.JdbcAuditIT.xml\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/TEST-io.openrule.jdbc.repository.JdbcFlowDefinitionRepositoryIT.xml\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/TEST-io.openrule.jdbc.studio.JdbcStudioStoreIT.xml\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/failsafe-summary.xml\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/io.openrule.jdbc.audit.JdbcAuditIT.txt\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/io.openrule.jdbc.repository.JdbcFlowDefinitionRepositoryIT.txt\n?? output/m2-v1/reports/openrule-jdbc-failsafe-reports/io.openrule.jdbc.studio.JdbcStudioStoreIT.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.SpringModuleSanityTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.autoconfigure.OpenRuleAutoConfigurationTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.fact.FactFixtureTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.fact.FactRuntimeTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.loader.FlowDefinitionJsonCodecTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.loader.FlowLoaderTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.service.OpenRuleServiceTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.service.OpenRuleServiceVersioningTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.standalone.InMemoryExecutionLogQueryTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.standalone.InMemoryFlowDefinitionRepositoryTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.standalone.LocalFlowChangeNotifierTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.studio.StudioB3FixtureTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/TEST-io.openrule.spring.studio.StudioDocumentCodecTest.xml\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.SpringModuleSanityTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.autoconfigure.OpenRuleAutoConfigurationTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.fact.FactFixtureTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.fact.FactRuntimeTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.loader.FlowDefinitionJsonCodecTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.loader.FlowLoaderTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.service.OpenRuleServiceTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.service.OpenRuleServiceVersioningTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.standalone.InMemoryExecutionLogQueryTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.standalone.InMemoryFlowDefinitionRepositoryTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.standalone.LocalFlowChangeNotifierTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.studio.StudioB3FixtureTest.txt\n?? output/m2-v1/reports/openrule-spring-surefire-reports/io.openrule.spring.studio.StudioDocumentCodecTest.txt\n?? output/m2-v1/reports/openrule-studio-server-failsafe-reports/TEST-io.openrule.studio.host.fact.FactHostIT.xml\n?? output/m2-v1/reports/openrule-studio-server-failsafe-reports/TEST-io.openrule.studio.host.fact.FactRestartIT.xml\n?? output/m2-v1/reports/openrule-studio-server-failsafe-reports/failsafe-summary.xml\n?? output/m2-v1/reports/openrule-studio-server-failsafe-reports/io.openrule.studio.host.fact.FactHostIT.txt\n?? output/m2-v1/reports/openrule-studio-server-failsafe-reports/io.openrule.studio.host.fact.FactRestartIT.txt\n?? output/m2-v1/reports/openrule-studio-server-surefire-reports/TEST-io.openrule.studio.host.fact.FactDocumentsTest.xml\n?? output/m2-v1/reports/openrule-studio-server-surefire-reports/io.openrule.studio.host.fact.FactDocumentsTest.txt\n?? output/m2-v1/restart-after.log\n?? output/m2-v1/restart-before.log\n?? output/m2-v1/restart-prepare.log\n?? output/m2-v1/restart/after-http.json\n?? output/m2-v1/restart/after.json\n?? output/m2-v1/restart/before-http.json\n?? output/m2-v1/restart/before.json\n?? output/m2-v1/restart/browser-after.json\n?? output/m2-v1/restart/browser-before.json\n?? output/m2-v1/restart/prepare-http.json\n?? output/m2-v1/source-snapshot.zip\n?? output/m2-v1/ui-helper-seed.log\n?? output/v1/backend-verify.txt\n?? output/v1/checksum-corruption.txt\n?? output/v1/d0-validation.txt\n?? output/v1/delivery-manifest.json\n?? output/v1/diagnostics-before.json\n?? output/v1/evidence-index.json\n?? output/v1/extra-http-evidence.json\n?? output/v1/extra-http-results.txt\n?? output/v1/extra-manifest.json\n?? output/v1/final-backend-verify.txt\n?? output/v1/final-d0-validation.txt\n?? output/v1/final-http-results.txt\n?? output/v1/final-mysql-it.txt\n?? output/v1/final-server.txt\n?? output/v1/http-evidence.json\n?? output/v1/http-manifest.json\n?? output/v1/http-results.txt\n?? output/v1/mysql-before.sql\n?? output/v1/mysql-it.txt\n?? output/v1/mysql-restart.txt\n?? output/v1/persistence-after-evidence.json\n?? output/v1/persistence-before-evidence.json\n?? output/v1/persistence-corruption-evidence.json\n?? output/v1/restart-after.json\n?? output/v1/restart-after.txt\n?? output/v1/restart-before.json\n?? output/v1/restart-before.txt\n?? output/v1/restart-current-recheck.txt\n?? output/v1/server.txt\n?? output/v1/source-manifest.json\n?? output/v1/targeted-tests.txt\n?? output/v1/v1-source-snapshot.zip\n?? scripts/m2-v1-connect-http.py\n?? scripts/m2-v1-connect.nginx.conf\n?? scripts/m2-v1-http.py\n?? scripts/m2-v1-integrity.py\n?? scripts/m2-v1-restart.py\n?? scripts/start-studio-m2.sh\n?? scripts/studio-m2-seed.py\n?? scripts/studio-m2-upstream.py\n",
+      "files": [
+        {
+          "path": ".gitignore",
+          "tracked": true,
+          "sha256": "992901309336b5e8d2680dc294bf8135913cbd6e7ee66decd999445592701ad4",
+          "bytes": 31
+        },
+        {
+          "path": "AGENTS.md",
+          "tracked": true,
+          "sha256": "af652729b5c4e2e96a8524f737cbd1c6a890eb0c82f9387951f4db5be515d66e",
+          "bytes": 2892
+        },
+        {
+          "path": "docs/adr/0001-core-extension-contract.md",
+          "tracked": true,
+          "sha256": "8d446cf35e91905b456c48718a55be6fbb7057861dbab721d97688e8022eca1c",
+          "bytes": 7804
+        },
+        {
+          "path": "docs/adr/0002-execution-state-and-value-semantics.md",
+          "tracked": true,
+          "sha256": "b6b6a07dc99061f2e6790542d5d934e98c2a91200ab9fba019100582f78e71e6",
+          "bytes": 9198
+        },
+        {
+          "path": "docs/adr/0003-deadline-cancellation-and-resource-isolation.md",
+          "tracked": true,
+          "sha256": "5c55441cee8c912d4d0ce1ffb9e2ec2ad7736dedf69ebf52420fcdc924fc5a1b",
+          "bytes": 8073
+        },
+        {
+          "path": "docs/adr/0004-decision-package-and-evidence-boundary.md",
+          "tracked": true,
+          "sha256": "ecdd472dca7a710a78ed28aa75a4311e8867e8fad10d53fc8b6814f62da33fcf",
+          "bytes": 8064
+        },
+        {
+          "path": "docs/adr/0005-studio-m1-flow-contract.md",
+          "tracked": true,
+          "sha256": "f3b897319521880c68fca2fb81261d81343103e782623a7d4c80e8b11f900cdd",
+          "bytes": 8261
+        },
+        {
+          "path": "docs/adr/0006-studio-m2-fact-resolution.md",
+          "tracked": false,
+          "sha256": "4d70ee0a5c28a49b63727727e27a624b3dd0d715d9b8f742abe18e1d69ab5633",
+          "bytes": 3722
+        },
+        {
+          "path": "docs/architecture/2026-08-20-openrule-design-gap-register.md",
+          "tracked": true,
+          "sha256": "0c8a7a4b35ef4d813c3cff8050b82305ad9c020b2f0ce4cb068457ac333d876f",
+          "bytes": 11292
+        },
+        {
+          "path": "docs/contracts/studio-m1/ACCEPTANCE.md",
+          "tracked": true,
+          "sha256": "b4131f2cd11c4f0a06827b6021df948dc46083d78e50fe1d1c77e21a57d1947e",
+          "bytes": 3202
+        },
+        {
+          "path": "docs/contracts/studio-m1/B1-IMPLEMENTATION.md",
+          "tracked": true,
+          "sha256": "4c7bad544b648e71f7cc0c5a2a871049e76d08585a2ab673f61a25c0d749fee3",
+          "bytes": 1098
+        },
+        {
+          "path": "docs/contracts/studio-m1/B2-IMPLEMENTATION.md",
+          "tracked": true,
+          "sha256": "10669bb401a222d66a7f33d7f91aee0ee6a139b6370a7fc166bf738a00f45027",
+          "bytes": 1147
+        },
+        {
+          "path": "docs/contracts/studio-m1/B3-IMPLEMENTATION.md",
+          "tracked": true,
+          "sha256": "a174fbab0ed87f31ada68c1cfc1afaa0f612174acc617aa98152af2fd0dd8b61",
+          "bytes": 5204
+        },
+        {
+          "path": "docs/contracts/studio-m1/README.md",
+          "tracked": true,
+          "sha256": "7cf4acdc38c9ced69161d917b7179a2394c0b561f1b6fbfb14aff748b45835b7",
+          "bytes": 7435
+        },
+        {
+          "path": "docs/contracts/studio-m1/V1-ACCEPTANCE.md",
+          "tracked": true,
+          "sha256": "f5621ebb4a29ae58b0a598e6f56099b066770a5ab0caee8a1631cc77a9b7431c",
+          "bytes": 23878
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/bad-pointer.definition.json",
+          "tracked": true,
+          "sha256": "eabe25701379873aa64592164810d8e6774107cfff757bb81fcb1edfcb6a97d7",
+          "bytes": 11162
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/future-node.definition.json",
+          "tracked": true,
+          "sha256": "fe044d948c167979e18d4298e65f3fcabc53f2b3388e299f1902d204ac943a6d",
+          "bytes": 11175
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/parallel-output.definition.json",
+          "tracked": true,
+          "sha256": "3d78c9b05be20f13430f8ec9bdc3e39b83c62fdf2a10fd09d87a8e741deffd85",
+          "bytes": 11161
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/parallel-terminal.definition.json",
+          "tracked": true,
+          "sha256": "bc7b9355d166b58e54c720d13ff993f220dbd502491a6f01252ee43134c329f5",
+          "bytes": 11165
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/string-score.definition.json",
+          "tracked": true,
+          "sha256": "a72153c1a076d554fd954a27bf8e21a96eaad21c58a4e2c2b5b57cf69c91c500",
+          "bytes": 11165
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/terminal-missing.definition.json",
+          "tracked": true,
+          "sha256": "49263e6b83f2af919c897f6c4dfec6193cbc419261fba0aef893c9d9b4afd97d",
+          "bytes": 11159
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/invalid/unknown-node.definition.json",
+          "tracked": true,
+          "sha256": "1d79f376a30e237029fbfc370e7b085f6745c2913bcfba2c338df80c7642fbe1",
+          "bytes": 11166
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/legacy/v1-priority.meta.json",
+          "tracked": true,
+          "sha256": "07c891585684cf87f73143f4c710a9828ba97d04bf43998a031f8095eb119e8a",
+          "bytes": 245
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/legacy/v1-priority.raw.json",
+          "tracked": true,
+          "sha256": "ff7edd70ca7869ef2b057269365da8c74343f5e1d89600d6a1cc17f4a4f8109e",
+          "bytes": 503
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/checksum-vectors.json",
+          "tracked": true,
+          "sha256": "4431fe9cbfe42474f4e8b4716a1efd1f002108b6cd356cc254d37149c695aedc",
+          "bytes": 1618
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/incomplete.draft.json",
+          "tracked": true,
+          "sha256": "faa6aa89d31dca27c93e4991fecc56f05245dfed7437a23c56f53223bfba10ab",
+          "bytes": 11165
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/order-admission-score-35.definition.json",
+          "tracked": true,
+          "sha256": "9339dffcda5cc204e0680ee4404ba3ffde678fb0fbb7f07fb2fb15be87a48b85",
+          "bytes": 11162
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/order-admission-score-59.definition.json",
+          "tracked": true,
+          "sha256": "d571532e195f9a556c48c8b6910f22caac24807f03e9ca6e9e23f529c349e077",
+          "bytes": 11163
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/order-admission-score-60.definition.json",
+          "tracked": true,
+          "sha256": "a6d4bbd8fc165f5a9d54ca1ebf47a55100ffae31a4986cc26e403c2ccfeb016e",
+          "bytes": 11163
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/order-admission.cases.json",
+          "tracked": true,
+          "sha256": "e320b5f5b922f78113910d49760d3dd0ebe6d1f025e12d4d2b71013afaead628",
+          "bytes": 11487
+        },
+        {
+          "path": "docs/contracts/studio-m1/fixtures/valid/order-admission.definition.json",
+          "tracked": true,
+          "sha256": "3edb012c8f7c96d433875135e4d828d113a2a13491b3bf03c9cb1423e5691d4d",
+          "bytes": 11163
+        },
+        {
+          "path": "docs/contracts/studio-m1/openapi.json",
+          "tracked": true,
+          "sha256": "23ceedb16940ceb39af4ebbe4ff2adb3e4475a036acb86e31061700c455e75f2",
+          "bytes": 89224
+        },
+        {
+          "path": "docs/contracts/studio-m1/schema/definition.schema.json",
+          "tracked": true,
+          "sha256": "a13980d82bf0dba25f53beacddb13410a63127a6e3337ad0a7bab4545269b0a6",
+          "bytes": 15301
+        },
+        {
+          "path": "docs/contracts/studio-m1/schema/draft.schema.json",
+          "tracked": true,
+          "sha256": "03b2524dd042ea97cafd77b243c8fa0a29c6917578a4229914fe78051fd55622",
+          "bytes": 16296
+        },
+        {
+          "path": "docs/contracts/studio-m2/ACCEPTANCE.md",
+          "tracked": false,
+          "sha256": "870d3b85ad185dc937df9a409b590f86a99ef2bb3ef4a08b4d88eed802c18812",
+          "bytes": 5567
+        },
+        {
+          "path": "docs/contracts/studio-m2/B1-IMPLEMENTATION.md",
+          "tracked": false,
+          "sha256": "9b698e5be607cd23661b9ffeaea77edbf21befe15f913eeadadaa8ba5e1e3f54",
+          "bytes": 19451
+        },
+        {
+          "path": "docs/contracts/studio-m2/B2-IMPLEMENTATION.md",
+          "tracked": false,
+          "sha256": "300466a18a5cc33eb7adce67a8946969bb2266bf8056ca2ab76954f1eee671da",
+          "bytes": 21491
+        },
+        {
+          "path": "docs/contracts/studio-m2/README.md",
+          "tracked": false,
+          "sha256": "1f063a1b3b2d90904a08bac0281e15859737b62c8ae0c66de454857a28b1a1a5",
+          "bytes": 10674
+        },
+        {
+          "path": "docs/contracts/studio-m2/V1-ACCEPTANCE.md",
+          "tracked": false,
+          "sha256": "77c822188f136deee81713a74831f8c22555b67ffbd63695d4886e3ff1dc66d7",
+          "bytes": 25041
+        },
+        {
+          "path": "docs/contracts/studio-m2/VALIDATION.md",
+          "tracked": false,
+          "sha256": "4cd7a18d172cf3df53004712b32dc36c61bc1426b86abd9c94a66fbeb16f979a",
+          "bytes": 3514
+        },
+        {
+          "path": "docs/contracts/studio-m2/checks/SchemaCheck.java",
+          "tracked": false,
+          "sha256": "b8e3ced652aa2edd1eac4a0e7ef32161432db72e2b9a53c342dccc1f3b3a0927",
+          "bytes": 1799
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/catalog-mock.json",
+          "tracked": false,
+          "sha256": "e3baabc16ade8a125d13ff2e4df25bf42baed5325e6225de34a123554107d711",
+          "bytes": 2146
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/catalog.json",
+          "tracked": false,
+          "sha256": "4f75133066d39c2c190ace466c114e66f14e1a3f6f89bc207011bd6d005e2ef6",
+          "bytes": 2131
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/bad-pointer.fact.json",
+          "tracked": false,
+          "sha256": "f3498199ae0031532ae35b326322e65621cb4e03a44091451e5eca907b9108b7",
+          "bytes": 268
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/java.provider.json",
+          "tracked": false,
+          "sha256": "7887a1bb5a9df7360a3d87150eff9dedb0cbbf5d719f1e6090cd0bc375aa1741",
+          "bytes": 698
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/live-mock.request.json",
+          "tracked": false,
+          "sha256": "f45bd7f85cfc730b3b2abc1fc4cd9b6040e1690f1d046c36b698ea49db0a7e57",
+          "bytes": 256
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/mixed-mapping.provider.json",
+          "tracked": false,
+          "sha256": "746472e7ac03e2449f3c253a81ee7b845a99ee5f24cf8e330abd2c1e301b16a0",
+          "bytes": 643
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/mock-response-null.provider.json",
+          "tracked": false,
+          "sha256": "fa09bc3815816c5b3404890c7b13082648fb8eeac6d9a32146e410d2a67548af",
+          "bytes": 590
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/mode-missing.request.json",
+          "tracked": false,
+          "sha256": "4766e85639b681499c5831b9d05add78c2d93db0074ffa3a4586ed1189f48567",
+          "bytes": 261
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/plaintext-secret.provider.json",
+          "tracked": false,
+          "sha256": "36bbb055fd91a288b0ab2569aae65f678b4ee53bad18e642d4353782b1358948",
+          "bytes": 705
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/revision-number.request.json",
+          "tracked": false,
+          "sha256": "f75f43666d88441b9a857141ee2456d6e92fd88f454d00ce980c99109dfaa4a4",
+          "bytes": 281
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/score-kind.response.json",
+          "tracked": false,
+          "sha256": "109d4afd49dd99dc6fc9c63843255a7d7a47493a399c4f3a3f9ac18cacecf665",
+          "bytes": 6987
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/unknown-field.request.json",
+          "tracked": false,
+          "sha256": "8d836a2e1fc6ee11beeba0cd64d0ffffeadd1b6246dcd908c22233e662e391fc",
+          "bytes": 302
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/invalid/write-provider.provider.json",
+          "tracked": false,
+          "sha256": "2b7c5cc05aad05d22f0652c508961ceff84f98c20540c402dd0987a7bd57664a",
+          "bytes": 699
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/order-admission.cases.json",
+          "tracked": false,
+          "sha256": "6e983fc952499a6f69a4d11d5ff8ba81ce250c5e1813232a351541c90c1ae73f",
+          "bytes": 43286
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/semantic.cases.json",
+          "tracked": false,
+          "sha256": "c96e0ea10e24b500eac51541133432fcec3381d1a6695dca4fddf533c07ec438",
+          "bytes": 7398
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/buyer_age_days.fact.json",
+          "tracked": false,
+          "sha256": "78354691aace259952c699385f0790c512d79289a733cf820fa087fb945257d4",
+          "bytes": 267
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/buyer_id.fact.json",
+          "tracked": false,
+          "sha256": "06329b6efe1a10e48c8b53eb5c50c8e639ee53b0fa5bd6a8f6d8ec542b3a2875",
+          "bytes": 181
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/deadline-before-core.error.json",
+          "tracked": false,
+          "sha256": "305458851d24e1d46091bb2db8ee2a41786f4d92d78ae5c61aa8f1423333cf78",
+          "bytes": 2623
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/empty-facts.page.json",
+          "tracked": false,
+          "sha256": "b0640aac712b1e5046a7642d2a27cad183b9324fd9181fe6f2518e522982e238",
+          "bytes": 63
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/fact-update.request.json",
+          "tracked": false,
+          "sha256": "56fbf5e902d2e5fe4cf785b8293a65a786e708e51c83b757bb3437ec3414d815",
+          "bytes": 336
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/live-http.request.json",
+          "tracked": false,
+          "sha256": "07a69a2ba3a532120196acc8a6c29233ffd308160d2e52e63b5bd9f78d9696f7",
+          "bytes": 256
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/mock-test.response.json",
+          "tracked": false,
+          "sha256": "32fff8358a051d69c830b168c4462a1456564dfcc4a9eb58c951e4929d5d46ec",
+          "bytes": 1544
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-01.semantic.json",
+          "tracked": false,
+          "sha256": "b09df985e9b169ab4613480c1ecf105eed9bcdda6c23ee6057e95e3097bf3329",
+          "bytes": 264
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-02.semantic.json",
+          "tracked": false,
+          "sha256": "84a9e5c65861036c823ddc4c76ad6ecb877149c8b3c2b37190010addeb7dd239",
+          "bytes": 273
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-03.semantic.json",
+          "tracked": false,
+          "sha256": "4d95e7c85575667c9ddacc599ae496a5c3bb3b1e4c11674cd316bdff9f10c2f0",
+          "bytes": 272
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-04.semantic.json",
+          "tracked": false,
+          "sha256": "1bc3f3593bf9996b23ab7b85cad054149f01c0036872a0ab90cdb05ee9865355",
+          "bytes": 697
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-05.semantic.json",
+          "tracked": false,
+          "sha256": "cf044832ad7d7e6b522e23d9df9f13baa2dbf6471f7ba140006fe439e18be5d5",
+          "bytes": 261
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-06.semantic.json",
+          "tracked": false,
+          "sha256": "785e9c2407ccdb5e02b78aa79510623147596fc2559d4a558f282776026a5c4a",
+          "bytes": 336
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-07.semantic.json",
+          "tracked": false,
+          "sha256": "abd3727855007167cbdef369a53df0b1b92ab247a3f70f4d596311dd2a921e8d",
+          "bytes": 807
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/ms-08.semantic.json",
+          "tracked": false,
+          "sha256": "ce04c1a375d96bc4c8d94a86a099f2034cc69ed7122c07c3e777da7a40267e83",
+          "bytes": 825
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/normal.response.json",
+          "tracked": false,
+          "sha256": "9cb7844a1b57ff63a5cf2250a58149249c87ebef72c0d55cc3f65e7f33f3e188",
+          "bytes": 6991
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/order-admission.required-facts.json",
+          "tracked": false,
+          "sha256": "6354401be089c9bcdb38a3000ee8b41be94aa38cba658d739a8419aa2606315a",
+          "bytes": 3900
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/order_amount.fact.json",
+          "tracked": false,
+          "sha256": "1c583130082da5e005f3587977c4cafc7d3b4f2b5a15a949adc1ee2f7bf97820",
+          "bytes": 190
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/order_country.fact.json",
+          "tracked": false,
+          "sha256": "8ff52204a7b4870e0b73c353b7215f43557de225ac6f3d2a1f37ff6be55246f7",
+          "bytes": 192
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/precision.provider.json",
+          "tracked": false,
+          "sha256": "7b46e77550696aa85f4ff6fa169a8853e9285fa9c52547e1562b70de919c4a0a",
+          "bytes": 748
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/provider-mock-test.request.json",
+          "tracked": false,
+          "sha256": "a056d9e1e985869777745260f4ac93d573f20e6f666755f55d963da6d560bec2",
+          "bytes": 235
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/provider-update.request.json",
+          "tracked": false,
+          "sha256": "c252d3868976f045eb26272fc9c30fbf7161f40b78efa14ad31f2b578eeb242b",
+          "bytes": 807
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/providers.page.json",
+          "tracked": false,
+          "sha256": "0bad6d091b7824574fd79e1bedaa274f70dea0b83812543c7f293886dfd74743",
+          "bytes": 1052
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/refund_rate.fact.json",
+          "tracked": false,
+          "sha256": "5d8e6f7392a4fb21c67a41c8231b78da6f8f35b44c00a1506f215b5aa8fe876c",
+          "bytes": 269
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile-mock.provider.json",
+          "tracked": false,
+          "sha256": "78f1479773674b8216653f0b91cb456a94ad828ff51ff2e53bcdfc9ed079db2d",
+          "bytes": 517
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile-secret.provider.json",
+          "tracked": false,
+          "sha256": "371f801b277ad27f7651b3543f90e85ac75e1d4183fe68cf161a5696893c9927",
+          "bytes": 727
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile.provider.json",
+          "tracked": false,
+          "sha256": "6a2ed59d1503d6c4181b517416380417e119694ca20670e5cf764e0856a881e3",
+          "bytes": 698
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile.resource.json",
+          "tracked": false,
+          "sha256": "37fe1b9413ffe41c74ba13747131bb9383615197cc5c3db6f26455afc9c7e680",
+          "bytes": 838
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/risk_blacklisted.fact.json",
+          "tracked": false,
+          "sha256": "3afc3e7949e746d8848c49307f2cd51acbef29ea0d3c164364f24a2fdd155950",
+          "bytes": 279
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/simulate-http.request.json",
+          "tracked": false,
+          "sha256": "9f36ca188e3b4d6924d40c568d81dfbb9d27a4df7a4a04f0218fd9ccd0f0ecc7",
+          "bytes": 283
+        },
+        {
+          "path": "docs/contracts/studio-m2/fixtures/valid/simulate-mock.request.json",
+          "tracked": false,
+          "sha256": "7ccccb4e41a20cf697f361897223dbcc3ea783e017756a8b669ed8a2344313cb",
+          "bytes": 283
+        },
+        {
+          "path": "docs/contracts/studio-m2/manifest.json",
+          "tracked": false,
+          "sha256": "4a2aa2f67db43338d59b891620c86dea45ddb684e46f947256a528338f216b6b",
+          "bytes": 6860
+        },
+        {
+          "path": "docs/contracts/studio-m2/openapi.json",
+          "tracked": false,
+          "sha256": "79b54667c1ca72c2e1323d24ea330531fc0187104cb214dd6113aa5597fd74fd",
+          "bytes": 26190
+        },
+        {
+          "path": "docs/contracts/studio-m2/schema/m2.schema.json",
+          "tracked": false,
+          "sha256": "474324122afb9b5bd262fba3db1f211b6b8fa5e7471f1dfbb2752c1dd7ad94f1",
+          "bytes": 22412
+        },
+        {
+          "path": "docs/contracts/studio-m2/validate.py",
+          "tracked": false,
+          "sha256": "acea06a89252a3c45c36cd872556ac9a1da741cee585aab8b81fb2c2510ceef6",
+          "bytes": 12626
+        },
+        {
+          "path": "docs/design/2026-08-20-r0-m1.6-core-contract-freeze.md",
+          "tracked": true,
+          "sha256": "fca0e49fa82a276b340d44edfb292a44d293d67957ae6d29ba8bf484ab1ab41f",
+          "bytes": 20266
+        },
+        {
+          "path": "docs/design/2026-09-15-openrule-studio-m1-scope.md",
+          "tracked": true,
+          "sha256": "6186b8e62497c9b96326614d15560e1cda92a8ba192bec7179a60f3f59827866",
+          "bytes": 13206
+        },
+        {
+          "path": "docs/design/2026-10-04-openrule-studio-m2-facts.md",
+          "tracked": false,
+          "sha256": "4111841c26421bd2a51dfb5157d88823a8c4dcd75cea0ccc0f5cb4ac1b127e99",
+          "bytes": 21566
+        },
+        {
+          "path": "docs/plans/2026-08-20-openrule-m1.5-core-hardening.md",
+          "tracked": true,
+          "sha256": "4d52b3543af3f3f69a2137dce59e06604dd7f5b660c6285ef135c01a7388921a",
+          "bytes": 6809
+        },
+        {
+          "path": "docs/plans/2026-08-20-r0-m1.6-implementation-plan.md",
+          "tracked": true,
+          "sha256": "8356b6b0272ada538c17324077474724cac397259d8f9a658f3c9b3a179c72cb",
+          "bytes": 16991
+        },
+        {
+          "path": "docs/plans/2026-09-15-openrule-studio-contract-and-delivery.md",
+          "tracked": true,
+          "sha256": "2059b6a02e9e487d9995e148f2d9839f9235ef6428d0e7d0a8a01f2ecacdfabf",
+          "bytes": 18403
+        },
+        {
+          "path": "docs/plans/2026-10-04-openrule-studio-m2-delivery.md",
+          "tracked": false,
+          "sha256": "c6592ffcfdf6927f9707cee91eb7c681e4e386ac073ff24e7c513f9fc937f439",
+          "bytes": 9636
+        },
+        {
+          "path": "docs/product/2026-08-23-openrule-product-blueprint.md",
+          "tracked": true,
+          "sha256": "4a49bda544951e5893327acced349e3f5585fc1f30d42a64b13ea8cd56ac5dfc",
+          "bytes": 19827
+        },
+        {
+          "path": "docs/roadmap/2026-07-28-openrule-development-roadmap.md",
+          "tracked": true,
+          "sha256": "c5aadd570cc239430fb5c22e12088d37e13a28f2d0a7e68be50995daf8983bcc",
+          "bytes": 9612
+        },
+        {
+          "path": "docs/sessions/2026-06-11-openrule-core-m1-session.md",
+          "tracked": true,
+          "sha256": "cc6e9fddd9e45003b3ceac53b8e4d61508ec954d6f9fba150de10d0b54b3d6a9",
+          "bytes": 5466
+        },
+        {
+          "path": "docs/sessions/2026-06-22-openrule-m2a-session.md",
+          "tracked": true,
+          "sha256": "adc3503826b14d88dc69e0be059845006bbd5298e2efa4bba2387abb2029b34f",
+          "bytes": 4198
+        },
+        {
+          "path": "docs/sessions/2026-06-24-openrule-m2b-session.md",
+          "tracked": true,
+          "sha256": "6722af65f964e504ee1ade7fa76189caaf851b93525b847e3360e40b0ad07e1d",
+          "bytes": 4016
+        },
+        {
+          "path": "docs/sessions/2026-08-20-openrule-m1.5-session.md",
+          "tracked": true,
+          "sha256": "4c3a42903cd9b6e8131b1c444d67dde85c79e8dc28b3fd0b1108629c96e4153e",
+          "bytes": 3363
+        },
+        {
+          "path": "docs/superpowers/plans/2026-06-11-openrule-core-m1.md",
+          "tracked": true,
+          "sha256": "40c3d35298fe7c9577d897bde55510b3055c34dfd1b2e647d7c2e1ab10afe344",
+          "bytes": 100969
+        },
+        {
+          "path": "docs/superpowers/plans/2026-06-22-openrule-m2a-spring.md",
+          "tracked": true,
+          "sha256": "d8608bbf07deb4a58e48bc67d7788bcdfc985ade6565aa61e4acdf3bbb778739",
+          "bytes": 81891
+        },
+        {
+          "path": "docs/superpowers/plans/2026-06-23-openrule-m4-advanced-nodes.md",
+          "tracked": true,
+          "sha256": "f2f7483ecd848b0782a3be41810f8b5906b9cf220fbcc0881fa5b08644221099",
+          "bytes": 96142
+        },
+        {
+          "path": "docs/superpowers/plans/2026-06-24-openrule-m2b-jdbc.md",
+          "tracked": true,
+          "sha256": "667e9152747f42248a4d098c6201c9b58463d7e7628e5cbaaea59e43a526019b",
+          "bytes": 72656
+        },
+        {
+          "path": "docs/superpowers/specs/2026-06-11-openrule-core-m1-design.md",
+          "tracked": true,
+          "sha256": "5a1ae4535d13b0c7931eb21dd9104d8f3a9d638b30e4dadf9467e475d2239ac6",
+          "bytes": 9215
+        },
+        {
+          "path": "docs/superpowers/specs/2026-06-22-openrule-m2a-spring-design.md",
+          "tracked": true,
+          "sha256": "18eaf538559ae9ee1ce159811a247858e29799bdebb18a00f752defc9ef5df42",
+          "bytes": 16248
+        },
+        {
+          "path": "docs/superpowers/specs/2026-06-23-openrule-m2b-jdbc-design.md",
+          "tracked": true,
+          "sha256": "f104c00744ebbe86b2a7a0fab9f6369b3bfdffed55d142d62a7d14eaf62c6e3d",
+          "bytes": 16480
+        },
+        {
+          "path": "docs/superpowers/specs/2026-06-23-openrule-m4-advanced-nodes-design.md",
+          "tracked": true,
+          "sha256": "d4fcf3e052e01b05ad5cb458b51750381b94fec06126ba213541894fe57a0f3a",
+          "bytes": 18890
+        },
+        {
+          "path": "open-rule-engine-design.html",
+          "tracked": true,
+          "sha256": "91368e83e6279ef9e0233f4677cad4eb5e3cd395b2d9bdf4c2591f65dd3de12d",
+          "bytes": 55084
+        },
+        {
+          "path": "open-rule-engine-technical-spec.md",
+          "tracked": true,
+          "sha256": "7d04fc9777ba8544212767bb01d6cf4de7ab1f994ebeefba99471df56d3cc044",
+          "bytes": 51035
+        },
+        {
+          "path": "openrule-api/pom.xml",
+          "tracked": true,
+          "sha256": "7b8cb1b78f3270e357501f06656aee0cbb5dec2b6b467f5717ab000b6e96b693",
+          "bytes": 1297
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/ExecuteController.java",
+          "tracked": true,
+          "sha256": "cae6ba8d6b8e41bcc18685c5229065f48cee5aada86a96852b6ccd120ca82b35",
+          "bytes": 1050
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/FlowAdminController.java",
+          "tracked": true,
+          "sha256": "b17796b1891284ca87dca9f06af2bf4e017ef27c08caad111beeb83c5e2cdd18",
+          "bytes": 3271
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/advice/OpenRuleExceptionAdvice.java",
+          "tracked": true,
+          "sha256": "c383d3bb7a79e4adfcc5e319d6916ad9820429d1168bb031ec4fb183e6b738ab",
+          "bytes": 1754
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/autoconfigure/OpenRuleApiAutoConfiguration.java",
+          "tracked": true,
+          "sha256": "e21da6522bf33e7066734502f03c50397bb83238047400d9c6d03dae9bdb4ffb",
+          "bytes": 1681
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/dto/ErrorBody.java",
+          "tracked": true,
+          "sha256": "0b5720b395c3af0bff73a5e6b000bd84ff9b42535013955d83fa865590467af1",
+          "bytes": 244
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/dto/ExecuteRequest.java",
+          "tracked": true,
+          "sha256": "e03a78e609fbc8941519040b9ee4778f92fc841217c3bf7aeda84370887916c9",
+          "bytes": 204
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/dto/ExecuteResponse.java",
+          "tracked": true,
+          "sha256": "a2990275a9b6bb650f9411fb2ad947b0716fe0b168162cced05e9688101b2b64",
+          "bytes": 875
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/dto/FlowSummary.java",
+          "tracked": true,
+          "sha256": "eee1cc54ce24fbeb5d9c782c83681ca8d26a0c13dd28498ab5382613e5bcd686",
+          "bytes": 330
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/dto/SimulateRequest.java",
+          "tracked": true,
+          "sha256": "c5fc7fa44398a4b2bccd3eafb13276444078e27a90da1b0477455970c48e7847",
+          "bytes": 183
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/studio/StudioApiAutoConfiguration.java",
+          "tracked": true,
+          "sha256": "d20ce56489f3d2e037b2f86d42b55e9a9ac5c3d09a83ecd8e9eef4ae2f0b5645",
+          "bytes": 938
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/studio/StudioController.java",
+          "tracked": true,
+          "sha256": "9fcea7d346ff8248c9620c8bc3c2eff8c290f28a7b3f50606898c67cab4346b9",
+          "bytes": 6331
+        },
+        {
+          "path": "openrule-api/src/main/java/io/openrule/api/studio/StudioProblemAdvice.java",
+          "tracked": true,
+          "sha256": "82832cc9f3c3d1625b39ce0f575c0d90de1f70fdcc96b3225e3bc63de8217ced",
+          "bytes": 1893
+        },
+        {
+          "path": "openrule-api/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports",
+          "tracked": true,
+          "sha256": "0ba038a612f8f7a1d16557d142f1b330c4a17de8a17adab2d105d5f3bf6e8ba5",
+          "bytes": 109
+        },
+        {
+          "path": "openrule-api/src/test/java/io/openrule/api/AdminApiTest.java",
+          "tracked": true,
+          "sha256": "cc33b8b1a9fb4345766d041191cbf1abe0b2934e3c887ba88f5a920f6f6db40a",
+          "bytes": 4657
+        },
+        {
+          "path": "openrule-api/src/test/java/io/openrule/api/EndToEndApiTest.java",
+          "tracked": true,
+          "sha256": "1403d2d3e42e7eb016e0beb4037fedb93703198f9085b8de1ac575b67a625f63",
+          "bytes": 5068
+        },
+        {
+          "path": "openrule-api/src/test/java/io/openrule/api/studio/StudioHttpTest.java",
+          "tracked": true,
+          "sha256": "b2d83dc2d477ccaea9e40b3c330f776731c76470198b887e44eecb58f9913edc",
+          "bytes": 22450
+        },
+        {
+          "path": "openrule-api/src/test/java/io/openrule/api/test/ApiTestApplication.java",
+          "tracked": true,
+          "sha256": "8e849703f643ecfb77d132f83b11b56e5136c25ebcfbcfd68ec040a61e7607c1",
+          "bytes": 298
+        },
+        {
+          "path": "openrule-core/pom.xml",
+          "tracked": true,
+          "sha256": "7a9916d54a7d47731721336562c8401874e3a9b20bab96ee64c562f270627bf5",
+          "bytes": 1434
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/OpenRuleEngine.java",
+          "tracked": true,
+          "sha256": "07d554d3aee92d25d7a477a097ef55c40ffd1ef37290e8395d861e0245e14174",
+          "bytes": 4891
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/aggregate/FirstTerminalAggregator.java",
+          "tracked": true,
+          "sha256": "b203ef364fcab1345ffe45ce572b2f1d28579d3047ca79586f7f901a555e48ac",
+          "bytes": 1379
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/aggregate/PriorityAggregator.java",
+          "tracked": true,
+          "sha256": "4316f1c3abbd07e344a4aa663c760c6ee274c96cfe1c81821b6abec9c0f7a2c9",
+          "bytes": 1445
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/compiler/FlowCompiler.java",
+          "tracked": true,
+          "sha256": "b29db04c705d8e2f79c0f17baa46c7fe548720dd89ffe41447916ee782a63313",
+          "bytes": 4883
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/context/DecisionContext.java",
+          "tracked": true,
+          "sha256": "5b576333c3369e09cf7ebfe97028b02d91928014f1851784932241f78b753722",
+          "bytes": 2240
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/context/FactMap.java",
+          "tracked": true,
+          "sha256": "02f3e1a53973dcbbe74cb0a265ea2b9ab75be5418a59f8d29481d369d10465bd",
+          "bytes": 2978
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/definition/FlowDefinition.java",
+          "tracked": true,
+          "sha256": "3b33814cc4920669517fd8a9ae2a38343c23308216be509279b23ab6093c405d",
+          "bytes": 575
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/definition/NodeDefinition.java",
+          "tracked": true,
+          "sha256": "d528cd368f58cc1bc926f24029c3325e3a132122c7f4fd20cbe7f94f0cad851e",
+          "bytes": 841
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/definition/StageDefinition.java",
+          "tracked": true,
+          "sha256": "3557d74e531d4e4b5b8f2a8dd5863784be0891142943e3ca1dd12eeb5fcff185",
+          "bytes": 580
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/definition/defs/OperatorDef.java",
+          "tracked": true,
+          "sha256": "347054edfa5c88bf65517bc508c1f772f1cc23c4734a7cc66c1a5fbddb7a2dea",
+          "bytes": 301
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/demo/M1Demo.java",
+          "tracked": true,
+          "sha256": "55b9b82e5fd604f450ca6a2c4e0a057dd326d09b6f236d0ab9c88f7e79d83b59",
+          "bytes": 3423
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/enums/AggregatePolicy.java",
+          "tracked": true,
+          "sha256": "10392ae7fcbaf37b0108ae47396794a8004fb409596d5c5a5c8108b2bba50f17",
+          "bytes": 172
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/enums/Decision.java",
+          "tracked": true,
+          "sha256": "5aaa404aa89db0fa75f005ef18f73548acade09456a0fcf60cead4d359eb32ef",
+          "bytes": 364
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/enums/ExecutionMode.java",
+          "tracked": true,
+          "sha256": "e393abb533c72e6fab242ba072b70da5c9fc1b3beb093e19a6ed91c5b118f5ff",
+          "bytes": 80
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/enums/FailPolicy.java",
+          "tracked": true,
+          "sha256": "0744086ec16b07e3e788eea48958ff2a9b03bbdef0e9afae9cf90a77c7b18eda",
+          "bytes": 298
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/enums/NodeType.java",
+          "tracked": true,
+          "sha256": "c190ff28bd9d4502c1b47f1224fa75938da8d447e9c462ba2f4e9c27dc72d782",
+          "bytes": 310
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/exception/FlowValidationException.java",
+          "tracked": true,
+          "sha256": "88721d722eeb8ebf95a560d57b0f3318d89647f897c8d8218fd70044d40f31af",
+          "bytes": 252
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/exception/RuleEngineException.java",
+          "tracked": true,
+          "sha256": "87c260134b318f7f4e188162c4c1c18aa55f54c6cd43e9cd06bff1243f08443b",
+          "bytes": 289
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/executor/OperatorNodeExecutor.java",
+          "tracked": true,
+          "sha256": "6b7b382a49cd430fe17669d5801395048d2b69fee11d4c47a87b04785f4f34db",
+          "bytes": 6335
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/package-info.java",
+          "tracked": true,
+          "sha256": "93afd0159cffdd0c9dc075ef2a7dce1fa392f618981cbc655c0c30ee5a02e728",
+          "bytes": 96
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/result/FlowResult.java",
+          "tracked": true,
+          "sha256": "12afa67dd2194f3442e4e33ff91c5a4bfd6a2e82beeb9077b429739f6b170309",
+          "bytes": 510
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/result/NodeResult.java",
+          "tracked": true,
+          "sha256": "2e3ba691a2fcfa1ee704bdedd0f151c395290c29466a7d9fba07ee86905c1019",
+          "bytes": 1003
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/result/StageResult.java",
+          "tracked": true,
+          "sha256": "f7aedf4b51de9a1c29179dbd8a945dfbcc039a9d0f5e0dfe3ee7d06b44234e18",
+          "bytes": 727
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/CompiledFlow.java",
+          "tracked": true,
+          "sha256": "4b248dd2ded26347a8108dd74b1ae47f4a0cd60b131ef314219b1fde9fbba762",
+          "bytes": 995
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/CompiledStage.java",
+          "tracked": true,
+          "sha256": "601fa788908d729a17d93c64d6b79e447283f0729fd9de20b228d7323a2e8c9d",
+          "bytes": 1237
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/FlowExecutor.java",
+          "tracked": true,
+          "sha256": "737b2dcca8aba67b48bdb2d38b0dbb36d3e8d41e381ff4cd5dd121e7d7c4395f",
+          "bytes": 2562
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/NodeExecutorRegistry.java",
+          "tracked": true,
+          "sha256": "76a7a9a2bec36b06153db4db1e97b30a0029f822d660805bfeff5199f8d260ff",
+          "bytes": 1043
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/NodeRunner.java",
+          "tracked": true,
+          "sha256": "2826188fe522422f3d33f4d5bf939df7cbb1a8115263a99d4c6cb6f24987c7d3",
+          "bytes": 4146
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/ParallelStageExecutor.java",
+          "tracked": true,
+          "sha256": "25fca7dc38bb606bade9bb54d3482baa8e0a2a7b043eb4d9629d94e03eef0266",
+          "bytes": 5686
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/runtime/SerialStageExecutor.java",
+          "tracked": true,
+          "sha256": "fde411bb5f8f6037a61beaf21498e8852ce8bb1b939ceba43e30a898aa09e455",
+          "bytes": 1401
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/spi/AggregateOutcome.java",
+          "tracked": true,
+          "sha256": "7f77d84c2f05040d279fc88289d8e05768bc24599b4f8b3a37a07bca52898d77",
+          "bytes": 233
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/spi/CompiledNode.java",
+          "tracked": true,
+          "sha256": "81955059a60c6fbee303f0affc8d7578249b218c72aa9ecfe8c27d9972b8e3c0",
+          "bytes": 4059
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/spi/DecisionAggregator.java",
+          "tracked": true,
+          "sha256": "7378d6caa5c2076349a3f210a972db27e0d62e7d31a7eddae04b1e17407510bb",
+          "bytes": 350
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/spi/NodeExecutor.java",
+          "tracked": true,
+          "sha256": "f286fb16982d7017328d02905f587be9e3e2bdea5e0b8fedfa34cdf10c718545",
+          "bytes": 813
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/RequiredFact.java",
+          "tracked": false,
+          "sha256": "668371a08e8d8bd68e52381ab8686d62702d9455accbc238b270cf3aa8ea2afa",
+          "bytes": 582
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioCompiledPlan.java",
+          "tracked": false,
+          "sha256": "8c4a467f6437a9de61c99e9f32e07e7c3dac4d3e38b3934fb33fa2e2c2c9a278",
+          "bytes": 573
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioCompiler.java",
+          "tracked": true,
+          "sha256": "1cce301bde807af29c9132da5838932f5500e024ff88223590b01319eb1822a3",
+          "bytes": 17136
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioConditions.java",
+          "tracked": true,
+          "sha256": "d8f1f5b014e00e6beafae7c73b5656e0c725fab8ee7c96db5126172ec3570ae3",
+          "bytes": 9532
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioDeadline.java",
+          "tracked": false,
+          "sha256": "eeafdf3fd34b40d89cae1932036ed02495e22b2687a41701e8849b4edebe6685",
+          "bytes": 1258
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioEngine.java",
+          "tracked": true,
+          "sha256": "2ade4f60ade708bc12e7ec5c391d1434f4bbeea72133da0ce45d6b0725d59b53",
+          "bytes": 23197
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioFactDependencies.java",
+          "tracked": false,
+          "sha256": "b9fd7785c71a8799c9846a3feba612503db2bf78542e947d9b527360730239c5",
+          "bytes": 8500
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioModel.java",
+          "tracked": true,
+          "sha256": "f4835eaf46ab359778d0fc4701464696cb43d1c4baddeb5c7cbb51a3335b2704",
+          "bytes": 4123
+        },
+        {
+          "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioValidationException.java",
+          "tracked": true,
+          "sha256": "0f812310de230204d2723587b0648c6d1c6593b30801b9373c6063203d9785e4",
+          "bytes": 814
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/EndToEndTest.java",
+          "tracked": true,
+          "sha256": "50bee4a491e06112bece30c20ca5fd8f33f16194eb4015fbff1bcd71f5487ba5",
+          "bytes": 4972
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/OpenRuleEngineTest.java",
+          "tracked": true,
+          "sha256": "af495cfb3df60f8d736ccb78ac07cceda694f38a01d1ad7bb225ab2bdfeac933",
+          "bytes": 2946
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/SanityTest.java",
+          "tracked": true,
+          "sha256": "97007a40f42a5052dc1788c7ddb6fc5b3d5def5f4e6a4130bd94a98a6cb27346",
+          "bytes": 274
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/aggregate/FirstTerminalAggregatorTest.java",
+          "tracked": true,
+          "sha256": "7f9c1f805d3a8c70808d7dae75379dc9442e6455b3922cc09b8ce075efc7afd1",
+          "bytes": 2184
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/aggregate/PriorityAggregatorTest.java",
+          "tracked": true,
+          "sha256": "fd92bf6f8fc78610e33af817ba271873715bfd11de1e887dba44dae3ebc21c67",
+          "bytes": 1872
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/compiler/FlowCompilerTest.java",
+          "tracked": true,
+          "sha256": "70d0dbf8b45a808cec00b5ed43076f43a8b15597c9c548c4bb410a76a41a212e",
+          "bytes": 4781
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/compiler/FlowCompilerValidationTest.java",
+          "tracked": true,
+          "sha256": "1062d2446f6a60f38747908c5f229096fe859b1c470c071efdcbcf46986d4ac9",
+          "bytes": 4195
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/context/DecisionContextTest.java",
+          "tracked": true,
+          "sha256": "8936bfff1c01454fc5baf31c2aa1f78139594d6d9db57c4735bbb4f2364d9d18",
+          "bytes": 1734
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/context/FactMapTest.java",
+          "tracked": true,
+          "sha256": "34c2b6573ed49e2ecab13a9230115d51d994687b4cc054b984149103dce2fc79",
+          "bytes": 2835
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/definition/DefinitionTest.java",
+          "tracked": true,
+          "sha256": "8987c0636c8779885b77fe169a2b08f1bd7dcb1fccbc4cc99d78c7868349da77",
+          "bytes": 1728
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/enums/DecisionTest.java",
+          "tracked": true,
+          "sha256": "950bc39d86ea1ef362295729fdd89a97f29b4206fb670c2aec9482d48bd7c3b1",
+          "bytes": 655
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/executor/OperatorNodeExecutorTest.java",
+          "tracked": true,
+          "sha256": "5df6b91d0293e2829bcc711fea1b1cf789aecca9bf53c843f5f946bb423b7a66",
+          "bytes": 5343
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/result/NodeResultTest.java",
+          "tracked": true,
+          "sha256": "0e2cce1f3039014a836547015933d32e01e42769ae4c14ffe144106bf04f294b",
+          "bytes": 1872
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/runtime/FlowExecutorTest.java",
+          "tracked": true,
+          "sha256": "0108372fef11b5822c342f74a542d1f841f9496c8c0fc92d2446358b87e05e9b",
+          "bytes": 8315
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/runtime/NodeExecutorRegistryTest.java",
+          "tracked": true,
+          "sha256": "3936f60828b1382c227668e1b4323350e75445f48e23dae353de6bab478a6db9",
+          "bytes": 1790
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/runtime/NodeRunnerTest.java",
+          "tracked": true,
+          "sha256": "b5fdb01e06603ef67a6b9af20cfddddd8bcdd3659c4cac066c93b86b4dd78c2f",
+          "bytes": 5021
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/runtime/ParallelStageExecutorTest.java",
+          "tracked": true,
+          "sha256": "ee9c626534cc569fd2dcd21a700f2cdb5180df2f7e689faca131f2d3773f8df6",
+          "bytes": 7351
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/runtime/SerialStageExecutorTest.java",
+          "tracked": true,
+          "sha256": "896efb1c290da459da33314bed48a113d1a57fd2847ad725998d7c65047ba801",
+          "bytes": 3270
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/spi/CompiledTest.java",
+          "tracked": true,
+          "sha256": "d7a617ff78b38c4c4267a9bfab5308f79173acb330a83b2469e4d5f882bd9834",
+          "bytes": 1517
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/studio/StudioB1Test.java",
+          "tracked": true,
+          "sha256": "84a617f6313a6fb86848246cc39a9ce3f8a828948259dba928cecf44717201b2",
+          "bytes": 13394
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/studio/StudioB3NodeTest.java",
+          "tracked": true,
+          "sha256": "c6dd5c54da3e67c4b2c55471add8b3c6999b2f502f18a753a9afb0c342432b5c",
+          "bytes": 3964
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/studio/StudioFixtureTest.java",
+          "tracked": true,
+          "sha256": "decc68329726d5bcf78e9b1b46fac3135856740da2cc479b7d3fc83a347fec3c",
+          "bytes": 5630
+        },
+        {
+          "path": "openrule-core/src/test/java/io/openrule/core/studio/StudioM2Test.java",
+          "tracked": false,
+          "sha256": "1391cdc0ddaa155ff95d988a49bd118867e5c95e33d632466110dfc311fdb3bb",
+          "bytes": 6990
+        },
+        {
+          "path": "openrule-jdbc/pom.xml",
+          "tracked": true,
+          "sha256": "dcc79ec4f62efb1c371a6c6ec26b3e36f11af1c1c2073fcfd557bf0852ccee7c",
+          "bytes": 3377
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/audit/JdbcExecutionLogQuery.java",
+          "tracked": true,
+          "sha256": "e02f7530d8c742aebacc85243489c9ccb1fd8a6eedf2777db756ac37c5324212",
+          "bytes": 1483
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/audit/JdbcExecutionLogger.java",
+          "tracked": true,
+          "sha256": "449d67e9797cbd2bbb779c0ec571f36c0b0069f16d06a9e90b452f5945680723",
+          "bytes": 2437
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/autoconfigure/OpenRuleJdbcAutoConfiguration.java",
+          "tracked": true,
+          "sha256": "78f69922de3e2fbdfedbd1a121953505299e25bb20e9e78bf559ca48a20e6889",
+          "bytes": 3283
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/autoconfigure/OpenRuleJdbcProperties.java",
+          "tracked": true,
+          "sha256": "1bb3d9edcc869aeb1c637fb7110a712e0fa69afecdc2ba57bc710604643b90e5",
+          "bytes": 611
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/repository/JdbcFlowDefinitionRepository.java",
+          "tracked": true,
+          "sha256": "fa3ebb89df701af2d6fa76b9535e1c61aa8a0115e846d8f35d5051791c27864f",
+          "bytes": 4563
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/studio/JdbcStudioStore.java",
+          "tracked": true,
+          "sha256": "06ae71df1dee3368d974380d9580d34822791cbb8b20b819dcdee5281109ad13",
+          "bytes": 9429
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/support/ChecksumUtil.java",
+          "tracked": true,
+          "sha256": "29ff4e34d8637bb879de6a532447507719ad19b4bd81592016692300de391e40",
+          "bytes": 887
+        },
+        {
+          "path": "openrule-jdbc/src/main/java/io/openrule/jdbc/support/Desensitizer.java",
+          "tracked": true,
+          "sha256": "e56736191df78ccbec40e1fa8237fa99308af75a010d8e9162f749db3046375a",
+          "bytes": 875
+        },
+        {
+          "path": "openrule-jdbc/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports",
+          "tracked": true,
+          "sha256": "fc43e35e90cbdae3b8c519305663a9c1388ea331814252d818cd08852d06f3d6",
+          "bytes": 61
+        },
+        {
+          "path": "openrule-jdbc/src/main/resources/db/studio/V1__studio_tables.sql",
+          "tracked": true,
+          "sha256": "b89fe678259cca333e739bdad9c405063fcc7ae02107c0c96aad88fbaa743b0f",
+          "bytes": 1221
+        },
+        {
+          "path": "openrule-jdbc/src/main/resources/schema.sql",
+          "tracked": true,
+          "sha256": "c937c55ce4f6aa57316d8723c01f37c4c91e249be0d0bb7c1b915f3282b5e56a",
+          "bytes": 1489
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/AbstractMySqlIT.java",
+          "tracked": true,
+          "sha256": "ea47e0cb25c417bd07aa41631b218f7b70b1772b3193630393a0b222e42c0e5b",
+          "bytes": 1257
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/audit/JdbcAuditIT.java",
+          "tracked": true,
+          "sha256": "5b6d4840b7657aa584a8c6f6f9238d54de0d1645c3cffcfa6043b7759ee64e02",
+          "bytes": 3266
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/autoconfigure/OpenRuleJdbcAutoConfigurationTest.java",
+          "tracked": true,
+          "sha256": "4f92df66c71d172a96f4fbd8f622e6374ff9a7ba86a860c66c3b979fc6030509",
+          "bytes": 2916
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/repository/JdbcFlowDefinitionRepositoryIT.java",
+          "tracked": true,
+          "sha256": "2d332715efd6d29d73007f7af689ee39babe546b411ae8318bd286363aecce46",
+          "bytes": 4799
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/studio/JdbcStudioStoreIT.java",
+          "tracked": true,
+          "sha256": "bfe86eb5ebd30476a2fe75a716e3c3931f5ffc50f70d3c2ba4e31e1696a1b870",
+          "bytes": 11081
+        },
+        {
+          "path": "openrule-jdbc/src/test/java/io/openrule/jdbc/support/SupportUtilTest.java",
+          "tracked": true,
+          "sha256": "52fd0a3b64d7ef3fff1b70d33a02d1449091b64ab5ebd997b095f5f6663e7b7c",
+          "bytes": 1357
+        },
+        {
+          "path": "openrule-spring/pom.xml",
+          "tracked": true,
+          "sha256": "5fb6932fc0d84d94dee76c34c5c6fd646c25fb9f35f481bb9f7b8ba83f828242",
+          "bytes": 2770
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/autoconfigure/OpenRuleAutoConfiguration.java",
+          "tracked": true,
+          "sha256": "e724d44574cb9b9782ecd7a7631cafdbbbf6fd36641102161935eb05480a56a2",
+          "bytes": 6320
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/autoconfigure/OpenRuleProperties.java",
+          "tracked": true,
+          "sha256": "3cdfbb5b8bdafd555820583f2a7de43c7b5cd5a8835d8bce20da0b85e79c4f57",
+          "bytes": 922
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchRequest.java",
+          "tracked": false,
+          "sha256": "ad1d6a34b1328b3fad32b4fc72425e2b6f4f7d50798ce0ab8dd832cff6c99c01",
+          "bytes": 1720
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchResult.java",
+          "tracked": false,
+          "sha256": "086c50080a68ecdf179af181c67fc6ba608a1031e00d78893f17e258afbc375b",
+          "bytes": 1197
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactConfiguration.java",
+          "tracked": false,
+          "sha256": "1bf4feb6e98fd53a288c07a3bde8ad5810c3607a176abaffd42a3a0333322158",
+          "bytes": 5325
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactProvider.java",
+          "tracked": false,
+          "sha256": "47e48c311e9f97a1e112e053c5396ec2284629e2d42370fd511badc0a2bd19d0",
+          "bytes": 218
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactRedaction.java",
+          "tracked": false,
+          "sha256": "1883773974d781d8224fa6bdd8b1362dab8ee541d5cf145b7466400ef7c128af",
+          "bytes": 2074
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionReport.java",
+          "tracked": false,
+          "sha256": "0d4cacf7698f4a1ba6b9ef2542cb0fc80f9f30cd2f6cc81c6e5a8ae1db101738",
+          "bytes": 1128
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionRequest.java",
+          "tracked": false,
+          "sha256": "3a0a9cfe6d7804fcc456c57b234c7434e67d280c9238d894b44cdb58f7b4b3ff",
+          "bytes": 1113
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionResult.java",
+          "tracked": false,
+          "sha256": "af578c896037dcf16835239ed3e6a69d6d506b2b86b680bcdb3e93c9e76e2716",
+          "bytes": 518
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolver.java",
+          "tracked": false,
+          "sha256": "f287cbbef93f766bab77aaa72712ea4f8a938476704d23219566715e1ab71925",
+          "bytes": 10395
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactTransportSupport.java",
+          "tracked": false,
+          "sha256": "8a193c33adb7db10dc9c0de7f0bfbc64f34a5cb0cae7201b22901ae35f5c6f2e",
+          "bytes": 3200
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactValues.java",
+          "tracked": false,
+          "sha256": "b30c76c00864a71fca915dfa766579790b80b541df6a3b089ad85300887deefd",
+          "bytes": 5121
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/HttpFactProvider.java",
+          "tracked": false,
+          "sha256": "154cfe65a36bb87286d9ef1113c763731d9d33cdbd774e6ac139d421ed4eddc8",
+          "bytes": 5541
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/MockFactProvider.java",
+          "tracked": false,
+          "sha256": "ddf84e338c310a33e6ad8afded046a732c67739b798b9f9e30b5e55315ca1ac7",
+          "bytes": 1262
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/fact/SecretResolver.java",
+          "tracked": false,
+          "sha256": "15e3add8e2864ae57c7eb1bac13fa18f5ac01dc9beb20837ec3d66a306a59b65",
+          "bytes": 230
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/loader/FlowDefinitionJsonCodec.java",
+          "tracked": true,
+          "sha256": "d4bc76cb830fa71942f70c0823860df12ce9054929c5c51c84729f5d56f0894a",
+          "bytes": 1347
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/loader/FlowLoader.java",
+          "tracked": true,
+          "sha256": "2cb860aa0c6cafda6926fa80a999a44313038c28d119b8ffd5f3bca690405b10",
+          "bytes": 1684
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/model/ExecuteCommand.java",
+          "tracked": true,
+          "sha256": "f20324e0da2c02b383595e0246f2681dd4455ef602fa46880c779075fbb7e1b3",
+          "bytes": 265
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/model/ExecutionLogEntry.java",
+          "tracked": true,
+          "sha256": "46d548aadc61b39d91bf8d8a579da459165245812618327f7361d402542ae647",
+          "bytes": 360
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/model/ExecutionOutcome.java",
+          "tracked": true,
+          "sha256": "756f95a13a12cc2fec115515720dcc2d0de1e4b72a5febb45f6af565ced5f770",
+          "bytes": 256
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/port/ExecutionLogQuery.java",
+          "tracked": true,
+          "sha256": "494721c9905907f435c5839a2d2638534ab542443d77a1e7415582ff3aaa4709",
+          "bytes": 404
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/port/ExecutionLogger.java",
+          "tracked": true,
+          "sha256": "a322c9a2a959fd9e7703b009a0cd6bb4c1e14e1dc25e90b888c2d653adcebc4d",
+          "bytes": 459
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/port/FlowChangeNotifier.java",
+          "tracked": true,
+          "sha256": "6acbeb4e1042fa4a9b858815a5de7807d176689b91a957b2a2d17441c24af794",
+          "bytes": 212
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/port/FlowDefinitionRepository.java",
+          "tracked": true,
+          "sha256": "bfa5e5dee4276998ac88ce7f1776de5243c680309fe998b6ffcb500da5430071",
+          "bytes": 818
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/service/OpenRuleService.java",
+          "tracked": true,
+          "sha256": "28ad30168f308f0a208890c0f502d6bbd964dc9bdc2e5a2e7beec5d78064e7b6",
+          "bytes": 4234
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/standalone/InMemoryExecutionLogger.java",
+          "tracked": true,
+          "sha256": "d9e7f6ca718662cc6c70e866043e0f3d149702b2b64c46bc9b5dccded067a0b2",
+          "bytes": 1922
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/standalone/InMemoryFlowDefinitionRepository.java",
+          "tracked": true,
+          "sha256": "3a2132ae60f0514afd9e3c878c4db1bff41a8af0189db1c2f7b9c585042d8058",
+          "bytes": 2542
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/standalone/LocalFlowChangeNotifier.java",
+          "tracked": true,
+          "sha256": "a31baea63739152d6e7f54b4c90e85d2034aad4edf8394d607b6c27fd2177d74",
+          "bytes": 582
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioAutoConfiguration.java",
+          "tracked": true,
+          "sha256": "ea8eabdb734de36bedfc8aa09a71f660081c67be176c21d8871a106339e35ac4",
+          "bytes": 1359
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioDocumentCodec.java",
+          "tracked": true,
+          "sha256": "48db29d9183e06f6b1b5df7d4fb804d80d254fd905297577f4377e1a6833a4b6",
+          "bytes": 15230
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioProblem.java",
+          "tracked": true,
+          "sha256": "546b88fa41a7febc37928264dcd742faa0c2147efd39f6f60805faa07fd3acd5",
+          "bytes": 1092
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioService.java",
+          "tracked": true,
+          "sha256": "f0b92182b7609ce122ac208760ca41d6a86c31896b938c630c1837a9e3127be1",
+          "bytes": 12012
+        },
+        {
+          "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioStore.java",
+          "tracked": true,
+          "sha256": "56589d934525f26c6a2b1150c29b2e9a082c58b7ba7b2ff240704f1e08410c78",
+          "bytes": 1082
+        },
+        {
+          "path": "openrule-spring/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports",
+          "tracked": true,
+          "sha256": "e7bd0db92d7922a40b63a5ff7a2380d464552ae5550f1e042040f19d6da4d54e",
+          "bytes": 109
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/SpringModuleSanityTest.java",
+          "tracked": true,
+          "sha256": "680905c9174da15ce5a1531192b4d5741a87ae3d763d4ffcfe7f94c7d96aaef9",
+          "bytes": 502
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/autoconfigure/OpenRuleAutoConfigurationTest.java",
+          "tracked": true,
+          "sha256": "10dec559995fe919a3179386ceea618331ba3ea848711474029dc908009bcfd9",
+          "bytes": 2946
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactFixtureTest.java",
+          "tracked": false,
+          "sha256": "48731c8f1c781a89f8322adad8ef32c048cc1f9bcd8a9668088587cda08b4c62",
+          "bytes": 11224
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactRuntimeTest.java",
+          "tracked": false,
+          "sha256": "3e41388e979868bba51a154466f32f67629f0beb144f1a70095b7363932a5967",
+          "bytes": 22905
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactTestSupport.java",
+          "tracked": false,
+          "sha256": "30f8d0b4b2a9b3adff8974a87c0ee2350d92c0f62d1baecc8470d4a6df194bd4",
+          "bytes": 6749
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/loader/FlowDefinitionJsonCodecTest.java",
+          "tracked": true,
+          "sha256": "c4070ab1e52a9719eda5d83a2210ab95e03e69cf3795b327c9759207ef2e3ab1",
+          "bytes": 2291
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/loader/FlowLoaderTest.java",
+          "tracked": true,
+          "sha256": "bfe26fc0636510fd9385b9fa2ea22b7aa18640fe6bc6c50f71c96e90b2f59975",
+          "bytes": 3169
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/service/OpenRuleServiceTest.java",
+          "tracked": true,
+          "sha256": "66be2c62788b99e75956de04aa5a445346692fa8dcb44d3e5ba9707d08dad70b",
+          "bytes": 5193
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/service/OpenRuleServiceVersioningTest.java",
+          "tracked": true,
+          "sha256": "f08be1c17619e3ffdea158c4518172da6a0f891d28ea05166782264672619dd3",
+          "bytes": 4692
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/standalone/InMemoryExecutionLogQueryTest.java",
+          "tracked": true,
+          "sha256": "b822c217ba8c3f6dab2efb81139cf54fe6a8314446d982902f4a06bad7668402",
+          "bytes": 1689
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/standalone/InMemoryFlowDefinitionRepositoryTest.java",
+          "tracked": true,
+          "sha256": "12c2303e17a752da7e2cc57db74eeeb0baf18fcbdad8719db72f5880d4f94e97",
+          "bytes": 2055
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/standalone/LocalFlowChangeNotifierTest.java",
+          "tracked": true,
+          "sha256": "8602c481a91e6a3b074646e723f697ebff0735b35a65341268b9a8efd3c0cd5a",
+          "bytes": 2129
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/studio/StudioB3FixtureTest.java",
+          "tracked": true,
+          "sha256": "91eb5c4098075b8b2e4282a670b4f61f167ba6e59b0429edc6f53e40cc8c206d",
+          "bytes": 6312
+        },
+        {
+          "path": "openrule-spring/src/test/java/io/openrule/spring/studio/StudioDocumentCodecTest.java",
+          "tracked": true,
+          "sha256": "e8651265f2d0e82635349a43bc17d0a80f743c22b89b445317f5c856838b56d4",
+          "bytes": 6634
+        },
+        {
+          "path": "openrule-studio-server/README.md",
+          "tracked": true,
+          "sha256": "7140bf64297b29d28033d0c3b0c76047b39d2c83688a934ec3e9ac8b8337052f",
+          "bytes": 4345
+        },
+        {
+          "path": "openrule-studio-server/pom.xml",
+          "tracked": true,
+          "sha256": "6a289a8c09b61db8c5e4911ef52031e4ada47fd8e903f6b2ba8dd5c9cacb1168",
+          "bytes": 3305
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/StudioServerApplication.java",
+          "tracked": true,
+          "sha256": "0164c20cbbf2892f4666a81072c4dfb88282333ab4998232c287ca68e89b652b",
+          "bytes": 326
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/EnvironmentSecretResolver.java",
+          "tracked": false,
+          "sha256": "0d3d5a96d3bd56b33d30d6bf40fc5f7a77622a34371703eec8ae7f1abc16a46d",
+          "bytes": 484
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactController.java",
+          "tracked": false,
+          "sha256": "9a431670d3b388887dcbde98886ae0f02495b4e8b82d86a6971c33161e9231c5",
+          "bytes": 4426
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactDocuments.java",
+          "tracked": false,
+          "sha256": "44016752009a45ed6d19da197974c095e964902e8d63499bc9d4ee89ca825bc8",
+          "bytes": 6343
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactExecutionContext.java",
+          "tracked": false,
+          "sha256": "075d6a27fad6dcfb7a4b968527c5b4b6b162592fb3b03eb75c68892f8c6caed4",
+          "bytes": 1339
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactHostConfiguration.java",
+          "tracked": false,
+          "sha256": "576cb03b4cf73dd45cc9c71d1180375dc41600fef89bac85af4615697c9f1129",
+          "bytes": 2046
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactProblemAdvice.java",
+          "tracked": false,
+          "sha256": "e339b53a96861aa51ecdf4fdda6a60b60541476fba3f5addb14e1c65c4440456",
+          "bytes": 2119
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactService.java",
+          "tracked": false,
+          "sha256": "6eea339be6e3b8d449c31f2750af547a8bd0ce2f739adb6103cff3ea8ea79cbe",
+          "bytes": 6277
+        },
+        {
+          "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/JdbcFactStore.java",
+          "tracked": false,
+          "sha256": "8d9a678666001ec5c06bc793fb4c26dbef0b82b1537b116cf3fa40d23cb9d80f",
+          "bytes": 10829
+        },
+        {
+          "path": "openrule-studio-server/src/main/resources/application.yml",
+          "tracked": true,
+          "sha256": "c0c0836f682eb5b1691391e1ef0a804e2070e3e2d7e36bc497080ed1d483cc22",
+          "bytes": 493
+        },
+        {
+          "path": "openrule-studio-server/src/main/resources/db/studio/V2__fact_tables.sql",
+          "tracked": false,
+          "sha256": "69f9c24c218e60015f7569971f13c7b0b5af1261a4f71f2f08464d9d194450d2",
+          "bytes": 1217
+        },
+        {
+          "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/ControlledProvider.java",
+          "tracked": false,
+          "sha256": "0a2eaffcecbc8466c672d6833c20c02458423d0d90bfefa7ce0b4a6e2644fa0a",
+          "bytes": 2772
+        },
+        {
+          "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactDocumentsTest.java",
+          "tracked": false,
+          "sha256": "666017673fa270b3b7d23b204f6bd9fb93a573b161f552618f6cdb6bbd23d6c5",
+          "bytes": 2416
+        },
+        {
+          "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactHostIT.java",
+          "tracked": false,
+          "sha256": "c9674376205682e89a8b3f04c2ef6fed166b1bd50f0a36eb3ced3a8367a86ac5",
+          "bytes": 36926
+        },
+        {
+          "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactRestartIT.java",
+          "tracked": false,
+          "sha256": "75c9cc1748bedefaee63bda48e6530ced60c3a45d68433b1be791ac7034feb28",
+          "bytes": 7756
+        },
+        {
+          "path": "pom.xml",
+          "tracked": true,
+          "sha256": "1147bae72faeb818441f40fee9c6c68cedac2d459f54224ca928a44bd9622023",
+          "bytes": 4099
+        },
+        {
+          "path": "scripts/StudioM1SchemaCheck.java",
+          "tracked": true,
+          "sha256": "b84fff71a08363d622649c439a6ce98ea856c1f47e0d65e73304edd2ae81164c",
+          "bytes": 2825
+        },
+        {
+          "path": "scripts/build_studio_m1_contract.py",
+          "tracked": true,
+          "sha256": "8fe115a6a30572eb6f42d09a2882f7f8ae98958b0a78c39c434a69193568aef6",
+          "bytes": 14426
+        },
+        {
+          "path": "scripts/build_studio_m1_fixtures.py",
+          "tracked": true,
+          "sha256": "5e5f4345276ce8fd758995e46945a2fcae927ce1fb95b364f046d016cae1b3d2",
+          "bytes": 9918
+        },
+        {
+          "path": "scripts/m2-v1-connect-http.py",
+          "tracked": false,
+          "sha256": "a69c4d47daaf9c0bcf0e1649cf6b63f94f16dee8592e30ed83a5e9051089fde7",
+          "bytes": 3389
+        },
+        {
+          "path": "scripts/m2-v1-connect.nginx.conf",
+          "tracked": false,
+          "sha256": "9a11768139bd33d7a5a125ea3302ce4c36345390fd77750350c9d0f194ad619e",
+          "bytes": 130
+        },
+        {
+          "path": "scripts/m2-v1-http.py",
+          "tracked": false,
+          "sha256": "65e118b8dd83e5f3e556aecd083e93d7e7aac2ccde08de7529bf7fec305fb296",
+          "bytes": 11701
+        },
+        {
+          "path": "scripts/m2-v1-integrity.py",
+          "tracked": false,
+          "sha256": "76bbf28664f1139e16501040acffe1bb6343e8e78cfa87ebd9fad109c1c19656",
+          "bytes": 13369
+        },
+        {
+          "path": "scripts/m2-v1-restart.py",
+          "tracked": false,
+          "sha256": "84b6730e01a1a6daf300544ee56b2cb0d6b7f5bdc3b21102c38dc5d2ab63a1b9",
+          "bytes": 4774
+        },
+        {
+          "path": "scripts/start-studio-m2.sh",
+          "tracked": false,
+          "sha256": "6b5ec0865046e675c4f97ee84eed19f61fa393aa8720d855876ad9de1483d382",
+          "bytes": 465
+        },
+        {
+          "path": "scripts/studio-m1-validation-pom.xml",
+          "tracked": true,
+          "sha256": "c3ffbd2e536aa6a0df7ad559179f69afad782c011a8aa5db9016b74b8ce73b96",
+          "bytes": 809
+        },
+        {
+          "path": "scripts/studio-m2-seed.py",
+          "tracked": false,
+          "sha256": "880aa5243517c7565bf9b39a4abb8fd127afb44a15a36f8f5ed4dffd082b7423",
+          "bytes": 3911
+        },
+        {
+          "path": "scripts/studio-m2-upstream.py",
+          "tracked": false,
+          "sha256": "609521b66280f67f1288b99078bfe71288f6fa5194504aabceeb66b14b74e7ad",
+          "bytes": 2516
+        },
+        {
+          "path": "scripts/studio_m1_checksum.py",
+          "tracked": true,
+          "sha256": "4d0bd956b9d1147370819f596da941becb4343e8d2f698fa11ddfb00c12df458",
+          "bytes": 1649
+        },
+        {
+          "path": "scripts/v1-acceptance.mjs",
+          "tracked": true,
+          "sha256": "de352271c2579387fdb5e8e8cbb28a85a9767fcef14609dcff6454cbaf46697d",
+          "bytes": 10961
+        },
+        {
+          "path": "scripts/v1-extra-acceptance.mjs",
+          "tracked": true,
+          "sha256": "bf99c1b792db9cddbe97b6ea4f2ab6f889ba5af2ee4b6e368dad5f7847274445",
+          "bytes": 4249
+        },
+        {
+          "path": "scripts/v1-persistence-check.mjs",
+          "tracked": true,
+          "sha256": "976030a0ba432cb1860fb3e7b751bd106cd932efd205e6988392f4515a2f8d9a",
+          "bytes": 4053
+        },
+        {
+          "path": "scripts/validate-studio-m1.sh",
+          "tracked": true,
+          "sha256": "5ffd99837f0026022f151c12589880256e2c764ad924f0ae3cb1d5cb0f3e57d0",
+          "bytes": 448
+        },
+        {
+          "path": "scripts/validate_studio_m1_openapi.py",
+          "tracked": true,
+          "sha256": "f85e5946393ae208f2151e142d81f895724e6977a2f3c4cb4216ed0b19ca8962",
+          "bytes": 5779
+        }
+      ]
+    },
+    {
+      "root": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio",
+      "HEAD": "1c520ca753213a8fea95bd1976887fe1a8c84c02",
+      "status": " M README.md\n M src/App.vue\n M src/api/client.ts\n M src/api/lossless.ts\n M src/app/router.ts\n M src/features/editor/FlowEditorPage.vue\n M src/features/editor/state.ts\n M src/style.css\n M tests/lossless.test.mjs\n M vite.config.ts\n?? dev/contractMock.mjs\n?? dev/fixtures/SOURCES.json\n?? dev/fixtures/catalog.json\n?? dev/fixtures/deadline-before-core.error.json\n?? dev/fixtures/m1-complete.request.json\n?? dev/fixtures/m1-normal.response.json\n?? dev/fixtures/mock-test.response.json\n?? dev/fixtures/mock.response.json\n?? dev/fixtures/normal.response.json\n?? dev/fixtures/order-admission.required-facts.json\n?? dev/fixtures/partial.response.json\n?? dev/fixtures/precision.provider.json\n?? dev/fixtures/precision.response.json\n?? dev/fixtures/provider-mock-test.request.json\n?? dev/fixtures/provider-timeout.response.json\n?? dev/fixtures/risk-profile-mock.provider.json\n?? dev/fixtures/risk-profile.provider.json\n?? dev/fixtures/scenarios.json\n?? dev/fixtures/technical-failure.error.json\n?? docs/M2-F1-HANDOFF.md\n?? output/m2-f1-real/browser-summary.json\n?? output/m2-f1-real/checks.json\n?? output/m2-f1-real/core-failed-after.json\n?? output/m2-f1-real/core-failed-before.json\n?? output/m2-f1-real/core-failed-control.json\n?? output/m2-f1-real/core-failed-requests.txt\n?? output/m2-f1-real/core-failed-snapshot.txt\n?? output/m2-f1-real/deadline-after.json\n?? output/m2-f1-real/deadline-before.json\n?? output/m2-f1-real/deadline-control.json\n?? output/m2-f1-real/deadline-requests.txt\n?? output/m2-f1-real/deadline-snapshot.txt\n?? output/m2-f1-real/disabled-after.json\n?? output/m2-f1-real/disabled-before.json\n?? output/m2-f1-real/disabled-control.json\n?? output/m2-f1-real/disabled-requests.txt\n?? output/m2-f1-real/disabled-snapshot.txt\n?? output/m2-f1-real/draft-v3.json\n?? output/m2-f1-real/environment.json\n?? output/m2-f1-real/existing-after.json\n?? output/m2-f1-real/existing-before.json\n?? output/m2-f1-real/existing-control.json\n?? output/m2-f1-real/existing-requests.txt\n?? output/m2-f1-real/existing-snapshot.txt\n?? output/m2-f1-real/fact-cas-conflict.txt\n?? output/m2-f1-real/fact-cas-external.json\n?? output/m2-f1-real/fact-created.txt\n?? output/m2-f1-real/fact-dialog-640-interaction.txt\n?? output/m2-f1-real/fact-dialog-640-measure.txt\n?? output/m2-f1-real/fact-mapping-reload.txt\n?? output/m2-f1-real/fact-page2.txt\n?? output/m2-f1-real/fact-provider-filter.txt\n?? output/m2-f1-real/fact-search.txt\n?? output/m2-f1-real/facts-1440x900-viewport.txt\n?? output/m2-f1-real/facts-1920x1080-viewport.txt\n?? output/m2-f1-real/facts-640x900-viewport.txt\n?? output/m2-f1-real/final-request-67.json\n?? output/m2-f1-real/final-request-69.json\n?? output/m2-f1-real/final-response-67.json\n?? output/m2-f1-real/final-response-69.json\n?? output/m2-f1-real/full-after.json\n?? output/m2-f1-real/full-before.json\n?? output/m2-f1-real/full-control.json\n?? output/m2-f1-real/full-requests.txt\n?? output/m2-f1-real/full-snapshot.txt\n?? output/m2-f1-real/http-provider-created.txt\n?? output/m2-f1-real/http-provider-disabled.txt\n?? output/m2-f1-real/http-provider-reload.txt\n?? output/m2-f1-real/m1-after.json\n?? output/m2-f1-real/m1-before.json\n?? output/m2-f1-real/m1-control.json\n?? output/m2-f1-real/m1-edit-reload.txt\n?? output/m2-f1-real/m1-edit-saved.txt\n?? output/m2-f1-real/m1-missing-after.json\n?? output/m2-f1-real/m1-missing-before.json\n?? output/m2-f1-real/m1-missing-control.json\n?? output/m2-f1-real/m1-missing-requests.txt\n?? output/m2-f1-real/m1-missing-snapshot.txt\n?? output/m2-f1-real/m1-next-draft.txt\n?? output/m2-f1-real/m1-published.txt\n?? output/m2-f1-real/m1-requests.txt\n?? output/m2-f1-real/m1-snapshot.txt\n?? output/m2-f1-real/mapping-after.json\n?? output/m2-f1-real/mapping-before.json\n?? output/m2-f1-real/mapping-network-failure.txt\n?? output/m2-f1-real/mapping-success.txt\n?? output/m2-f1-real/missing-buyer-after.json\n?? output/m2-f1-real/missing-buyer-before.json\n?? output/m2-f1-real/missing-buyer-control.json\n?? output/m2-f1-real/missing-buyer-requests.txt\n?? output/m2-f1-real/missing-buyer-snapshot.txt\n?? output/m2-f1-real/mock-after.json\n?? output/m2-f1-real/mock-before.json\n?? output/m2-f1-real/mock-control.json\n?? output/m2-f1-real/mock-requests.txt\n?? output/m2-f1-real/mock-snapshot.txt\n?? output/m2-f1-real/normal-final-after.json\n?? output/m2-f1-real/normal-final-before.json\n?? output/m2-f1-real/normal-final-control.json\n?? output/m2-f1-real/normal-final-requests.txt\n?? output/m2-f1-real/normal-final-snapshot.txt\n?? output/m2-f1-real/null-after.json\n?? output/m2-f1-real/null-before.json\n?? output/m2-f1-real/null-control.json\n?? output/m2-f1-real/null-requests.txt\n?? output/m2-f1-real/null-snapshot.txt\n?? output/m2-f1-real/partial-after.json\n?? output/m2-f1-real/partial-before.json\n?? output/m2-f1-real/partial-control.json\n?? output/m2-f1-real/partial-requests.txt\n?? output/m2-f1-real/partial-snapshot.txt\n?? output/m2-f1-real/preflight.json\n?? output/m2-f1-real/prototype-facts-1440x900-viewport.txt\n?? output/m2-f1-real/prototype-facts-1920x1080-viewport.txt\n?? output/m2-f1-real/prototype-facts-640x900-viewport.txt\n?? output/m2-f1-real/prototype-providers-1440x900-viewport.txt\n?? output/m2-f1-real/prototype-providers-1920x1080-viewport.txt\n?? output/m2-f1-real/prototype-providers-640x900-viewport.txt\n?? output/m2-f1-real/prototype-simulate-1440x900-viewport.txt\n?? output/m2-f1-real/prototype-simulate-1920x1080-viewport.txt\n?? output/m2-f1-real/prototype-simulate-640x900-viewport.txt\n?? output/m2-f1-real/provider-cas-conflict.txt\n?? output/m2-f1-real/provider-cas-external.json\n?? output/m2-f1-real/provider-continue-edit.txt\n?? output/m2-f1-real/provider-created-reload.txt\n?? output/m2-f1-real/provider-created.txt\n?? output/m2-f1-real/provider-delayed-after.txt\n?? output/m2-f1-real/provider-delayed-before.txt\n?? output/m2-f1-real/provider-delayed-reload.txt\n?? output/m2-f1-real/provider-delayed-resaved.txt\n?? output/m2-f1-real/provider-dialog-640-interaction.txt\n?? output/m2-f1-real/provider-dialog-640-measure.txt\n?? output/m2-f1-real/provider-disabled.txt\n?? output/m2-f1-real/provider-enabled.txt\n?? output/m2-f1-real/provider-precision-reload.txt\n?? output/m2-f1-real/provider-precision-saved.txt\n?? output/m2-f1-real/provider-response-loss-requests.txt\n?? output/m2-f1-real/provider-response-loss.txt\n?? output/m2-f1-real/provider-route-cancel.txt\n?? output/m2-f1-real/provider-route-guard.txt\n?? output/m2-f1-real/provider-search-refresh.txt\n?? output/m2-f1-real/providers-1440x900-viewport.txt\n?? output/m2-f1-real/providers-1920x1080-viewport.txt\n?? output/m2-f1-real/providers-640x900-viewport.txt\n?? output/m2-f1-real/published-v2.json\n?? output/m2-f1-real/request-73.json\n?? output/m2-f1-real/request-75.json\n?? output/m2-f1-real/request-77.json\n?? output/m2-f1-real/request-79.json\n?? output/m2-f1-real/request-81.json\n?? output/m2-f1-real/request-83.json\n?? output/m2-f1-real/request-85.json\n?? output/m2-f1-real/request-87.json\n?? output/m2-f1-real/request-89.json\n?? output/m2-f1-real/request-91.json\n?? output/m2-f1-real/response-73.json\n?? output/m2-f1-real/response-75.json\n?? output/m2-f1-real/response-77.json\n?? output/m2-f1-real/response-79.json\n?? output/m2-f1-real/response-81.json\n?? output/m2-f1-real/response-83.json\n?? output/m2-f1-real/response-85.json\n?? output/m2-f1-real/response-87.json\n?? output/m2-f1-real/response-89.json\n?? output/m2-f1-real/response-91.json\n?? output/m2-f1-real/simulation-1440x900-viewport.txt\n?? output/m2-f1-real/simulation-1920x1080-viewport.txt\n?? output/m2-f1-real/simulation-640x900-viewport.txt\n?? output/m2-f1-real/stale-budget.txt\n?? output/m2-f1-real/stale-http-after.json\n?? output/m2-f1-real/stale-http-before.json\n?? output/m2-f1-real/stale-input.txt\n?? output/m2-f1-real/stale-rerun-requests.txt\n?? output/m2-f1-real/stale-rerun.txt\n?? output/m2-f1-real/timeout-after.json\n?? output/m2-f1-real/timeout-before.json\n?? output/m2-f1-real/timeout-control.json\n?? output/m2-f1-real/timeout-requests.txt\n?? output/m2-f1-real/timeout-snapshot.txt\n?? output/m2-f1-real/type-after.json\n?? output/m2-f1-real/type-before.json\n?? output/m2-f1-real/type-control.json\n?? output/m2-f1-real/type-requests.txt\n?? output/m2-f1-real/type-snapshot.txt\n?? output/m2-f1-real/validate-responses.py\n?? output/m2-f1/scenario-results.json\n?? output/m2-f1/viewport-evidence.json\n?? output/m2-v1/browser-acceptance.json\n?? output/m2-v1/browser-acceptance.md\n?? output/m2-v1/dirty-provider-dom.txt\n?? output/m2-v1/editor-faults-browser.txt\n?? output/m2-v1/editor-faults-final-dom.txt\n?? output/m2-v1/editor-faults-network.txt\n?? output/m2-v1/editor-faults-rerun.txt\n?? output/m2-v1/extra-browser-locations.txt\n?? output/m2-v1/extra-browser.mjs\n?? output/m2-v1/facts-1440x900-viewport.txt\n?? output/m2-v1/facts-1920x1080-viewport.txt\n?? output/m2-v1/facts-640x900-viewport.txt\n?? output/m2-v1/facts-dom.txt\n?? output/m2-v1/frontend-mock-isolation-result.json\n?? output/m2-v1/guard-browser-rerun.txt\n?? output/m2-v1/guard-browser.txt\n?? output/m2-v1/m1-full-after.json\n?? output/m2-v1/m1-full-before.json\n?? output/m2-v1/m1-full-dom.txt\n?? output/m2-v1/mf01-after.json\n?? output/m2-v1/mf01-before.json\n?? output/m2-v1/mf01-control.json\n?? output/m2-v1/mf01-dom.txt\n?? output/m2-v1/mf02-after.json\n?? output/m2-v1/mf02-before.json\n?? output/m2-v1/mf02-control.json\n?? output/m2-v1/mf02-dom.txt\n?? output/m2-v1/mf02-network.txt\n?? output/m2-v1/mf04-after.json\n?? output/m2-v1/mf04-before.json\n?? output/m2-v1/mf04-control.json\n?? output/m2-v1/mf04-dom.txt\n?? output/m2-v1/mf04-network.txt\n?? output/m2-v1/mf05-after.json\n?? output/m2-v1/mf05-before.json\n?? output/m2-v1/mf05-control.json\n?? output/m2-v1/mf05-dom.txt\n?? output/m2-v1/mf05-network.txt\n?? output/m2-v1/mf06-after.json\n?? output/m2-v1/mf06-before.json\n?? output/m2-v1/mf06-control.json\n?? output/m2-v1/mf06-dom.txt\n?? output/m2-v1/mf06-network.txt\n?? output/m2-v1/mf08-after.json\n?? output/m2-v1/mf08-before.json\n?? output/m2-v1/mf08-control.json\n?? output/m2-v1/mf08-dom.txt\n?? output/m2-v1/mf08-network.txt\n?? output/m2-v1/mf09-after.json\n?? output/m2-v1/mf09-before.json\n?? output/m2-v1/mf09-control.json\n?? output/m2-v1/mf09-dom.txt\n?? output/m2-v1/mf09-network.txt\n?? output/m2-v1/mf10-after.json\n?? output/m2-v1/mf10-before.json\n?? output/m2-v1/mf10-control.json\n?? output/m2-v1/mf10-dom.txt\n?? output/m2-v1/mf10-network.txt\n?? output/m2-v1/mf18-after.json\n?? output/m2-v1/mf18-before.json\n?? output/m2-v1/mf18-control.json\n?? output/m2-v1/mf18-dom.txt\n?? output/m2-v1/mf18-network.txt\n?? output/m2-v1/mf19-after.json\n?? output/m2-v1/mf19-before.json\n?? output/m2-v1/mf19-dom.txt\n?? output/m2-v1/mf19-network.txt\n?? output/m2-v1/mf21-after.json\n?? output/m2-v1/mf21-before.json\n?? output/m2-v1/mf21-control.json\n?? output/m2-v1/mf21-dom.txt\n?? output/m2-v1/mf21-network.txt\n?? output/m2-v1/mock-restored-dom.txt\n?? output/m2-v1/order-browser.mjs\n?? output/m2-v1/order-browser.txt\n?? output/m2-v1/order-ui-manifest.json\n?? output/m2-v1/precision-mock-browser.txt\n?? output/m2-v1/prototype-dom.txt\n?? output/m2-v1/prototype-facts-1440x900-viewport.txt\n?? output/m2-v1/prototype-facts-1920x1080-viewport.txt\n?? output/m2-v1/prototype-facts-640x900-viewport.txt\n?? output/m2-v1/prototype-providers-1440x900-viewport.txt\n?? output/m2-v1/prototype-providers-1920x1080-viewport.txt\n?? output/m2-v1/prototype-providers-640x900-viewport.txt\n?? output/m2-v1/prototype-simulate-1440x900-viewport.txt\n?? output/m2-v1/prototype-simulate-1920x1080-viewport.txt\n?? output/m2-v1/prototype-simulate-640x900-viewport.txt\n?? output/m2-v1/provider-cas-browser.txt\n?? output/m2-v1/provider-late-browser.txt\n?? output/m2-v1/provider-lost-browser.txt\n?? output/m2-v1/provider-lost-final-get.json\n?? output/m2-v1/provider-lost-followup-dom.txt\n?? output/m2-v1/provider-lost-network.txt\n?? output/m2-v1/provider-lost-recovered-dom.txt\n?? output/m2-v1/provider-lost-rerun.txt\n?? output/m2-v1/provider-precision-browser.txt\n?? output/m2-v1/provider-restored-dom.txt\n?? output/m2-v1/providers-1440x900-viewport.txt\n?? output/m2-v1/providers-1920x1080-viewport.txt\n?? output/m2-v1/providers-640x900-viewport.txt\n?? output/m2-v1/providers-dom.txt\n?? output/m2-v1/redaction-control.json\n?? output/m2-v1/redaction-stale-browser-rerun.txt\n?? output/m2-v1/redaction-stale-browser.txt\n?? output/m2-v1/report-visual-browser.txt\n?? output/m2-v1/restrictions-browser.txt\n?? output/m2-v1/result-failure-browser.txt\n?? output/m2-v1/result-late-browser.txt\n?? output/m2-v1/result-late-control.json\n?? output/m2-v1/simulation-1440x900-viewport.txt\n?? output/m2-v1/simulation-1920x1080-viewport.txt\n?? output/m2-v1/simulation-640x900-viewport.txt\n?? output/playwright/m2-f1-deadline-1440x900.png\n?? output/playwright/m2-f1-fact-cas-1440x900.png\n?? output/playwright/m2-f1-fact-saved-1440x900.png\n?? output/playwright/m2-f1-facts-1440x900.png\n?? output/playwright/m2-f1-facts-1920x1080.png\n?? output/playwright/m2-f1-facts-640x900.png\n?? output/playwright/m2-f1-mapping-test-1440x900.png\n?? output/playwright/m2-f1-mock-1440x900.png\n?? output/playwright/m2-f1-mock-provider-1440x900.png\n?? output/playwright/m2-f1-normal-1440x900.png\n?? output/playwright/m2-f1-partial-1440x900.png\n?? output/playwright/m2-f1-precision-1440x900.png\n?? output/playwright/m2-f1-prototype-facts-1440x900.png\n?? output/playwright/m2-f1-prototype-facts-1920x1080.png\n?? output/playwright/m2-f1-prototype-facts-640x900.png\n?? output/playwright/m2-f1-prototype-providers-1440x900.png\n?? output/playwright/m2-f1-prototype-providers-1920x1080.png\n?? output/playwright/m2-f1-prototype-providers-640x900.png\n?? output/playwright/m2-f1-prototype-simulate-1440x900.png\n?? output/playwright/m2-f1-prototype-simulate-1920x1080.png\n?? output/playwright/m2-f1-prototype-simulate-640x900.png\n?? output/playwright/m2-f1-provider-config-1440x900.png\n?? output/playwright/m2-f1-provider-precision-1440x900.png\n?? output/playwright/m2-f1-provider-timeout-1440x900.png\n?? output/playwright/m2-f1-providers-1440x900.png\n?? output/playwright/m2-f1-providers-1920x1080.png\n?? output/playwright/m2-f1-providers-640x900.png\n?? output/playwright/m2-f1-real-fact-dialog-640x900.png\n?? output/playwright/m2-f1-real-facts-1440x900.png\n?? output/playwright/m2-f1-real-facts-1920x1080.png\n?? output/playwright/m2-f1-real-facts-640x900.png\n?? output/playwright/m2-f1-real-normal-final.png\n?? output/playwright/m2-f1-real-prototype-facts-1440x900.png\n?? output/playwright/m2-f1-real-prototype-facts-1920x1080.png\n?? output/playwright/m2-f1-real-prototype-facts-640x900.png\n?? output/playwright/m2-f1-real-prototype-providers-1440x900.png\n?? output/playwright/m2-f1-real-prototype-providers-1920x1080.png\n?? output/playwright/m2-f1-real-prototype-providers-640x900.png\n?? output/playwright/m2-f1-real-prototype-simulate-1440x900.png\n?? output/playwright/m2-f1-real-prototype-simulate-1920x1080.png\n?? output/playwright/m2-f1-real-prototype-simulate-640x900.png\n?? output/playwright/m2-f1-real-provider-cas-640x900.png\n?? output/playwright/m2-f1-real-provider-dialog-640x900.png\n?? output/playwright/m2-f1-real-providers-1440x900.png\n?? output/playwright/m2-f1-real-providers-1920x1080.png\n?? output/playwright/m2-f1-real-providers-640x900.png\n?? output/playwright/m2-f1-real-report-1440x900.png\n?? output/playwright/m2-f1-real-report-1920x1080.png\n?? output/playwright/m2-f1-real-report-640x900.png\n?? output/playwright/m2-f1-real-simulation-1440x900.png\n?? output/playwright/m2-f1-real-simulation-1920x1080.png\n?? output/playwright/m2-f1-real-simulation-640x900.png\n?? output/playwright/m2-f1-simulation-1440x900.png\n?? output/playwright/m2-f1-simulation-1920x1080.png\n?? output/playwright/m2-f1-simulation-640x900.png\n?? output/playwright/m2-f1-technical-failure-1440x900.png\n?? output/playwright/m2-v1-editor-cas-rerun.png\n?? output/playwright/m2-v1-editor-cas.png\n?? output/playwright/m2-v1-editor-publish-lost-rerun.png\n?? output/playwright/m2-v1-editor-publish-lost.png\n?? output/playwright/m2-v1-fact-identity.png\n?? output/playwright/m2-v1-facts-1440x900.png\n?? output/playwright/m2-v1-facts-1920x1080.png\n?? output/playwright/m2-v1-facts-640x900.png\n?? output/playwright/m2-v1-mf12.png\n?? output/playwright/m2-v1-mf15.png\n?? output/playwright/m2-v1-order-result-15.png\n?? output/playwright/m2-v1-order-result-35.png\n?? output/playwright/m2-v1-order-result-75.png\n?? output/playwright/m2-v1-order-score-45-to-5.png\n?? output/playwright/m2-v1-precision-mock-report.png\n?? output/playwright/m2-v1-prototype-facts-1440x900.png\n?? output/playwright/m2-v1-prototype-facts-1920x1080.png\n?? output/playwright/m2-v1-prototype-facts-640x900.png\n?? output/playwright/m2-v1-prototype-providers-1440x900.png\n?? output/playwright/m2-v1-prototype-providers-1920x1080.png\n?? output/playwright/m2-v1-prototype-providers-640x900.png\n?? output/playwright/m2-v1-prototype-simulate-1440x900.png\n?? output/playwright/m2-v1-prototype-simulate-1920x1080.png\n?? output/playwright/m2-v1-prototype-simulate-640x900.png\n?? output/playwright/m2-v1-provider-cas.png\n?? output/playwright/m2-v1-provider-late.png\n?? output/playwright/m2-v1-provider-lost-rerun.png\n?? output/playwright/m2-v1-provider-precision.png\n?? output/playwright/m2-v1-providers-1440x900.png\n?? output/playwright/m2-v1-providers-1920x1080.png\n?? output/playwright/m2-v1-providers-640x900.png\n?? output/playwright/m2-v1-reordered-bin-location.png\n?? output/playwright/m2-v1-reordered-conflict-location.png\n?? output/playwright/m2-v1-report-1440x900.png\n?? output/playwright/m2-v1-report-1920x1080.png\n?? output/playwright/m2-v1-report-640x900.png\n?? output/playwright/m2-v1-report-stale-redacted.png\n?? output/playwright/m2-v1-result-failure.png\n?? output/playwright/m2-v1-result-late.png\n?? output/playwright/m2-v1-simulation-1440x900.png\n?? output/playwright/m2-v1-simulation-1920x1080.png\n?? output/playwright/m2-v1-simulation-640x900.png\n?? output/playwright/v1-editor-all-match.png\n?? output/playwright/v1-final-result-15.png\n?? output/playwright/v1-final-result-35.png\n?? output/playwright/v1-final-score-45-to-5.png\n?? output/playwright/v1-incomplete-publish-rejected.png\n?? output/playwright/v1-late-result-stale.png\n?? output/playwright/v1-oa-07-failure.png\n?? output/playwright/v1-oa-08-failure.png\n?? output/playwright/v1-oa-09-failure.png\n?? output/playwright/v1-precision-execution.png\n?? output/playwright/v1-prototype-1440x900-decisiontable.png\n?? output/playwright/v1-prototype-1440x900-ruleset.png\n?? output/playwright/v1-prototype-1920x1080-canvas.png\n?? output/playwright/v1-prototype-1920x1080-decisiontable.png\n?? output/playwright/v1-prototype-1920x1080-ruleset.png\n?? output/playwright/v1-prototype-1920x1080-scorecard.png\n?? output/playwright/v1-prototype-640x900-canvas.png\n?? output/playwright/v1-prototype-640x900-decisiontable.png\n?? output/playwright/v1-prototype-640x900-ruleset.png\n?? output/playwright/v1-prototype-640x900-scorecard.png\n?? output/playwright/v1-prototype-canvas-1440.png\n?? output/playwright/v1-prototype-scorecard-1440.png\n?? output/playwright/v1-publish-cas-conflict.png\n?? output/playwright/v1-publish-confirm.png\n?? output/playwright/v1-published-v1-readonly.png\n?? output/playwright/v1-published-v2-readonly.png\n?? output/playwright/v1-request-timeout.png\n?? output/playwright/v1-result-15.png\n?? output/playwright/v1-result-35.png\n?? output/playwright/v1-result-75.png\n?? output/playwright/v1-revalidate-actual-revision.png\n?? output/playwright/v1-save-cas-conflict.png\n?? output/playwright/v1-save-failure.png\n?? output/playwright/v1-save-late-edit.png\n?? output/playwright/v1-score-45-to-5.png\n?? output/playwright/v1-validation-bin.png\n?? output/playwright/v1-validation-parallel.png\n?? output/playwright/v1-visual-1440x900-condition.png\n?? output/playwright/v1-visual-1920x1080-condition.png\n?? output/playwright/v1-visual-1920x1080-decisiontable.png\n?? output/playwright/v1-visual-1920x1080-execution-35.png\n?? output/playwright/v1-visual-1920x1080-execution-details.png\n?? output/playwright/v1-visual-1920x1080-publish-confirm.png\n?? output/playwright/v1-visual-1920x1080-published-readonly.png\n?? output/playwright/v1-visual-1920x1080-published-scorecard.png\n?? output/playwright/v1-visual-1920x1080-ruleset.png\n?? output/playwright/v1-visual-1920x1080-scorecard.png\n?? output/playwright/v1-visual-640x900-condition.png\n?? output/playwright/v1-visual-640x900-decisiontable.png\n?? output/playwright/v1-visual-640x900-execution-35.png\n?? output/playwright/v1-visual-640x900-execution-details.png\n?? output/playwright/v1-visual-640x900-publish-confirm.png\n?? output/playwright/v1-visual-640x900-published-readonly.png\n?? output/playwright/v1-visual-640x900-published-scorecard.png\n?? output/playwright/v1-visual-640x900-ruleset.png\n?? output/v1/browser-bin-location.txt\n?? output/v1/browser-conflicts-run.txt\n?? output/v1/browser-conflicts.txt\n?? output/v1/browser-edit-35.txt\n?? output/v1/browser-edit-publish.txt\n?? output/v1/browser-orders.txt\n?? output/v1/browser-parallel-location.txt\n?? output/v1/browser-publication.txt\n?? output/v1/browser-publish-v2.txt\n?? output/v1/browser-save-lost-before.txt\n?? output/v1/browser-saves-final.txt\n?? output/v1/browser-saves-run.txt\n?? output/v1/browser-saves.txt\n?? output/v1/browser-simulations.txt\n?? output/v1/browser-visual-before.txt\n?? output/v1/close-browser-conditions-and-editors.txt\n?? output/v1/close-browser-conflicts-retry.txt\n?? output/v1/close-browser-conflicts.txt\n?? output/v1/close-browser-editors.txt\n?? output/v1/close-browser-locations.txt\n?? output/v1/close-browser-orders.txt\n?? output/v1/close-browser-publication.txt\n?? output/v1/close-browser-saves-retry.txt\n?? output/v1/close-browser-saves.txt\n?? output/v1/close-browser-simulations-retry.txt\n?? output/v1/close-browser-simulations.txt\n?? output/v1/close-fault-seed.txt\n?? output/v1/close-idle-load.json\n?? output/v1/close-load-summary.json\n?? output/v1/close-memory-ranking.txt\n?? output/v1/close-visual-1440x900.txt\n?? output/v1/close-visual-1920x1080.txt\n?? output/v1/close-visual-640x900.txt\n?? output/v1/editor-browser-run-fixed.txt\n?? output/v1/editor-browser-run.txt\n?? output/v1/editor-browser.txt\n?? output/v1/extra-browser-incomplete.txt\n?? output/v1/extra-browser-locations.txt\n?? output/v1/extra-browser-precision.txt\n?? output/v1/extra-run-incomplete-fixed.txt\n?? output/v1/extra-run-incomplete.txt\n?? output/v1/extra-run-locations.txt\n?? output/v1/extra-run-precision.txt\n?? output/v1/final-browser-orders.txt\n?? output/v1/final-frontend-build.txt\n?? output/v1/final-frontend-lint.txt\n?? output/v1/final-frontend-test.txt\n?? output/v1/final-frontend-typecheck.txt\n?? output/v1/final-order-run.txt\n?? output/v1/final-ui-manifest.json\n?? output/v1/frontend-build-after-pause.txt\n?? output/v1/frontend-build.txt\n?? output/v1/frontend-lint-after-pause.txt\n?? output/v1/frontend-lint.txt\n?? output/v1/frontend-test-after-pause.txt\n?? output/v1/frontend-test.txt\n?? output/v1/frontend-typecheck-after-pause.txt\n?? output/v1/frontend-typecheck.txt\n?? output/v1/hmr-after-fix.txt\n?? output/v1/hmr-before-fix.txt\n?? output/v1/hmr-bounded-check.txt\n?? output/v1/hmr-probe.jsonl\n?? output/v1/prototype-capture-final.txt\n?? output/v1/prototype-capture-run.txt\n?? output/v1/prototype-captures.txt\n?? output/v1/proxy-events.jsonl\n?? output/v1/proxy-fuse-check.txt\n?? output/v1/proxy-resumed-server.txt\n?? output/v1/proxy-server.txt\n?? output/v1/proxy-vite.txt\n?? output/v1/resumed-browser-conflicts.txt\n?? output/v1/resumed-browser-publication.txt\n?? output/v1/resumed-browser-saves.txt\n?? output/v1/resumed-browser-simulations-fixed.txt\n?? output/v1/resumed-browser-simulations.txt\n?? output/v1/resumed-load-summary.json\n?? output/v1/resumed-proxy-events.jsonl\n?? output/v1/stage-add.txt\n?? output/v1/stage-browser-check.txt\n?? output/v1/stage-browser-result.txt\n?? output/v1/stage-delete-confirmed.txt\n?? output/v1/stage-delete-dialog.txt\n?? output/v1/tailwind-scanned-evidence-files.txt\n?? output/v1/ui-live-results.txt\n?? output/v1/visual-1440x900.txt\n?? output/v1/visual-1920x1080.txt\n?? output/v1/visual-640x900.txt\n?? output/v1/visual-run-1440-fixed.txt\n?? output/v1/visual-run-1440.txt\n?? output/v1/visual-run-1920.txt\n?? output/v1/visual-run-640.txt\n?? scripts/validate-m2-mock-fixtures.py\n?? src/api/factTypes.ts\n?? src/api/facts.ts\n?? src/features/facts/FactCatalogPage.vue\n?? src/features/facts/components/ContractMockBanner.vue\n?? src/features/facts/components/FactResolutionPanel.vue\n?? src/features/facts/components/RequiredFactsPanel.vue\n?? src/features/facts/components/UnsavedDialog.vue\n?? src/features/facts/configState.ts\n?? src/features/facts/unsaved.ts\n?? src/features/facts/validation.ts\n?? src/features/providers/ProviderPage.vue\n?? tests/factApi.test.mjs\n?? tests/factState.test.mjs\n?? tests/m2ContractMock.test.mjs\n",
+      "files": [
+        {
+          "path": ".gitignore",
+          "tracked": true,
+          "sha256": "157ea4a1439a4343281994eda3d393d562c59470fc10e67cfc2ef1fd30d1aeca",
+          "bytes": 356
+        },
+        {
+          "path": ".vscode/extensions.json",
+          "tracked": true,
+          "sha256": "70d56b550e796e3ea92922763ae03037a1a94596fda9d737982c75f6a20e88dd",
+          "bytes": 39
+        },
+        {
+          "path": "README.md",
+          "tracked": true,
+          "sha256": "379e23166469d8c6e0c80782d377eeae02f7452937b3c16441c1d02f6e33cf58",
+          "bytes": 7695
+        },
+        {
+          "path": "components.json",
+          "tracked": true,
+          "sha256": "0227697400f501e0c83994ccc8d93051476007fa0ab177ce1f7ff85ebb4f21a8",
+          "bytes": 506
+        },
+        {
+          "path": "dev/contractMock.mjs",
+          "tracked": false,
+          "sha256": "9aa470c3f775ba8a3aaf9d3d344c5b07e50a62b7766f2104940da24d84c16801",
+          "bytes": 10732
+        },
+        {
+          "path": "dev/fixtures/SOURCES.json",
+          "tracked": false,
+          "sha256": "adde74432dd38313eb912e61c1e7d6a7184e3f90f40e0cde981028671d181b4c",
+          "bytes": 2315
+        },
+        {
+          "path": "dev/fixtures/catalog.json",
+          "tracked": false,
+          "sha256": "4f75133066d39c2c190ace466c114e66f14e1a3f6f89bc207011bd6d005e2ef6",
+          "bytes": 2131
+        },
+        {
+          "path": "dev/fixtures/deadline-before-core.error.json",
+          "tracked": false,
+          "sha256": "305458851d24e1d46091bb2db8ee2a41786f4d92d78ae5c61aa8f1423333cf78",
+          "bytes": 2623
+        },
+        {
+          "path": "dev/fixtures/m1-complete.request.json",
+          "tracked": false,
+          "sha256": "753284199f76dc4966c9bfd5be15362a08649f67321b0fdbffccafd89daea334",
+          "bytes": 376
+        },
+        {
+          "path": "dev/fixtures/m1-normal.response.json",
+          "tracked": false,
+          "sha256": "bb0bf332aaa0e42127157c7d574f6910152bb2131fcf42aced89cfd1738a6f81",
+          "bytes": 4435
+        },
+        {
+          "path": "dev/fixtures/mock-test.response.json",
+          "tracked": false,
+          "sha256": "32fff8358a051d69c830b168c4462a1456564dfcc4a9eb58c951e4929d5d46ec",
+          "bytes": 1544
+        },
+        {
+          "path": "dev/fixtures/mock.response.json",
+          "tracked": false,
+          "sha256": "e6ee961aa25f333c124368678139a3e43aa961daddd174384afa3eaa2ec1aa6b",
+          "bytes": 6991
+        },
+        {
+          "path": "dev/fixtures/normal.response.json",
+          "tracked": false,
+          "sha256": "9cb7844a1b57ff63a5cf2250a58149249c87ebef72c0d55cc3f65e7f33f3e188",
+          "bytes": 6991
+        },
+        {
+          "path": "dev/fixtures/order-admission.required-facts.json",
+          "tracked": false,
+          "sha256": "6354401be089c9bcdb38a3000ee8b41be94aa38cba658d739a8419aa2606315a",
+          "bytes": 3900
+        },
+        {
+          "path": "dev/fixtures/partial.response.json",
+          "tracked": false,
+          "sha256": "37b27e1ca82e50933f22ed1b80157dad2c199fa1ac107600aae84e89fd91fc8e",
+          "bytes": 6671
+        },
+        {
+          "path": "dev/fixtures/precision.provider.json",
+          "tracked": false,
+          "sha256": "7b46e77550696aa85f4ff6fa169a8853e9285fa9c52547e1562b70de919c4a0a",
+          "bytes": 748
+        },
+        {
+          "path": "dev/fixtures/precision.response.json",
+          "tracked": false,
+          "sha256": "20d08bbd26c2a839196823e32b180169fee418b29714675a23c6d2a08cf8ef2c",
+          "bytes": 7041
+        },
+        {
+          "path": "dev/fixtures/provider-mock-test.request.json",
+          "tracked": false,
+          "sha256": "a056d9e1e985869777745260f4ac93d573f20e6f666755f55d963da6d560bec2",
+          "bytes": 235
+        },
+        {
+          "path": "dev/fixtures/provider-timeout.response.json",
+          "tracked": false,
+          "sha256": "15a53f1eed67bf11833ada37ca350a8f3cfc0d8fb407e3fb0bed6c7f678fcd28",
+          "bytes": 6997
+        },
+        {
+          "path": "dev/fixtures/risk-profile-mock.provider.json",
+          "tracked": false,
+          "sha256": "78f1479773674b8216653f0b91cb456a94ad828ff51ff2e53bcdfc9ed079db2d",
+          "bytes": 517
+        },
+        {
+          "path": "dev/fixtures/risk-profile.provider.json",
+          "tracked": false,
+          "sha256": "6a2ed59d1503d6c4181b517416380417e119694ca20670e5cf764e0856a881e3",
+          "bytes": 698
+        },
+        {
+          "path": "dev/fixtures/scenarios.json",
+          "tracked": false,
+          "sha256": "744eef28cc9ea755d061a4e6d98a83284698c76936e9f7f79d49d7ab1dbda38f",
+          "bytes": 4157
+        },
+        {
+          "path": "dev/fixtures/technical-failure.error.json",
+          "tracked": false,
+          "sha256": "2915d9c7b68b02cdc57bf199750c6999ef22c443136e3160048e957687bf496f",
+          "bytes": 5694
+        },
+        {
+          "path": "docs/F3-HANDOFF.md",
+          "tracked": true,
+          "sha256": "c2c8e6bf8412711e4aabf949cb19d7be0694c3d416e8d31a48b8c3d1efc47cda",
+          "bytes": 10219
+        },
+        {
+          "path": "docs/M2-F1-HANDOFF.md",
+          "tracked": false,
+          "sha256": "8b5f10e87c668b8df15fb9af200c92a0d509caf06baa0fd9bcb6e89c7426bb35",
+          "bytes": 23055
+        },
+        {
+          "path": "docs/V1-AUTOMATION-INCIDENT.md",
+          "tracked": true,
+          "sha256": "00a7ab2d9cca6e897b11b581ba0672047f8713b3c132ab189e3ca7e81950b975",
+          "bytes": 5221
+        },
+        {
+          "path": "docs/V1-HANDOFF.md",
+          "tracked": true,
+          "sha256": "4686b59b522df83fee6915ec0c40d27fe8b47f4198a217f7bfef4e4f44ebd5a8",
+          "bytes": 5215
+        },
+        {
+          "path": "eslint.config.js",
+          "tracked": true,
+          "sha256": "6ccc4661fd92516751696477dc0edf471ae37f43984635e05cdf298c8edf7bef",
+          "bytes": 449
+        },
+        {
+          "path": "index.html",
+          "tracked": true,
+          "sha256": "253eb73c955577f0f911415033c2f08516593d8d1a55ebc6fa587cea9b8e88a1",
+          "bytes": 434
+        },
+        {
+          "path": "package-lock.json",
+          "tracked": true,
+          "sha256": "02d63ad24b685a9ed5afe02fc24e7664ea4384135407a298769b7e705436c6d6",
+          "bytes": 288812
+        },
+        {
+          "path": "package.json",
+          "tracked": true,
+          "sha256": "f818c98e90c9c7f6533fbb962d3ae051507ae3f658b2635ec8fefd0e1b249c15",
+          "bytes": 1127
+        },
+        {
+          "path": "public/favicon.svg",
+          "tracked": true,
+          "sha256": "b339603da392cc8ab8db4cc36c72473bcfedc9eed3edd03fde98641c951c69f3",
+          "bytes": 378
+        },
+        {
+          "path": "public/icons.svg",
+          "tracked": true,
+          "sha256": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a",
+          "bytes": 5031
+        },
+        {
+          "path": "scripts/f3-acceptance.mjs",
+          "tracked": true,
+          "sha256": "7340512fae1b0b205a064ca0f693e03da11bffe239fca7ed27b557cb36981fa2",
+          "bytes": 4954
+        },
+        {
+          "path": "scripts/f3-bump-draft.mjs",
+          "tracked": true,
+          "sha256": "9a8f9c7dc1e6819f98be7958dcb2e708761f632b541b5bd7ba320bbfa910edf1",
+          "bytes": 1098
+        },
+        {
+          "path": "scripts/f3-seed-order.mjs",
+          "tracked": true,
+          "sha256": "f0f7824fa191efb532025098d290f50c485d25e6aa0908eb3882910801f2cb4c",
+          "bytes": 1393
+        },
+        {
+          "path": "scripts/f3-validation-diagnostics.mjs",
+          "tracked": true,
+          "sha256": "170b7584376871a300216295ea92e9031485a72a33f00ec9892fbdd353718d8c",
+          "bytes": 1500
+        },
+        {
+          "path": "scripts/v1-browser-acceptance.mjs",
+          "tracked": true,
+          "sha256": "f36b70f73678a89a0c9d0872ac73a92506896e437726d5b81679e127df523457",
+          "bytes": 13193
+        },
+        {
+          "path": "scripts/v1-editor-browser.mjs",
+          "tracked": true,
+          "sha256": "e65a36cd338a745c6c3d60262fa0bb1202877c152dbcf9c3a21416a029dde8f9",
+          "bytes": 7606
+        },
+        {
+          "path": "scripts/v1-extra-browser.mjs",
+          "tracked": true,
+          "sha256": "37b65dad73940ad8b1f0517efe55f07d3d833d4a80a116cdf8a1a3d85de5475b",
+          "bytes": 9538
+        },
+        {
+          "path": "scripts/v1-fault-proxy.mjs",
+          "tracked": true,
+          "sha256": "f9b5a2bb7e53cd2afed064b7da75da274f4878d22fba4e363eba950ee14e779b",
+          "bytes": 3863
+        },
+        {
+          "path": "scripts/v1-order-browser.mjs",
+          "tracked": true,
+          "sha256": "295e9a50297570125c399469ea8ff20c7d6e6ced074239e746086b05ed998065",
+          "bytes": 5704
+        },
+        {
+          "path": "scripts/v1-prototype-capture.mjs",
+          "tracked": true,
+          "sha256": "af387077dacba1e5bf1a9a310105b22701e74fa30e0eededb69cc8efdd3f3fc9",
+          "bytes": 1988
+        },
+        {
+          "path": "scripts/v1-seed-fault.mjs",
+          "tracked": true,
+          "sha256": "47508e0d6c499a1f697396952087dc59e0a833da06bdc2c11e90931907bb68c8",
+          "bytes": 954
+        },
+        {
+          "path": "scripts/v1-visual-acceptance.mjs",
+          "tracked": true,
+          "sha256": "241d42f6a212829de4a07699606ac6cc534f299af77b0b7fbe01183e013d3450",
+          "bytes": 4708
+        },
+        {
+          "path": "scripts/validate-m2-mock-fixtures.py",
+          "tracked": false,
+          "sha256": "8119331a3ab404e0b875472d6d429a712cc27a74bcd70bf594c919c10822c1af",
+          "bytes": 2555
+        },
+        {
+          "path": "src/App.vue",
+          "tracked": true,
+          "sha256": "67cc0e554876b83e00cba34389c0153848528f50471f999cb14f827e5d99d630",
+          "bytes": 3920
+        },
+        {
+          "path": "src/api/client.ts",
+          "tracked": true,
+          "sha256": "6a8ac695202885131a4433b00fa6d43a2adaf86b78726737763ab4dc01d5bc91",
+          "bytes": 3732
+        },
+        {
+          "path": "src/api/factTypes.ts",
+          "tracked": false,
+          "sha256": "97e365877ff2e97bffbe7816924ff2d6f444bf8e889239494c1c6ea451de0dfa",
+          "bytes": 3351
+        },
+        {
+          "path": "src/api/facts.ts",
+          "tracked": false,
+          "sha256": "564017576a491e6b22d63ef196aebcc156a0de15320d93a95ffbb5d939aead26",
+          "bytes": 2618
+        },
+        {
+          "path": "src/api/lossless.ts",
+          "tracked": true,
+          "sha256": "0fe625e47e9b7e9386eeca92bddf4bc7a8e18f873a55468cac9345e29b4f7ae1",
+          "bytes": 5684
+        },
+        {
+          "path": "src/api/types.ts",
+          "tracked": true,
+          "sha256": "a166e682c09034f082a7e9a3ba6e1660377c8440478fcce1a1ae034aece57683",
+          "bytes": 2123
+        },
+        {
+          "path": "src/app/router.ts",
+          "tracked": true,
+          "sha256": "169381b8fda44ec1bc98e7cdf533854768fc8bc0706b134d0b3f9f76bb25c3ea",
+          "bytes": 677
+        },
+        {
+          "path": "src/components/ui/badge/Badge.vue",
+          "tracked": true,
+          "sha256": "556d4c8c30c326913cbe7f5155a016b63ff9ae2fdf79ddc2e327a1372956bf1d",
+          "bytes": 688
+        },
+        {
+          "path": "src/components/ui/badge/index.ts",
+          "tracked": true,
+          "sha256": "f2b297030434460b8280ddee4b58fcab828d12d934ae4721732507888c8c0416",
+          "bytes": 1461
+        },
+        {
+          "path": "src/components/ui/button/Button.vue",
+          "tracked": true,
+          "sha256": "eb0d050c8d191da6d03e5fb542a1f37ebca6ce8d4328f22c062b582d1fe49c8e",
+          "bytes": 729
+        },
+        {
+          "path": "src/components/ui/button/index.ts",
+          "tracked": true,
+          "sha256": "22802c293ea7e558307703f0db450bbdee3d2adb4b2bf48ebff287fed1a3f265",
+          "bytes": 2853
+        },
+        {
+          "path": "src/components/ui/dialog/Dialog.vue",
+          "tracked": true,
+          "sha256": "59ef326fed4fef60691b867c56b089c7a5abf388e6e2eb615dd7d4e7a8dfb60a",
+          "bytes": 462
+        },
+        {
+          "path": "src/components/ui/dialog/DialogClose.vue",
+          "tracked": true,
+          "sha256": "700eba3b6a116712879437ea0bba89db3bf223caad860470c682ea097ab143ed",
+          "bytes": 289
+        },
+        {
+          "path": "src/components/ui/dialog/DialogContent.vue",
+          "tracked": true,
+          "sha256": "9ea94dd804c0f09347255343b5e20489f15d2402dd62ae699dc2442ec41c5a2b",
+          "bytes": 1723
+        },
+        {
+          "path": "src/components/ui/dialog/DialogDescription.vue",
+          "tracked": true,
+          "sha256": "0fa90ada57ce2c174e8d3db9652199ee44b684ec008f8a14e7a74a19a402ca96",
+          "bytes": 748
+        },
+        {
+          "path": "src/components/ui/dialog/DialogFooter.vue",
+          "tracked": true,
+          "sha256": "d93536e3fed4f3e080f10625c437221c80695f8b61fea52318ffa508a3e6d619",
+          "bytes": 693
+        },
+        {
+          "path": "src/components/ui/dialog/DialogHeader.vue",
+          "tracked": true,
+          "sha256": "e7fe6a49cabe61d5ef205dc289e930764436d4bdb41fbe7b21d5dbcd4dc84701",
+          "bytes": 317
+        },
+        {
+          "path": "src/components/ui/dialog/DialogOverlay.vue",
+          "tracked": true,
+          "sha256": "a4718acde21c2e3b5b69b73d230f9ba5452f6f92bc3cb7af1f89e320d2075e11",
+          "bytes": 734
+        },
+        {
+          "path": "src/components/ui/dialog/DialogScrollContent.vue",
+          "tracked": true,
+          "sha256": "96cc954d65a03515918387203e4c5d78cfd86115dd8ac38af5787cd5c56d55e9",
+          "bytes": 1883
+        },
+        {
+          "path": "src/components/ui/dialog/DialogTitle.vue",
+          "tracked": true,
+          "sha256": "08b72c1a0c0c83022fab22c771a69ff7109696ea5a8c78642fb2e2c88dde14c6",
+          "bytes": 664
+        },
+        {
+          "path": "src/components/ui/dialog/DialogTrigger.vue",
+          "tracked": true,
+          "sha256": "72ee8fd4b82cb7d5eea9a7896e64323511e0e782554d3931a357221bc89b2f8d",
+          "bytes": 301
+        },
+        {
+          "path": "src/components/ui/dialog/index.ts",
+          "tracked": true,
+          "sha256": "8a51c81fc89c7b71908f9192875632720d8fa58e3f7fbe9b8e9a6e3a308bdc46",
+          "bytes": 624
+        },
+        {
+          "path": "src/components/ui/separator/Separator.vue",
+          "tracked": true,
+          "sha256": "82178462daf69c6e29b67dd075f87a3f7dcc6f68408b2aa743c1990ca5e33cf9",
+          "bytes": 774
+        },
+        {
+          "path": "src/components/ui/separator/index.ts",
+          "tracked": true,
+          "sha256": "5e79dd5256c2212bb1fad479a2c967d5f29746e7f42a364a7fc2107373502cd6",
+          "bytes": 55
+        },
+        {
+          "path": "src/features/FlowListPage.vue",
+          "tracked": true,
+          "sha256": "27c4d606aea3d6d6cba268a8caaa2e8b2f67ed3cd53d51df3773edc712837965",
+          "bytes": 2372
+        },
+        {
+          "path": "src/features/editor/FlowEditorPage.vue",
+          "tracked": true,
+          "sha256": "c596e2f9f0f34f672f7470df12c12a132832a06b0ffed359ebd30fc5ad96e822",
+          "bytes": 20531
+        },
+        {
+          "path": "src/features/editor/components/ConditionBuilder.vue",
+          "tracked": true,
+          "sha256": "3b0a7a3bf1dad896e93684899a9c264e7d6943d06898b6c2df0059defb357daa",
+          "bytes": 5288
+        },
+        {
+          "path": "src/features/editor/components/ExecutionPanel.vue",
+          "tracked": true,
+          "sha256": "980eecc229f8432e712e4b4e67086bbb00aa97691a49d50b64745e6800a83972",
+          "bytes": 4529
+        },
+        {
+          "path": "src/features/editor/components/InspectorPanel.vue",
+          "tracked": true,
+          "sha256": "e0c6aa501e174681e6455ce54c3879e5ba6f702b622b4fa638e907e1d07c36dd",
+          "bytes": 6139
+        },
+        {
+          "path": "src/features/editor/components/NodeCard.vue",
+          "tracked": true,
+          "sha256": "b16d4b797b5960534c518eae06b4f479fd102f3da35be2481f33375661d5f034",
+          "bytes": 803
+        },
+        {
+          "path": "src/features/editor/components/NodeConfigDialog.vue",
+          "tracked": true,
+          "sha256": "c0b9391ac2e84fd998f374eb86427aa3092de82a4da2d53965b109b71e27dfb4",
+          "bytes": 13733
+        },
+        {
+          "path": "src/features/editor/components/NodeIcon.vue",
+          "tracked": true,
+          "sha256": "8c2c58fb1fcea2f9cf2aa3d6daa46a6d337f06e2434a81286df33c423c7f8e5c",
+          "bytes": 642
+        },
+        {
+          "path": "src/features/editor/components/NodePalette.vue",
+          "tracked": true,
+          "sha256": "ff2a5710e990adf992dac171d81cb019fc0434297f014be6350ad26ef58e5c0d",
+          "bytes": 1289
+        },
+        {
+          "path": "src/features/editor/components/StageCard.vue",
+          "tracked": true,
+          "sha256": "a549bca3931b027334a1a3ca017de8e36f6ce55018c1e4165e7ca3e875aa06be",
+          "bytes": 1688
+        },
+        {
+          "path": "src/features/editor/fixtures/order-admission.cases.json",
+          "tracked": true,
+          "sha256": "e320b5f5b922f78113910d49760d3dd0ebe6d1f025e12d4d2b71013afaead628",
+          "bytes": 11487
+        },
+        {
+          "path": "src/features/editor/fixtures/order-admission.definition.json",
+          "tracked": true,
+          "sha256": "3edb012c8f7c96d433875135e4d828d113a2a13491b3bf03c9cb1423e5691d4d",
+          "bytes": 11163
+        },
+        {
+          "path": "src/features/editor/issueLocation.ts",
+          "tracked": true,
+          "sha256": "0db7bea12e9f181666824db92da04d3218e5cc1b75bd4eb437d1d0e9c1dc954a",
+          "bytes": 1451
+        },
+        {
+          "path": "src/features/editor/sample.ts",
+          "tracked": true,
+          "sha256": "219bc7f18a4a39396af73f7331e9ee19e8459cbf28441ae65d80788b67d09996",
+          "bytes": 4489
+        },
+        {
+          "path": "src/features/editor/state.ts",
+          "tracked": true,
+          "sha256": "772c4cf0af83912110a56b2478b5d92ac3622e699c063f1b56e964051614acd9",
+          "bytes": 14374
+        },
+        {
+          "path": "src/features/facts/FactCatalogPage.vue",
+          "tracked": false,
+          "sha256": "7803eea76e43700b72831443794e099ef48ac6d77b9c5f27eb885ce03cb20c93",
+          "bytes": 10385
+        },
+        {
+          "path": "src/features/facts/components/ContractMockBanner.vue",
+          "tracked": false,
+          "sha256": "8c9837739750a199abd235cb4262e30a5c94d16b61a35104ead382ecf17cd1fd",
+          "bytes": 2310
+        },
+        {
+          "path": "src/features/facts/components/FactResolutionPanel.vue",
+          "tracked": false,
+          "sha256": "dba43fe2859f304434ba0cdf7ec90462276e823bbbcfc3fda92fb5aac1c7c5d4",
+          "bytes": 2359
+        },
+        {
+          "path": "src/features/facts/components/RequiredFactsPanel.vue",
+          "tracked": false,
+          "sha256": "10e0872634b5a3755f4d68f33f82c179e4f5e467deb0b0a17b0a5f39de224464",
+          "bytes": 1600
+        },
+        {
+          "path": "src/features/facts/components/UnsavedDialog.vue",
+          "tracked": false,
+          "sha256": "8d3e0af7712eb8e4e256184719162eacdb6b20a1d171bca413a64708e1d160bb",
+          "bytes": 807
+        },
+        {
+          "path": "src/features/facts/configState.ts",
+          "tracked": false,
+          "sha256": "452e8f80914ec0d270080f5587584c32396297b2c55bd4dd9001a350f74296c8",
+          "bytes": 4921
+        },
+        {
+          "path": "src/features/facts/unsaved.ts",
+          "tracked": false,
+          "sha256": "befb89d2c1be5b202f0d093a76b267a22b29bd0f0bd34544fea1a52a2e43de2c",
+          "bytes": 816
+        },
+        {
+          "path": "src/features/facts/validation.ts",
+          "tracked": false,
+          "sha256": "98ad26e26944c6289fdb22d672ee901bf19e31bb7976759b0619df2be7727fd4",
+          "bytes": 3542
+        },
+        {
+          "path": "src/features/providers/ProviderPage.vue",
+          "tracked": false,
+          "sha256": "7096ba704fbde451bcc316087fa35dcc1a629275249e55ae51baf97c9d622d81",
+          "bytes": 14885
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "tracked": true,
+          "sha256": "e46429536f43f5910f5b2b0c50bb2769b510a4558bb4b5d20a3b0a9091dbf7c3",
+          "bytes": 166
+        },
+        {
+          "path": "src/main.ts",
+          "tracked": true,
+          "sha256": "913e20918723226b2f9f6c2a885d040a04c8a2fcb82955b843b39f997e7f6867",
+          "bytes": 161
+        },
+        {
+          "path": "src/style.css",
+          "tracked": true,
+          "sha256": "ab13b04bfd97cc4386a30296838ef386f2cd72567d00ee155fe524208b2b884b",
+          "bytes": 42294
+        },
+        {
+          "path": "tests/factApi.test.mjs",
+          "tracked": false,
+          "sha256": "b1edd31d477c6438f05330008120f3d75792e5d1805709c5dec686a56cc1d664",
+          "bytes": 3605
+        },
+        {
+          "path": "tests/factState.test.mjs",
+          "tracked": false,
+          "sha256": "9f6928186c58ae14fb5c0789ef481895a77d9ebabc69c3498209a399ce5e54ac",
+          "bytes": 7361
+        },
+        {
+          "path": "tests/issueLocation.test.mjs",
+          "tracked": true,
+          "sha256": "0a003945d5ed3fdc099c171faf83246d122c64ba5f3a32014677f5c69c6c9887",
+          "bytes": 1739
+        },
+        {
+          "path": "tests/lossless.test.mjs",
+          "tracked": true,
+          "sha256": "a176bfb3f745cf6b0b66831c094446d5b7a078fabcdfbdb3e7f9ce89f1aea1c0",
+          "bytes": 1828
+        },
+        {
+          "path": "tests/m2ContractMock.test.mjs",
+          "tracked": false,
+          "sha256": "6e53962054ef7a3253e5b95026cf18dd21a8af5bf09ad9668d73daa1122ae7e4",
+          "bytes": 4397
+        },
+        {
+          "path": "tests/state.test.mjs",
+          "tracked": true,
+          "sha256": "8500aa3e0c761d0939baa69147369a83a3d3aa6891f86c77657e3a6e2bb1ae95",
+          "bytes": 11337
+        },
+        {
+          "path": "tsconfig.app.json",
+          "tracked": true,
+          "sha256": "9bb7251b2ebb8d3d330462b45b248f336e6ab112b4ae42e88110e275938c5d22",
+          "bytes": 507
+        },
+        {
+          "path": "tsconfig.json",
+          "tracked": true,
+          "sha256": "83aaa220f0ee1568289dc4f94065a4b36f8af2364abcb27ccbebd3e0668c042c",
+          "bytes": 183
+        },
+        {
+          "path": "tsconfig.node.json",
+          "tracked": true,
+          "sha256": "d366cc0827139db39c61815f22491bbfda56c654354a42ad7795143d314e45e8",
+          "bytes": 558
+        },
+        {
+          "path": "vite.config.ts",
+          "tracked": true,
+          "sha256": "0bcf3af574afc136e047471faf4d66e7191fb9ccc8a371dbf3cffb31b409c392",
+          "bytes": 865
+        }
+      ]
+    }
+  ],
+  "jarSha256": "d7f68f1cca5c7a2c50fbe59cc5c58c0aeb4864c81924e44f25a443a22f91b1a4",
+  "sourceOnlyV1Changes": "No production source or existing tests changed; added validation scripts/report and M2 README/ACCEPTANCE status links",
+  "sourceSnapshot": "output/m2-v1/source-snapshot.zip"
+}

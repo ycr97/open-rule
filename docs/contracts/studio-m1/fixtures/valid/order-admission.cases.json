@@ -1,0 +1,580 @@
+[
+  {
+    "id": "OA-01",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "score": "15",
+      "segment": "LOW",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-02",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 1800,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_2056",
+        "ageDays": 12
+      },
+      "metrics": {
+        "refundRate": 0.42
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REVIEW",
+      "score": "75",
+      "segment": "MEDIUM",
+      "terminalNodeId": "risk_review",
+      "reasonCodes": [
+        "HIGH_RISK_SCORE"
+      ]
+    }
+  },
+  {
+    "id": "OA-04",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": true
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REJECT",
+      "score": null,
+      "segment": null,
+      "terminalNodeId": "reject",
+      "reasonCodes": [
+        "ADMISSION_REJECTED"
+      ]
+    }
+  },
+  {
+    "id": "OA-07",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {},
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REVIEW",
+      "score": null,
+      "segment": "LOW",
+      "terminalNodeId": "data_review",
+      "nodeStatus": {
+        "buyer_score": "FAILED"
+      },
+      "reasonCodes": [
+        "FACT_RESOLUTION_FAILED"
+      ]
+    }
+  },
+  {
+    "id": "OA-08",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": null
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REVIEW",
+      "score": null,
+      "terminalNodeId": "data_review",
+      "nodeStatus": {
+        "buyer_score": "FAILED"
+      },
+      "reasonCodes": [
+        "FACT_RESOLUTION_FAILED"
+      ]
+    }
+  },
+  {
+    "id": "OA-09",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": "680",
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "FAILED",
+      "decisionCode": null,
+      "terminalNodeId": null,
+      "nodeStatus": {
+        "base_rules": "FAILED"
+      },
+      "reasonCodes": []
+    }
+  },
+  {
+    "id": "OA-03",
+    "definitionFixture": "order-admission-score-35.definition.json",
+    "facts": {
+      "order": {
+        "amount": 1800,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 12
+      },
+      "metrics": {
+        "refundRate": 0.42
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "score": "35",
+      "segment": "MEDIUM",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-05a",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 50000,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REJECT",
+      "score": null,
+      "terminalNodeId": "reject",
+      "reasonCodes": [
+        "ADMISSION_REJECTED"
+      ]
+    }
+  },
+  {
+    "id": "OA-05b",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 49999.99,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "score": "15",
+      "segment": "HIGH",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-06a",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "XX"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REJECT",
+      "terminalNodeId": "reject",
+      "reasonCodes": [
+        "ADMISSION_REJECTED"
+      ]
+    }
+  },
+  {
+    "id": "OA-06b",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "ZZ"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REJECT",
+      "terminalNodeId": "reject",
+      "reasonCodes": [
+        "ADMISSION_REJECTED"
+      ]
+    }
+  },
+  {
+    "id": "OA-10a",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 30
+      },
+      "metrics": {
+        "refundRate": 0.3
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "score": "50",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-10b",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 29
+      },
+      "metrics": {
+        "refundRate": 0.3
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REVIEW",
+      "score": "75",
+      "terminalNodeId": "risk_review",
+      "reasonCodes": [
+        "HIGH_RISK_SCORE"
+      ]
+    }
+  },
+  {
+    "id": "OA-11a",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 999,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "segment": "LOW",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-11b",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 1000,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "segment": "MEDIUM",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-11c",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 4999,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "segment": "MEDIUM",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-11d",
+    "definitionFixture": "order-admission.definition.json",
+    "facts": {
+      "order": {
+        "amount": 5000,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 365
+      },
+      "metrics": {
+        "refundRate": 0.08
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "segment": "HIGH",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-12a",
+    "definitionFixture": "order-admission-score-59.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 12
+      },
+      "metrics": {
+        "refundRate": 0.42
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "APPROVE",
+      "score": "59",
+      "terminalNodeId": "approve",
+      "reasonCodes": [
+        "RISK_ACCEPTABLE"
+      ]
+    }
+  },
+  {
+    "id": "OA-12b",
+    "definitionFixture": "order-admission-score-60.definition.json",
+    "facts": {
+      "order": {
+        "amount": 680,
+        "country": "JP"
+      },
+      "buyer": {
+        "id": "buyer_1024",
+        "ageDays": 12
+      },
+      "metrics": {
+        "refundRate": 0.42
+      },
+      "risk": {
+        "blacklisted": false
+      },
+      "channel": "web"
+    },
+    "expected": {
+      "status": "DECIDED",
+      "decisionCode": "REVIEW",
+      "score": "60",
+      "terminalNodeId": "risk_review",
+      "reasonCodes": [
+        "HIGH_RISK_SCORE"
+      ]
+    }
+  }
+]
