@@ -1,0 +1,153 @@
+{
+  "flowId": "order_admission",
+  "version": "1",
+  "revision": "1",
+  "definitionChecksum": "sha256:f32efdc7490d67e1df7ff0b63ff38f91cf5e963808eb46f4af135b4a1e31b0a7",
+  "requiredFacts": [
+    {
+      "path": "/buyer/ageDays",
+      "expectedTypes": [
+        "number"
+      ],
+      "typeConflict": false,
+      "uses": [
+        {
+          "pointer": "/stages/2/nodes/0/config/characteristics/0/bins/0/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "buyer_score",
+          "itemId": "b_age_new",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        },
+        {
+          "pointer": "/stages/2/nodes/0/config/characteristics/0/bins/1/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "buyer_score",
+          "itemId": "b_age_old",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/metrics/refundRate",
+      "expectedTypes": [
+        "number"
+      ],
+      "typeConflict": false,
+      "uses": [
+        {
+          "pointer": "/stages/2/nodes/0/config/characteristics/1/bins/0/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "buyer_score",
+          "itemId": "b_refund_high",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        },
+        {
+          "pointer": "/stages/2/nodes/0/config/characteristics/1/bins/1/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "buyer_score",
+          "itemId": "b_refund_low",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/order/amount",
+      "expectedTypes": [
+        "number"
+      ],
+      "typeConflict": false,
+      "uses": [
+        {
+          "pointer": "/stages/0/nodes/1/config/rules/0/condition/ref/pointer",
+          "stageId": "s_base",
+          "nodeId": "base_rules",
+          "itemId": "r_amount",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        },
+        {
+          "pointer": "/stages/2/nodes/1/config/rules/0/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "order_segment",
+          "itemId": "t_high",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        },
+        {
+          "pointer": "/stages/2/nodes/1/config/rules/1/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "order_segment",
+          "itemId": "t_med",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        },
+        {
+          "pointer": "/stages/2/nodes/1/config/rules/2/condition/ref/pointer",
+          "stageId": "s_score",
+          "nodeId": "order_segment",
+          "itemId": "t_low",
+          "access": "VALUE",
+          "expectedTypes": [
+            "number"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/order/country",
+      "expectedTypes": [
+        "string"
+      ],
+      "typeConflict": false,
+      "uses": [
+        {
+          "pointer": "/stages/0/nodes/1/config/rules/1/condition/ref/pointer",
+          "stageId": "s_base",
+          "nodeId": "base_rules",
+          "itemId": "r_region",
+          "access": "VALUE",
+          "expectedTypes": [
+            "string"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/risk/blacklisted",
+      "expectedTypes": [
+        "boolean"
+      ],
+      "typeConflict": false,
+      "uses": [
+        {
+          "pointer": "/stages/0/nodes/0/config/condition/ref/pointer",
+          "stageId": "s_base",
+          "nodeId": "blacklist",
+          "itemId": null,
+          "access": "VALUE",
+          "expectedTypes": [
+            "boolean"
+          ]
+        }
+      ]
+    }
+  ]
+}

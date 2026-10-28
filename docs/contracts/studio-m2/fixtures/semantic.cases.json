@@ -1,0 +1,275 @@
+[
+  {
+    "id": "MS-01",
+    "kind": "fact",
+    "document": {
+      "factId": "invalid_path_01",
+      "path": "/metrics/0",
+      "name": "退款率",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile",
+        "responsePointer": "/data/refundRate"
+      }
+    },
+    "expectedCode": "OR-FACT-CONFIG",
+    "reason": "numeric write token",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "POST",
+      "path": "/api/v2/admin/facts"
+    },
+    "expectedHttpStatus": 400
+  },
+  {
+    "id": "MS-02",
+    "kind": "fact",
+    "document": {
+      "factId": "invalid_path_02",
+      "path": "/__proto__/polluted",
+      "name": "退款率",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile",
+        "responsePointer": "/data/refundRate"
+      }
+    },
+    "expectedCode": "OR-FACT-CONFIG",
+    "reason": "dangerous write token",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "POST",
+      "path": "/api/v2/admin/facts"
+    },
+    "expectedHttpStatus": 400
+  },
+  {
+    "id": "MS-03",
+    "kind": "fact",
+    "document": {
+      "factId": "unknown_binding",
+      "path": "/metrics/chargebackRate",
+      "name": "退款率",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "unknown_provider",
+        "responsePointer": "/data/x"
+      }
+    },
+    "expectedCode": "OR-FACT-CONFIG",
+    "reason": "provider reference absent",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "POST",
+      "path": "/api/v2/admin/facts"
+    },
+    "expectedHttpStatus": 400
+  },
+  {
+    "id": "MS-04",
+    "kind": "provider",
+    "document": {
+      "providerId": "bad_timeout",
+      "name": "买家风险画像",
+      "description": "受控 HTTP 验收配置，非生产 SLA",
+      "enabled": true,
+      "type": "HTTP",
+      "endpoint": "http://127.0.0.1:19091/v1/buyer/batch",
+      "connectTimeoutMillis": 400,
+      "readTimeoutMillis": 300,
+      "secretRef": null,
+      "readOnly": true,
+      "allowSimulationHttp": true,
+      "requestMap": {
+        "buyerId": {
+          "source": "FACT",
+          "pointer": "/buyer/id"
+        },
+        "region": {
+          "source": "CONSTANT",
+          "value": "GLOBAL"
+        }
+      },
+      "mock": {
+        "outcome": "RESPONSE",
+        "response": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        }
+      }
+    },
+    "expectedCode": "OR-FACT-CONFIG",
+    "reason": "connect budget greater than read budget",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "POST",
+      "path": "/api/v2/admin/fact-providers"
+    },
+    "expectedHttpStatus": 400
+  },
+  {
+    "id": "MS-05",
+    "kind": "fact",
+    "document": {
+      "factId": "metrics_parent",
+      "path": "/metrics",
+      "name": "退款率",
+      "type": "number",
+      "sensitive": false,
+      "description": "订单准入演示字段",
+      "binding": {
+        "providerId": "risk_profile",
+        "responsePointer": "/data/refundRate"
+      }
+    },
+    "expectedCode": "OR-FACT-CONFIG",
+    "reason": "prefix overlap with existing /metrics/refundRate",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "POST",
+      "path": "/api/v2/admin/facts"
+    },
+    "expectedHttpStatus": 400
+  },
+  {
+    "id": "MS-06",
+    "kind": "fact-update",
+    "document": {
+      "expectedRevision": "1",
+      "document": {
+        "factId": "refund_rate",
+        "path": "/metrics/refundRate",
+        "name": "退款率",
+        "type": "string",
+        "sensitive": false,
+        "description": "订单准入演示字段",
+        "binding": {
+          "providerId": "risk_profile",
+          "responsePointer": "/data/refundRate"
+        }
+      }
+    },
+    "expectedCode": "OR-FACT-IDENTITY",
+    "reason": "immutable type",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "PUT",
+      "path": "/api/v2/admin/facts/refund_rate"
+    },
+    "expectedHttpStatus": 409
+  },
+  {
+    "id": "MS-07",
+    "kind": "provider-update",
+    "document": {
+      "expectedRevision": "2",
+      "document": {
+        "providerId": "risk_profile",
+        "name": "买家风险画像",
+        "description": "受控 HTTP 验收配置，非生产 SLA",
+        "enabled": true,
+        "type": "HTTP",
+        "endpoint": "http://127.0.0.1:19091/v1/buyer/batch",
+        "connectTimeoutMillis": 100,
+        "readTimeoutMillis": 300,
+        "secretRef": null,
+        "readOnly": true,
+        "allowSimulationHttp": true,
+        "requestMap": {
+          "buyerId": {
+            "source": "FACT",
+            "pointer": "/buyer/id"
+          },
+          "region": {
+            "source": "CONSTANT",
+            "value": "GLOBAL"
+          }
+        },
+        "mock": {
+          "outcome": "RESPONSE",
+          "response": {
+            "data": {
+              "blacklisted": false,
+              "ageDays": 365,
+              "refundRate": 0.08
+            }
+          }
+        }
+      }
+    },
+    "storedRevision": "1",
+    "expectedCode": "OR-REVISION-CONFLICT",
+    "reason": "stale CAS",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "PUT",
+      "path": "/api/v2/admin/fact-providers/risk_profile"
+    },
+    "expectedHttpStatus": 409
+  },
+  {
+    "id": "MS-08",
+    "kind": "provider-update",
+    "document": {
+      "expectedRevision": "9223372036854775808",
+      "document": {
+        "providerId": "risk_profile",
+        "name": "买家风险画像",
+        "description": "受控 HTTP 验收配置，非生产 SLA",
+        "enabled": true,
+        "type": "HTTP",
+        "endpoint": "http://127.0.0.1:19091/v1/buyer/batch",
+        "connectTimeoutMillis": 100,
+        "readTimeoutMillis": 300,
+        "secretRef": null,
+        "readOnly": true,
+        "allowSimulationHttp": true,
+        "requestMap": {
+          "buyerId": {
+            "source": "FACT",
+            "pointer": "/buyer/id"
+          },
+          "region": {
+            "source": "CONSTANT",
+            "value": "GLOBAL"
+          }
+        },
+        "mock": {
+          "outcome": "RESPONSE",
+          "response": {
+            "data": {
+              "blacklisted": false,
+              "ageDays": 365,
+              "refundRate": 0.08
+            }
+          }
+        }
+      }
+    },
+    "expectedCode": "OR-REQUEST-INVALID",
+    "reason": "revision outside BIGINT",
+    "catalogFile": "catalog.json",
+    "providerResourceFile": "valid/risk-profile.resource.json",
+    "operation": {
+      "method": "PUT",
+      "path": "/api/v2/admin/fact-providers/risk_profile"
+    },
+    "expectedHttpStatus": 400
+  }
+]

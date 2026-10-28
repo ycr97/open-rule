@@ -1,0 +1,9 @@
+{
+  "factId": "order_country",
+  "path": "/order/country",
+  "name": "收货国家",
+  "type": "string",
+  "sensitive": false,
+  "description": "订单准入演示字段",
+  "binding": null
+}

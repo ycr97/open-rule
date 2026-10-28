@@ -48,6 +48,18 @@
         </dependency>
     </dependencies>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <jdk.httpclient.disableRetryConnect>true</jdk.httpclient.disableRetryConnect>
+                        <jdk.httpclient.enableAllMethodRetry>false</jdk.httpclient.enableAllMethodRetry>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

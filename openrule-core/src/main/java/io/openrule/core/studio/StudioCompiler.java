@@ -13,6 +13,11 @@ import java.math.BigDecimal;
 
 /** Cross-field validation and deterministic order for schemaVersion 2 definitions. */
 public final class StudioCompiler {
+    public StudioCompiledPlan compilePlan(Flow definition) {
+        Flow validated = compile(definition);
+        return new StudioCompiledPlan(StudioFactDependencies.freeze(validated), StudioFactDependencies.collect(definition));
+    }
+
     public Flow compile(Flow flow) {
         if (flow == null || flow.schemaVersion() != 2 || flow.flowId() == null
                 || flow.flowName() == null || flow.version() == null || flow.description() == null

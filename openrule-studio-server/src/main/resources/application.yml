@@ -8,4 +8,8 @@ spring:
   sql:
     init:
       mode: always
-      schema-locations: classpath:schema.sql,classpath:db/studio/V1__studio_tables.sql
+      schema-locations: classpath:schema.sql,classpath:db/studio/V1__studio_tables.sql,classpath:db/studio/V2__fact_tables.sql
+
+studio:
+  facts:
+    max-in-flight: ${STUDIO_FACTS_MAX_IN_FLIGHT:64}

@@ -1,0 +1,27 @@
+{
+  "providerId": "risk_profile_mock",
+  "name": "买家风险画像",
+  "description": "受控 HTTP 验收配置，非生产 SLA",
+  "enabled": true,
+  "requestMap": {
+    "buyerId": {
+      "source": "FACT",
+      "pointer": "/buyer/id"
+    },
+    "region": {
+      "source": "CONSTANT",
+      "value": "GLOBAL"
+    }
+  },
+  "mock": {
+    "outcome": "RESPONSE",
+    "response": {
+      "data": {
+        "blacklisted": false,
+        "ageDays": 365,
+        "refundRate": 0.08
+      }
+    }
+  },
+  "type": "MOCK"
+}

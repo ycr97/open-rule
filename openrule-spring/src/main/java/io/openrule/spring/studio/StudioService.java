@@ -114,13 +114,27 @@ public final class StudioService {
         @SuppressWarnings("unchecked") Map<String, Object> facts = (Map<String, Object>) codec.value(factsNode);
         StudioModel.Result result = engine.execute(executable, facts, timeoutNode.longValue());
         String traceId = java.util.UUID.randomUUID().toString();
+        Map<String, Object> response = executionResult(stored, requestId, bizId,
+                simulate ? "SIMULATE" : "LIVE", traceId, checksum, result);
+        if (!result.status().equals("DECIDED")) {
+            int status = result.errorCode().equals("OR-EXECUTION-TIMEOUT") ? 504
+                    : result.errorCode().equals("OR-ENGINE-OVERLOADED") ? 503 : 500;
+            throw new StudioProblem(status, result.errorCode(), "Execution failed", List.of(), response);
+        }
+        return response;
+    }
+
+    /** Shared M1 DTO projection. M2 must pass a redacted Core result and its pre-created traceId. */
+    public static Map<String, Object> executionResult(Version stored, String requestId, String bizId,
+                                                      String purpose, String traceId, String checksum,
+                                                      StudioModel.Result result) {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("requestId", requestId);
         response.put("traceId", traceId);
         response.put("bizId", bizId);
-        response.put("purpose", simulate ? "SIMULATE" : "LIVE");
-        response.put("flowId", flowId);
-        response.put("version", version);
+        response.put("purpose", purpose);
+        response.put("flowId", stored.flowId());
+        response.put("version", Long.toString(stored.version()));
         response.put("revision", Long.toString(stored.revision()));
         response.put("definitionChecksum", checksum);
         response.put("status", result.status());
@@ -175,11 +189,6 @@ public final class StudioService {
             return item;
         }).toList());
         response.put("elapsedMillis", result.elapsedMillis());
-        if (!result.status().equals("DECIDED")) {
-            int status = result.errorCode().equals("OR-EXECUTION-TIMEOUT") ? 504
-                    : result.errorCode().equals("OR-ENGINE-OVERLOADED") ? 503 : 500;
-            throw new StudioProblem(status, result.errorCode(), "Execution failed", List.of(), response);
-        }
         return response;
     }
 

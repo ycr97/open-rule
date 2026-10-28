@@ -1,0 +1,450 @@
+{
+  "acceptanceHead": "348a48d209f0571049535f4b513eef556859876b",
+  "files": [
+    {
+      "path": "docs/adr/0006-studio-m2-fact-resolution.md",
+      "sha256": "4d70ee0a5c28a49b63727727e27a624b3dd0d715d9b8f742abe18e1d69ab5633"
+    },
+    {
+      "path": "docs/contracts/studio-m2/ACCEPTANCE.md",
+      "sha256": "870d3b85ad185dc937df9a409b590f86a99ef2bb3ef4a08b4d88eed802c18812"
+    },
+    {
+      "path": "docs/contracts/studio-m2/B1-IMPLEMENTATION.md",
+      "sha256": "9b698e5be607cd23661b9ffeaea77edbf21befe15f913eeadadaa8ba5e1e3f54"
+    },
+    {
+      "path": "docs/contracts/studio-m2/B2-IMPLEMENTATION.md",
+      "sha256": "300466a18a5cc33eb7adce67a8946969bb2266bf8056ca2ab76954f1eee671da"
+    },
+    {
+      "path": "docs/contracts/studio-m2/README.md",
+      "sha256": "1f063a1b3b2d90904a08bac0281e15859737b62c8ae0c66de454857a28b1a1a5"
+    },
+    {
+      "path": "docs/contracts/studio-m2/V1-ACCEPTANCE.md",
+      "sha256": "77c822188f136deee81713a74831f8c22555b67ffbd63695d4886e3ff1dc66d7"
+    },
+    {
+      "path": "docs/contracts/studio-m2/VALIDATION.md",
+      "sha256": "4cd7a18d172cf3df53004712b32dc36c61bc1426b86abd9c94a66fbeb16f979a"
+    },
+    {
+      "path": "docs/contracts/studio-m2/checks/SchemaCheck.java",
+      "sha256": "b8e3ced652aa2edd1eac4a0e7ef32161432db72e2b9a53c342dccc1f3b3a0927"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/catalog-mock.json",
+      "sha256": "e3baabc16ade8a125d13ff2e4df25bf42baed5325e6225de34a123554107d711"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/catalog.json",
+      "sha256": "4f75133066d39c2c190ace466c114e66f14e1a3f6f89bc207011bd6d005e2ef6"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/bad-pointer.fact.json",
+      "sha256": "f3498199ae0031532ae35b326322e65621cb4e03a44091451e5eca907b9108b7"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/java.provider.json",
+      "sha256": "7887a1bb5a9df7360a3d87150eff9dedb0cbbf5d719f1e6090cd0bc375aa1741"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/live-mock.request.json",
+      "sha256": "f45bd7f85cfc730b3b2abc1fc4cd9b6040e1690f1d046c36b698ea49db0a7e57"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/mixed-mapping.provider.json",
+      "sha256": "746472e7ac03e2449f3c253a81ee7b845a99ee5f24cf8e330abd2c1e301b16a0"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/mock-response-null.provider.json",
+      "sha256": "fa09bc3815816c5b3404890c7b13082648fb8eeac6d9a32146e410d2a67548af"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/mode-missing.request.json",
+      "sha256": "4766e85639b681499c5831b9d05add78c2d93db0074ffa3a4586ed1189f48567"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/plaintext-secret.provider.json",
+      "sha256": "36bbb055fd91a288b0ab2569aae65f678b4ee53bad18e642d4353782b1358948"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/revision-number.request.json",
+      "sha256": "f75f43666d88441b9a857141ee2456d6e92fd88f454d00ce980c99109dfaa4a4"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/score-kind.response.json",
+      "sha256": "109d4afd49dd99dc6fc9c63843255a7d7a47493a399c4f3a3f9ac18cacecf665"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/unknown-field.request.json",
+      "sha256": "8d836a2e1fc6ee11beeba0cd64d0ffffeadd1b6246dcd908c22233e662e391fc"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/invalid/write-provider.provider.json",
+      "sha256": "2b7c5cc05aad05d22f0652c508961ceff84f98c20540c402dd0987a7bd57664a"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/order-admission.cases.json",
+      "sha256": "6e983fc952499a6f69a4d11d5ff8ba81ce250c5e1813232a351541c90c1ae73f"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/semantic.cases.json",
+      "sha256": "c96e0ea10e24b500eac51541133432fcec3381d1a6695dca4fddf533c07ec438"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/buyer_age_days.fact.json",
+      "sha256": "78354691aace259952c699385f0790c512d79289a733cf820fa087fb945257d4"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/buyer_id.fact.json",
+      "sha256": "06329b6efe1a10e48c8b53eb5c50c8e639ee53b0fa5bd6a8f6d8ec542b3a2875"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/deadline-before-core.error.json",
+      "sha256": "305458851d24e1d46091bb2db8ee2a41786f4d92d78ae5c61aa8f1423333cf78"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/empty-facts.page.json",
+      "sha256": "b0640aac712b1e5046a7642d2a27cad183b9324fd9181fe6f2518e522982e238"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/fact-update.request.json",
+      "sha256": "56fbf5e902d2e5fe4cf785b8293a65a786e708e51c83b757bb3437ec3414d815"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/live-http.request.json",
+      "sha256": "07a69a2ba3a532120196acc8a6c29233ffd308160d2e52e63b5bd9f78d9696f7"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/mock-test.response.json",
+      "sha256": "32fff8358a051d69c830b168c4462a1456564dfcc4a9eb58c951e4929d5d46ec"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-01.semantic.json",
+      "sha256": "b09df985e9b169ab4613480c1ecf105eed9bcdda6c23ee6057e95e3097bf3329"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-02.semantic.json",
+      "sha256": "84a9e5c65861036c823ddc4c76ad6ecb877149c8b3c2b37190010addeb7dd239"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-03.semantic.json",
+      "sha256": "4d95e7c85575667c9ddacc599ae496a5c3bb3b1e4c11674cd316bdff9f10c2f0"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-04.semantic.json",
+      "sha256": "1bc3f3593bf9996b23ab7b85cad054149f01c0036872a0ab90cdb05ee9865355"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-05.semantic.json",
+      "sha256": "cf044832ad7d7e6b522e23d9df9f13baa2dbf6471f7ba140006fe439e18be5d5"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-06.semantic.json",
+      "sha256": "785e9c2407ccdb5e02b78aa79510623147596fc2559d4a558f282776026a5c4a"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-07.semantic.json",
+      "sha256": "abd3727855007167cbdef369a53df0b1b92ab247a3f70f4d596311dd2a921e8d"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/ms-08.semantic.json",
+      "sha256": "ce04c1a375d96bc4c8d94a86a099f2034cc69ed7122c07c3e777da7a40267e83"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/normal.response.json",
+      "sha256": "9cb7844a1b57ff63a5cf2250a58149249c87ebef72c0d55cc3f65e7f33f3e188"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/order-admission.required-facts.json",
+      "sha256": "6354401be089c9bcdb38a3000ee8b41be94aa38cba658d739a8419aa2606315a"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/order_amount.fact.json",
+      "sha256": "1c583130082da5e005f3587977c4cafc7d3b4f2b5a15a949adc1ee2f7bf97820"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/order_country.fact.json",
+      "sha256": "8ff52204a7b4870e0b73c353b7215f43557de225ac6f3d2a1f37ff6be55246f7"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/precision.provider.json",
+      "sha256": "7b46e77550696aa85f4ff6fa169a8853e9285fa9c52547e1562b70de919c4a0a"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/provider-mock-test.request.json",
+      "sha256": "a056d9e1e985869777745260f4ac93d573f20e6f666755f55d963da6d560bec2"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/provider-update.request.json",
+      "sha256": "c252d3868976f045eb26272fc9c30fbf7161f40b78efa14ad31f2b578eeb242b"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/providers.page.json",
+      "sha256": "0bad6d091b7824574fd79e1bedaa274f70dea0b83812543c7f293886dfd74743"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/refund_rate.fact.json",
+      "sha256": "5d8e6f7392a4fb21c67a41c8231b78da6f8f35b44c00a1506f215b5aa8fe876c"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile-mock.provider.json",
+      "sha256": "78f1479773674b8216653f0b91cb456a94ad828ff51ff2e53bcdfc9ed079db2d"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile-secret.provider.json",
+      "sha256": "371f801b277ad27f7651b3543f90e85ac75e1d4183fe68cf161a5696893c9927"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile.provider.json",
+      "sha256": "6a2ed59d1503d6c4181b517416380417e119694ca20670e5cf764e0856a881e3"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/risk-profile.resource.json",
+      "sha256": "37fe1b9413ffe41c74ba13747131bb9383615197cc5c3db6f26455afc9c7e680"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/risk_blacklisted.fact.json",
+      "sha256": "3afc3e7949e746d8848c49307f2cd51acbef29ea0d3c164364f24a2fdd155950"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/simulate-http.request.json",
+      "sha256": "9f36ca188e3b4d6924d40c568d81dfbb9d27a4df7a4a04f0218fd9ccd0f0ecc7"
+    },
+    {
+      "path": "docs/contracts/studio-m2/fixtures/valid/simulate-mock.request.json",
+      "sha256": "7ccccb4e41a20cf697f361897223dbcc3ea783e017756a8b669ed8a2344313cb"
+    },
+    {
+      "path": "docs/contracts/studio-m2/manifest.json",
+      "sha256": "4a2aa2f67db43338d59b891620c86dea45ddb684e46f947256a528338f216b6b"
+    },
+    {
+      "path": "docs/contracts/studio-m2/openapi.json",
+      "sha256": "79b54667c1ca72c2e1323d24ea330531fc0187104cb214dd6113aa5597fd74fd"
+    },
+    {
+      "path": "docs/contracts/studio-m2/schema/m2.schema.json",
+      "sha256": "474324122afb9b5bd262fba3db1f211b6b8fa5e7471f1dfbb2752c1dd7ad94f1"
+    },
+    {
+      "path": "docs/contracts/studio-m2/validate.py",
+      "sha256": "acea06a89252a3c45c36cd872556ac9a1da741cee585aab8b81fb2c2510ceef6"
+    },
+    {
+      "path": "docs/design/2026-10-04-openrule-studio-m2-facts.md",
+      "sha256": "4111841c26421bd2a51dfb5157d88823a8c4dcd75cea0ccc0f5cb4ac1b127e99"
+    },
+    {
+      "path": "docs/plans/2026-10-04-openrule-studio-m2-delivery.md",
+      "sha256": "c6592ffcfdf6927f9707cee91eb7c681e4e386ac073ff24e7c513f9fc937f439"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/RequiredFact.java",
+      "sha256": "668371a08e8d8bd68e52381ab8686d62702d9455accbc238b270cf3aa8ea2afa"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioCompiledPlan.java",
+      "sha256": "8c4a467f6437a9de61c99e9f32e07e7c3dac4d3e38b3934fb33fa2e2c2c9a278"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioCompiler.java",
+      "sha256": "1cce301bde807af29c9132da5838932f5500e024ff88223590b01319eb1822a3"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioDeadline.java",
+      "sha256": "eeafdf3fd34b40d89cae1932036ed02495e22b2687a41701e8849b4edebe6685"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioEngine.java",
+      "sha256": "2ade4f60ade708bc12e7ec5c391d1434f4bbeea72133da0ce45d6b0725d59b53"
+    },
+    {
+      "path": "openrule-core/src/main/java/io/openrule/core/studio/StudioFactDependencies.java",
+      "sha256": "b9fd7785c71a8799c9846a3feba612503db2bf78542e947d9b527360730239c5"
+    },
+    {
+      "path": "openrule-core/src/test/java/io/openrule/core/studio/StudioM2Test.java",
+      "sha256": "1391cdc0ddaa155ff95d988a49bd118867e5c95e33d632466110dfc311fdb3bb"
+    },
+    {
+      "path": "openrule-spring/pom.xml",
+      "sha256": "5fb6932fc0d84d94dee76c34c5c6fd646c25fb9f35f481bb9f7b8ba83f828242"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchRequest.java",
+      "sha256": "ad1d6a34b1328b3fad32b4fc72425e2b6f4f7d50798ce0ab8dd832cff6c99c01"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactBatchResult.java",
+      "sha256": "086c50080a68ecdf179af181c67fc6ba608a1031e00d78893f17e258afbc375b"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactConfiguration.java",
+      "sha256": "1bf4feb6e98fd53a288c07a3bde8ad5810c3607a176abaffd42a3a0333322158"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactProvider.java",
+      "sha256": "47e48c311e9f97a1e112e053c5396ec2284629e2d42370fd511badc0a2bd19d0"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactRedaction.java",
+      "sha256": "1883773974d781d8224fa6bdd8b1362dab8ee541d5cf145b7466400ef7c128af"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionReport.java",
+      "sha256": "0d4cacf7698f4a1ba6b9ef2542cb0fc80f9f30cd2f6cc81c6e5a8ae1db101738"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionRequest.java",
+      "sha256": "3a0a9cfe6d7804fcc456c57b234c7434e67d280c9238d894b44cdb58f7b4b3ff"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolutionResult.java",
+      "sha256": "af578c896037dcf16835239ed3e6a69d6d506b2b86b680bcdb3e93c9e76e2716"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactResolver.java",
+      "sha256": "f287cbbef93f766bab77aaa72712ea4f8a938476704d23219566715e1ab71925"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactTransportSupport.java",
+      "sha256": "8a193c33adb7db10dc9c0de7f0bfbc64f34a5cb0cae7201b22901ae35f5c6f2e"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/FactValues.java",
+      "sha256": "b30c76c00864a71fca915dfa766579790b80b541df6a3b089ad85300887deefd"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/HttpFactProvider.java",
+      "sha256": "154cfe65a36bb87286d9ef1113c763731d9d33cdbd774e6ac139d421ed4eddc8"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/MockFactProvider.java",
+      "sha256": "ddf84e338c310a33e6ad8afded046a732c67739b798b9f9e30b5e55315ca1ac7"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/fact/SecretResolver.java",
+      "sha256": "15e3add8e2864ae57c7eb1bac13fa18f5ac01dc9beb20837ec3d66a306a59b65"
+    },
+    {
+      "path": "openrule-spring/src/main/java/io/openrule/spring/studio/StudioService.java",
+      "sha256": "f0b92182b7609ce122ac208760ca41d6a86c31896b938c630c1837a9e3127be1"
+    },
+    {
+      "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactFixtureTest.java",
+      "sha256": "48731c8f1c781a89f8322adad8ef32c048cc1f9bcd8a9668088587cda08b4c62"
+    },
+    {
+      "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactRuntimeTest.java",
+      "sha256": "3e41388e979868bba51a154466f32f67629f0beb144f1a70095b7363932a5967"
+    },
+    {
+      "path": "openrule-spring/src/test/java/io/openrule/spring/fact/FactTestSupport.java",
+      "sha256": "30f8d0b4b2a9b3adff8974a87c0ee2350d92c0f62d1baecc8470d4a6df194bd4"
+    },
+    {
+      "path": "openrule-studio-server/pom.xml",
+      "sha256": "6a289a8c09b61db8c5e4911ef52031e4ada47fd8e903f6b2ba8dd5c9cacb1168"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/EnvironmentSecretResolver.java",
+      "sha256": "0d3d5a96d3bd56b33d30d6bf40fc5f7a77622a34371703eec8ae7f1abc16a46d"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactController.java",
+      "sha256": "9a431670d3b388887dcbde98886ae0f02495b4e8b82d86a6971c33161e9231c5"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactDocuments.java",
+      "sha256": "44016752009a45ed6d19da197974c095e964902e8d63499bc9d4ee89ca825bc8"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactExecutionContext.java",
+      "sha256": "075d6a27fad6dcfb7a4b968527c5b4b6b162592fb3b03eb75c68892f8c6caed4"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactHostConfiguration.java",
+      "sha256": "576cb03b4cf73dd45cc9c71d1180375dc41600fef89bac85af4615697c9f1129"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactProblemAdvice.java",
+      "sha256": "e339b53a96861aa51ecdf4fdda6a60b60541476fba3f5addb14e1c65c4440456"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/FactService.java",
+      "sha256": "6eea339be6e3b8d449c31f2750af547a8bd0ce2f739adb6103cff3ea8ea79cbe"
+    },
+    {
+      "path": "openrule-studio-server/src/main/java/io/openrule/studio/host/fact/JdbcFactStore.java",
+      "sha256": "8d9a678666001ec5c06bc793fb4c26dbef0b82b1537b116cf3fa40d23cb9d80f"
+    },
+    {
+      "path": "openrule-studio-server/src/main/resources/application.yml",
+      "sha256": "c0c0836f682eb5b1691391e1ef0a804e2070e3e2d7e36bc497080ed1d483cc22"
+    },
+    {
+      "path": "openrule-studio-server/src/main/resources/db/studio/V2__fact_tables.sql",
+      "sha256": "69f9c24c218e60015f7569971f13c7b0b5af1261a4f71f2f08464d9d194450d2"
+    },
+    {
+      "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/ControlledProvider.java",
+      "sha256": "0a2eaffcecbc8466c672d6833c20c02458423d0d90bfefa7ce0b4a6e2644fa0a"
+    },
+    {
+      "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactDocumentsTest.java",
+      "sha256": "666017673fa270b3b7d23b204f6bd9fb93a573b161f552618f6cdb6bbd23d6c5"
+    },
+    {
+      "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactHostIT.java",
+      "sha256": "c9674376205682e89a8b3f04c2ef6fed166b1bd50f0a36eb3ced3a8367a86ac5"
+    },
+    {
+      "path": "openrule-studio-server/src/test/java/io/openrule/studio/host/fact/FactRestartIT.java",
+      "sha256": "75c9cc1748bedefaee63bda48e6530ced60c3a45d68433b1be791ac7034feb28"
+    },
+    {
+      "path": "scripts/m2-v1-connect-http.py",
+      "sha256": "a69c4d47daaf9c0bcf0e1649cf6b63f94f16dee8592e30ed83a5e9051089fde7"
+    },
+    {
+      "path": "scripts/m2-v1-connect.nginx.conf",
+      "sha256": "9a11768139bd33d7a5a125ea3302ce4c36345390fd77750350c9d0f194ad619e"
+    },
+    {
+      "path": "scripts/m2-v1-http.py",
+      "sha256": "65e118b8dd83e5f3e556aecd083e93d7e7aac2ccde08de7529bf7fec305fb296"
+    },
+    {
+      "path": "scripts/m2-v1-integrity.py",
+      "sha256": "76bbf28664f1139e16501040acffe1bb6343e8e78cfa87ebd9fad109c1c19656"
+    },
+    {
+      "path": "scripts/m2-v1-restart.py",
+      "sha256": "84b6730e01a1a6daf300544ee56b2cb0d6b7f5bdc3b21102c38dc5d2ab63a1b9"
+    },
+    {
+      "path": "scripts/start-studio-m2.sh",
+      "sha256": "6b5ec0865046e675c4f97ee84eed19f61fa393aa8720d855876ad9de1483d382"
+    },
+    {
+      "path": "scripts/studio-m2-seed.py",
+      "sha256": "880aa5243517c7565bf9b39a4abb8fd127afb44a15a36f8f5ed4dffd082b7423"
+    },
+    {
+      "path": "scripts/studio-m2-upstream.py",
+      "sha256": "609521b66280f67f1288b99078bfe71288f6fa5194504aabceeb66b14b74e7ad"
+    },
+    {
+      "path": "output/m2-v1/source-manifest.json",
+      "sha256": "f5cd46a76aae87808d3cf3584c14610035b41b386490042f357870a74c78f5d2"
+    },
+    {
+      "path": "output/m2-v1/evidence-index.json",
+      "sha256": "f27692ae4b3ed5b3049a558e93ebb3b0ad293732a871eb0d7ec9e4a62efe7d18"
+    }
+  ],
+  "excluded": "Raw logs, database dumps, intermediate evidence and unselected screenshots remain local. Acceptance report references to excluded evidence require the local archive."
+}

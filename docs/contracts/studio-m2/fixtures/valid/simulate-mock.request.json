@@ -1,0 +1,17 @@
+{
+  "requestId": "m2-normal",
+  "bizId": "ORDER-M2-001",
+  "facts": {
+    "order": {
+      "amount": 680,
+      "country": "JP"
+    },
+    "buyer": {
+      "id": "buyer_1024"
+    },
+    "channel": "web"
+  },
+  "timeoutMillis": 3000,
+  "expectedRevision": "1",
+  "factMode": "MOCK"
+}

@@ -1,0 +1,1637 @@
+{
+  "description": "Declarative expected projections, not execution evidence. providerPatch is a recursive object overlay: null is retained; arrays/scalars replace. All file paths are relative to this case file. expected.segment/preserved/requestedPaths are internal Core/resolver assertions; wire output is redacted.",
+  "cases": [
+    {
+      "id": "MF-01",
+      "title": "一次HTTP补齐三个字段",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-01",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "15",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        }
+      }
+    },
+    {
+      "id": "MF-02",
+      "title": "完整facts不调用",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-02",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024",
+            "ageDays": 365
+          },
+          "channel": "web",
+          "metrics": {
+            "refundRate": 0.08
+          },
+          "risk": {
+            "blacklisted": false
+          }
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "15",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        }
+      }
+    },
+    {
+      "id": "MF-03",
+      "title": "已有年龄不被上游365覆盖",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-03",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024",
+            "ageDays": 12
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "40",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        },
+        "preserved": {
+          "/buyer/ageDays": 12
+        },
+        "requestedPaths": [
+          "/metrics/refundRate",
+          "/risk/blacklisted"
+        ]
+      }
+    },
+    {
+      "id": "MF-04",
+      "title": "显式null不触发补数",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-04",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024",
+            "ageDays": 365
+          },
+          "channel": "web",
+          "metrics": {
+            "refundRate": null
+          },
+          "risk": {
+            "blacklisted": false
+          }
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "resolved"
+        },
+        "preserved": {
+          "/metrics/refundRate": null
+        },
+        "nodeFailures": {
+          "buyer_score": "TYPE"
+        }
+      }
+    },
+    {
+      "id": "MF-05",
+      "title": "partial保留其他成功字段",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-05",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "missing",
+          "/risk/blacklisted": "resolved"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-RESPONSE-MISSING"
+        }
+      }
+    },
+    {
+      "id": "MF-06",
+      "title": "Provider超时后仍有预算",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-06",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "TIMEOUT",
+        "delayMillis": 400
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/buyer/ageDays": "OR-FACT-TIMEOUT",
+          "/metrics/refundRate": "OR-FACT-TIMEOUT",
+          "/risk/blacklisted": "OR-FACT-TIMEOUT"
+        }
+      }
+    },
+    {
+      "id": "MF-07",
+      "title": "缺buyerId阻止HTTP",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-07",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {},
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-REQUEST-INPUT"
+        }
+      }
+    },
+    {
+      "id": "MF-08",
+      "title": "响应退款率字符串类型错误",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-08",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": "0.08"
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-TYPE"
+        }
+      }
+    },
+    {
+      "id": "MF-09",
+      "title": "总预算耗尽不进入Core",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-09",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "readTimeoutMillis": 10000
+      },
+      "transport": {
+        "outcome": "TIMEOUT",
+        "delayMillis": 5000
+      },
+      "expected": {
+        "httpStatus": 504,
+        "httpCalls": 1,
+        "coreInvoked": false,
+        "execution": null,
+        "decisionCode": null,
+        "errorCode": "OR-EXECUTION-TIMEOUT"
+      }
+    },
+    {
+      "id": "MF-10",
+      "title": "Mock成功零HTTP且不解析缺失secret",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-10",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "MOCK"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "secretRef": "env:OPENRULE_TEST_NOT_SET"
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "15",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        },
+        "mockCalls": 1,
+        "secretResolutions": 0
+      }
+    },
+    {
+      "id": "MF-11",
+      "title": "HTTP失败不回退Mock",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-11",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 503,
+        "body": {
+          "error": "upstream"
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "mockCalls": 0,
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-HTTP"
+        }
+      }
+    },
+    {
+      "id": "MF-12",
+      "title": "禁用Provider不请求",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-12",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "enabled": false
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-DISABLED"
+        }
+      }
+    },
+    {
+      "id": "MF-13",
+      "title": "父路径null不覆盖",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-13",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web",
+          "metrics": null
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-PATH-BLOCKED"
+        },
+        "preserved": {
+          "/metrics": null
+        },
+        "requestedPaths": [
+          "/buyer/ageDays",
+          "/risk/blacklisted"
+        ]
+      }
+    },
+    {
+      "id": "MF-14",
+      "title": "父路径标量不覆盖",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-14",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web",
+          "metrics": "broken"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-PATH-BLOCKED"
+        },
+        "preserved": {
+          "/metrics": "broken"
+        }
+      }
+    },
+    {
+      "id": "MF-15",
+      "title": "真实模拟未授权不发HTTP",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-15",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "allowSimulationHttp": false
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-SIMULATION-DENIED"
+        }
+      }
+    },
+    {
+      "id": "MF-16",
+      "title": "LIVE仅真实HTTP",
+      "endpoint": "LIVE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-16",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "15",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        }
+      }
+    },
+    {
+      "id": "MF-17",
+      "title": "响应null是类型错误",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-17",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": null
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-TYPE"
+        }
+      }
+    },
+    {
+      "id": "MF-18",
+      "title": "已有错误类型由原Core ABORT",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-18",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": "680",
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024",
+            "ageDays": 365
+          },
+          "channel": "web",
+          "metrics": {
+            "refundRate": 0.08
+          },
+          "risk": {
+            "blacklisted": false
+          }
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 500,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "FAILED",
+        "decisionCode": null,
+        "errorCode": "OR-NODE-FAILED",
+        "nodeFailures": {
+          "base_rules": "TYPE"
+        }
+      }
+    },
+    {
+      "id": "MF-19",
+      "title": "Mock timeout不触网",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-19",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "MOCK"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "mock": {
+          "outcome": "TIMEOUT",
+          "response": null
+        }
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "mockCalls": 1,
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-TIMEOUT"
+        }
+      }
+    },
+    {
+      "id": "MF-20",
+      "title": "请求映射null不发送",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-20",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": null
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldErrors": {
+          "/buyer/ageDays": "OR-FACT-REQUEST-INPUT"
+        }
+      }
+    },
+    {
+      "id": "MF-21",
+      "title": "原M1缺失请求不受Catalog影响",
+      "endpoint": "M1_SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-21",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review"
+      }
+    },
+    {
+      "id": "MF-22",
+      "title": "原M1完整输入保持15分",
+      "endpoint": "M1_SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-22",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024",
+            "ageDays": 365
+          },
+          "channel": "web",
+          "metrics": {
+            "refundRate": 0.08
+          },
+          "risk": {
+            "blacklisted": false
+          }
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "APPROVE",
+        "score": "15",
+        "segment": "LOW",
+        "terminalNodeId": "approve",
+        "fieldStates": {
+          "/buyer/ageDays": "resolved",
+          "/metrics/refundRate": "resolved",
+          "/risk/blacklisted": "resolved"
+        }
+      }
+    },
+    {
+      "id": "MF-23",
+      "title": "HTTP无凭证时失败，不能降级Mock",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-23",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "secretRef": "env:OPENRULE_TEST_NOT_SET"
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "secretResolutions": 1,
+        "mockCalls": 0,
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-SECRET"
+        }
+      }
+    },
+    {
+      "id": "MF-24",
+      "title": "已有黑名单不被false覆盖，静态预取仍发生",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-24",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web",
+          "risk": {
+            "blacklisted": true
+          }
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REJECT",
+        "score": null,
+        "terminalNodeId": "reject",
+        "preserved": {
+          "/risk/blacklisted": true
+        },
+        "requestedPaths": [
+          "/buyer/ageDays",
+          "/metrics/refundRate"
+        ]
+      }
+    },
+    {
+      "id": "MF-25",
+      "title": "数组父路径不得替换",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-25",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web",
+          "metrics": []
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-PATH-BLOCKED"
+        },
+        "preserved": {
+          "/metrics": []
+        }
+      }
+    },
+    {
+      "id": "MF-26",
+      "title": "非法JSON响应不自动重试",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-26",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RAW_RESPONSE",
+        "status": 200,
+        "rawBody": "{\"data\":",
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-RESPONSE"
+        }
+      }
+    },
+    {
+      "id": "MF-27",
+      "title": "重复响应键被严格解析拒绝",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-27",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RAW_RESPONSE",
+        "status": 200,
+        "rawBody": "{\"data\":{\"refundRate\":0.08,\"refundRate\":0.9}}",
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-RESPONSE"
+        }
+      }
+    },
+    {
+      "id": "MF-28",
+      "title": "Mock错误不触网",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-28",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "MOCK"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {
+        "mock": {
+          "outcome": "ERROR",
+          "response": null
+        }
+      },
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-MOCK"
+        },
+        "mockCalls": 1
+      }
+    },
+    {
+      "id": "MF-29",
+      "title": "连接失败保留字段错误",
+      "endpoint": "SIMULATE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-29",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "expectedRevision": "1",
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog.json",
+      "providerDocumentFile": "valid/risk-profile.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "CONNECT_ERROR",
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 1,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-HTTP"
+        }
+      }
+    },
+    {
+      "id": "MF-30",
+      "title": "LIVE不执行MOCK配置",
+      "endpoint": "LIVE",
+      "definitionFile": "../../studio-m1/fixtures/valid/order-admission.definition.json",
+      "request": {
+        "requestId": "mf-30",
+        "bizId": "ORDER-M2-001",
+        "facts": {
+          "order": {
+            "amount": 680,
+            "country": "JP"
+          },
+          "buyer": {
+            "id": "buyer_1024"
+          },
+          "channel": "web"
+        },
+        "timeoutMillis": 3000,
+        "factMode": "HTTP"
+      },
+      "providerRevision": "1",
+      "catalogFile": "catalog-mock.json",
+      "providerDocumentFile": "valid/risk-profile-mock.provider.json",
+      "providerPatch": {},
+      "transport": {
+        "outcome": "RESPONSE",
+        "status": 200,
+        "body": {
+          "data": {
+            "blacklisted": false,
+            "ageDays": 365,
+            "refundRate": 0.08
+          }
+        },
+        "delayMillis": 0
+      },
+      "expected": {
+        "httpStatus": 200,
+        "httpCalls": 0,
+        "coreInvoked": true,
+        "status": "DECIDED",
+        "decisionCode": "REVIEW",
+        "score": null,
+        "segment": "LOW",
+        "terminalNodeId": "data_review",
+        "fieldStates": {
+          "/metrics/refundRate": "failed"
+        },
+        "fieldErrors": {
+          "/metrics/refundRate": "OR-FACT-MOCK-FORBIDDEN"
+        },
+        "mockCalls": 0
+      }
+    }
+  ]
+}

@@ -39,6 +39,16 @@ public final class StudioEngine {
         if (requestTimeoutMillis < 1) throw new IllegalArgumentException("timeoutMillis must be positive");
         Map<String, Object> inputFacts = new FactMap(facts).asMap();
         long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(requestTimeoutMillis);
+        return executeFlow(flow, inputFacts, deadline, null, start);
+    }
+
+    public Result execute(StudioCompiledPlan plan, Map<String, Object> facts, StudioDeadline deadline) {
+        long start = System.nanoTime();
+        return executeFlow(plan.flow(), new FactMap(facts).asMap(), deadline.expiresAtNanos(), deadline, start);
+    }
+
+    private Result executeFlow(Flow flow, Map<String, Object> inputFacts, long deadline,
+                               StudioDeadline shared, long start) {
         Map<String, Object> variables = new LinkedHashMap<>();
         Map<String, NodeResult> prior = new LinkedHashMap<>();
         List<NodeResult> results = new ArrayList<>();
@@ -51,6 +61,11 @@ public final class StudioEngine {
             }
             if (decision != null) {
                 skip(stage, SkipReason.TERMINATED, prior, results);
+                continue;
+            }
+            if (shared != null && shared.failureCode() != null) {
+                error = shared.failureCode();
+                skip(stage, SkipReason.ABORTED, prior, results);
                 continue;
             }
             if (expired(deadline)) {
@@ -74,8 +89,8 @@ public final class StudioEngine {
             if (stage.mode() == Mode.PARALLEL) {
                 List<NodeResult> batch = runParallel(stage, inputFacts,
                         Collections.unmodifiableMap(new LinkedHashMap<>(variables)),
-                        Collections.unmodifiableMap(new LinkedHashMap<>(prior)), stageDeadline, deadline);
-                if (Thread.currentThread().isInterrupted()) error = "OR-EXECUTION-CANCELLED";
+                        Collections.unmodifiableMap(new LinkedHashMap<>(prior)), stageDeadline, deadline, shared);
+                if (Thread.currentThread().isInterrupted() || shared != null && shared.cancelled()) error = "OR-EXECUTION-CANCELLED";
                 else if (expired(deadline)) error = "OR-EXECUTION-TIMEOUT";
                 else {
                     for (NodeResult result : batch) {
@@ -97,10 +112,13 @@ public final class StudioEngine {
             } else {
                 for (int i = 0; i < stage.nodes().size(); i++) {
                     Node node = stage.nodes().get(i);
+                    if (shared != null && shared.failureCode() != null) {
+                        error = shared.failureCode(); skipRemaining(stage, i, prior, results); break;
+                    }
                     Pending future = submit(node, stage.stageId(), inputFacts,
                             Collections.unmodifiableMap(new LinkedHashMap<>(variables)),
                             Collections.unmodifiableMap(new LinkedHashMap<>(prior)));
-                    NodeResult result = await(future, node, stage.stageId(), stageDeadline, deadline);
+                    NodeResult result = await(future, node, stage.stageId(), stageDeadline, deadline, shared);
                     prior.put(node.nodeId(), result);
                     results.add(result);
                     if (expired(deadline)) { error = "OR-EXECUTION-TIMEOUT"; skipRemaining(stage, i + 1, prior, results); break; }
@@ -131,6 +149,7 @@ public final class StudioEngine {
                 if (error != null) continue;
             }
         }
+        if (shared != null && shared.failureCode() != null) error = shared.failureCode();
         if (error == null && decision == null) error = "OR-FLOW-NO-TERMINAL";
         List<StageResult> stageResults = new ArrayList<>();
         for (Stage stage : flow.stages()) {
@@ -247,7 +266,7 @@ public final class StudioEngine {
 
     private List<NodeResult> runParallel(Stage stage, Map<String, Object> facts,
                                          Map<String, Object> variables, Map<String, NodeResult> prior,
-                                         long stageDeadline, long requestDeadline) {
+                                         long stageDeadline, long requestDeadline, StudioDeadline shared) {
         BlockingQueue<Integer> completed = new LinkedBlockingQueue<>();
         List<Pending> pending = new ArrayList<>();
         int size = stage.nodes().size();
@@ -256,6 +275,12 @@ public final class StudioEngine {
             int index = i;
             Node node = stage.nodes().get(i);
             long nodeDeadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(node.timeoutMillis());
+            if (shared != null && shared.failureCode() != null) {
+                NodeResult skipped = new NodeResult(stage.stageId(), node.nodeId(), node.type(), Status.SKIPPED,
+                        false, Map.of(), List.of(), null, SkipReason.ABORTED, 0);
+                pending.add(new Pending(java.util.concurrent.CompletableFuture.completedFuture(skipped), nodeDeadline));
+                continue;
+            }
             Future<NodeResult> future = pool.submit(() -> {
                 try { return run(node, stage.stageId(), facts, variables, prior); }
                 finally { completed.offer(index); }
@@ -265,6 +290,7 @@ public final class StudioEngine {
         int remaining = size;
         boolean abort = false;
         while (remaining > 0 && !abort) {
+            if (shared != null && shared.cancelled()) { abort = true; break; }
             long next = Math.min(stageDeadline, requestDeadline);
             for (int i = 0; i < size; i++) {
                 if (ordered[i] != null) continue;
@@ -283,7 +309,7 @@ public final class StudioEngine {
             }
             if (abort || remaining == 0) break;
             try {
-                completed.poll(Math.max(1, next - System.nanoTime()), TimeUnit.NANOSECONDS);
+                completed.poll(Math.max(1, shared == null ? next - System.nanoTime() : Math.min(next - System.nanoTime(), TimeUnit.MILLISECONDS.toNanos(10))), TimeUnit.NANOSECONDS);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 abort = true;
@@ -320,11 +346,22 @@ public final class StudioEngine {
     }
 
     private NodeResult await(Pending pending, Node node, String stageId,
-                             long stageDeadline, long requestDeadline) {
+                             long stageDeadline, long requestDeadline, StudioDeadline shared) {
         Future<NodeResult> future = pending.future();
         long deadline = Math.min(stageDeadline, Math.min(requestDeadline, pending.deadline()));
         try {
-            return future.get(Math.max(1, deadline - System.nanoTime()), TimeUnit.NANOSECONDS);
+            if (shared == null) return future.get(Math.max(1, deadline - System.nanoTime()), TimeUnit.NANOSECONDS);
+            while (true) {
+                if (shared != null && shared.cancelled()) {
+                    future.cancel(true);
+                    return new NodeResult(stageId, node.nodeId(), node.type(), Status.CANCELLED, false,
+                            Map.of(), List.of(), "Execution cancelled", null, 0);
+                }
+                long left = deadline - System.nanoTime();
+                if (left <= 0) throw new TimeoutException();
+                try { return future.get(Math.max(1, Math.min(left, TimeUnit.MILLISECONDS.toNanos(10))), TimeUnit.NANOSECONDS); }
+                catch (TimeoutException ex) { if (expired(deadline)) throw ex; }
+            }
         } catch (TimeoutException ex) {
             future.cancel(true);
             return timeoutResult(node, stageId);

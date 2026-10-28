@@ -1,0 +1,62 @@
+{
+  "requestId": "m2-preview",
+  "traceId": "m2-trace-001",
+  "factResolution": {
+    "mode": "MOCK",
+    "status": "COMPLETE",
+    "elapsedMillis": 12,
+    "fields": [
+      {
+        "path": "/buyer/ageDays",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "buyer_age_days",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "365",
+        "error": null
+      },
+      {
+        "path": "/metrics/refundRate",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "refund_rate",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "0.08",
+        "error": null
+      },
+      {
+        "path": "/risk/blacklisted",
+        "status": "resolved",
+        "source": "PROVIDER",
+        "factId": "risk_blacklisted",
+        "catalogRevision": "1",
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "valueSummary": "[REDACTED]",
+        "error": null
+      }
+    ],
+    "calls": [
+      {
+        "providerId": "risk_profile",
+        "providerRevision": "1",
+        "traceId": "m2-trace-001",
+        "transport": "MOCK",
+        "status": "SUCCEEDED",
+        "attempted": true,
+        "requestedPaths": [
+          "/buyer/ageDays",
+          "/metrics/refundRate",
+          "/risk/blacklisted"
+        ],
+        "elapsedMillis": 10,
+        "error": null
+      }
+    ]
+  },
+  "totalElapsedMillis": 13
+}

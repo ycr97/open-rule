@@ -1,0 +1,12 @@
+{
+  "factId": "buyer_age_days",
+  "path": "/buyer/ageDays",
+  "name": "账户天数",
+  "type": "number",
+  "sensitive": false,
+  "description": "订单准入演示字段",
+  "binding": {
+    "providerId": "risk_profile",
+    "responsePointer": "/data/ageDays"
+  }
+}

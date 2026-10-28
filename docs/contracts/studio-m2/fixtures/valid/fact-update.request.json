@@ -1,0 +1,15 @@
+{
+  "expectedRevision": "1",
+  "document": {
+    "factId": "refund_rate",
+    "path": "/metrics/refundRate",
+    "name": "退款率",
+    "type": "number",
+    "sensitive": false,
+    "description": "订单准入演示字段",
+    "binding": {
+      "providerId": "risk_profile",
+      "responsePointer": "/data/refundRate"
+    }
+  }
+}

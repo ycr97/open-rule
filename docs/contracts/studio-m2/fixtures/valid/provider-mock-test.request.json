@@ -1,0 +1,15 @@
+{
+  "requestId": "m2-preview",
+  "expectedRevision": "1",
+  "facts": {
+    "order": {
+      "amount": 680,
+      "country": "JP"
+    },
+    "buyer": {
+      "id": "buyer_1024"
+    },
+    "channel": "web"
+  },
+  "timeoutMillis": 3000
+}

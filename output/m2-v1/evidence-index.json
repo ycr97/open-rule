@@ -1,0 +1,1196 @@
+{
+  "checkedAt": "2026-10-28T06:01:25.564700+00:00",
+  "HEADs": {
+    "/Users/ycr/IdeaProjects/Sandbox/open-rule": "348a48d209f0571049535f4b513eef556859876b",
+    "/Users/ycr/IdeaProjects/Sandbox/openrule-studio": "1c520ca753213a8fea95bd1976887fe1a8c84c02"
+  },
+  "jarSha256": "d7f68f1cca5c7a2c50fbe59cc5c58c0aeb4864c81924e44f25a443a22f91b1a4",
+  "javaTests": {
+    "openrule-core/surefire": {
+      "tests": 96,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-spring/surefire": {
+      "tests": 71,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-api/surefire": {
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-jdbc/surefire": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-jdbc/failsafe": {
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-studio-server/surefire": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "openrule-studio-server/failsafe": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "MF_MS_HTTP": [
+    {
+      "id": "MF-01",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "15",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_01",
+      "checksum": "sha256:06af0fbdb2bb14683af8525f7ba919dca18e781bb1ee6ebc2026d4aa92e1197d"
+    },
+    {
+      "id": "MF-02",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "15",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_02",
+      "checksum": "sha256:92307493c7fa8e26f758f69a768f7bca62170533bded9e510205daa5960c560c"
+    },
+    {
+      "id": "MF-03",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "40",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_03",
+      "checksum": "sha256:6568b9a30f4e44049f6cb9b48857edd6ddda28df0abbac325f0e2635d80d1ff2"
+    },
+    {
+      "id": "MF-04",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_04",
+      "checksum": "sha256:1a6ea8520acef721a5e2d8b62640307f803b307927d522237193ea294a0ffb97"
+    },
+    {
+      "id": "MF-05",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_05",
+      "checksum": "sha256:1352547d0205217c7902cd9b31af3b7495a24f8f3ffefd6a63f81c4437e55cbc"
+    },
+    {
+      "id": "MF-06",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_06",
+      "checksum": "sha256:186813ead599ed3565b6850e44ef9af1726da5bb3ce6be7e9269819d7b7052a5"
+    },
+    {
+      "id": "MF-07",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_07",
+      "checksum": "sha256:b87aca247824a85aa48e6caea0ccd4b735fc55667e3fb913bf39656f16f4b377"
+    },
+    {
+      "id": "MF-08",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_08",
+      "checksum": "sha256:e0970da8ba501a808050b333b6d3b5286e155b467a038427e53f6154d0ed8393"
+    },
+    {
+      "id": "MF-09",
+      "status": "PASS",
+      "httpStatus": 504,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": null,
+      "flowId": "m2v1_20261028_mf_09",
+      "checksum": "sha256:294e53f07fcfc62fb328b14a273ec8155b0ac26a1d7c5945b1fe1f0ff4d7f2a9"
+    },
+    {
+      "id": "MF-10",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "15",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_10",
+      "checksum": "sha256:f92b498716ff149271c592ad08198cf0212699fa32bf2306c938d8630a53b3ca"
+    },
+    {
+      "id": "MF-11",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_11",
+      "checksum": "sha256:9739d1fdb8f5442883044a53752de73c73d38d0ada6685fc29a118823aeb2d93"
+    },
+    {
+      "id": "MF-12",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_12",
+      "checksum": "sha256:a1ab534f183bdabca68e3a0d2c3f3b7f0127c580fdd4ed4fe36191c6fa13ad10"
+    },
+    {
+      "id": "MF-13",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_13",
+      "checksum": "sha256:ccdfe9a4073c16c74f09c7759c0b27c4fef91cef5c7e83ab39aa3aae84d9b123"
+    },
+    {
+      "id": "MF-14",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_14",
+      "checksum": "sha256:c19231667f462df392fdf91f17f7084a9fcbce4e5de80837e2aa63e839066aa5"
+    },
+    {
+      "id": "MF-15",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_15",
+      "checksum": "sha256:86e2a3c43619b497b68253cefeeefb249b0af559370d76767d55029f0011bb88"
+    },
+    {
+      "id": "MF-16",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "15",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_16",
+      "checksum": "sha256:042c686397f1f92833db6c6a80fed7c8c77f93d0c4dcc3fee22dbd8823e25192"
+    },
+    {
+      "id": "MF-17",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_17",
+      "checksum": "sha256:7d41fd09195912a581137da32e4e762e9c1fa2b577b42f2fd599ad4811f45e5e"
+    },
+    {
+      "id": "MF-18",
+      "status": "PASS",
+      "httpStatus": 500,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": null,
+      "flowId": "m2v1_20261028_mf_18",
+      "checksum": "sha256:3a46d6636f34ab3f8ed1f447fc6259db8598a93f27e2a2e99c6dca55b51af99c"
+    },
+    {
+      "id": "MF-19",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_19",
+      "checksum": "sha256:6c1e6274d3366ab607ebc002c72cbbc130399f664299161c5399ba2cdf83e6f6"
+    },
+    {
+      "id": "MF-20",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_20",
+      "checksum": "sha256:ca2f6a2b0731f2e1e33255529a793244a4a4759aecd19e7f5d7eac3ea685d462"
+    },
+    {
+      "id": "MF-21",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_21",
+      "checksum": "sha256:4892f32f9cde53556d0311c88b7f5a5482dfec6eaa76380567d3f4b44cc5b976"
+    },
+    {
+      "id": "MF-22",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "APPROVE",
+        "reasonCodes": [
+          "RISK_ACCEPTABLE"
+        ],
+        "score": "15",
+        "terminalNodeId": "approve"
+      },
+      "flowId": "m2v1_20261028_mf_22",
+      "checksum": "sha256:5915d0acea8afab83a8bf0f4efe32a7072d5e8a778bb46d5b9de653ef1b5aa59"
+    },
+    {
+      "id": "MF-23",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_23",
+      "checksum": "sha256:54e0fcca9c10bc40e923845ae86d4b5fdc5f3d2bc7a6f92ee97a8930d2df0642"
+    },
+    {
+      "id": "MF-24",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REJECT",
+        "reasonCodes": [
+          "ADMISSION_REJECTED"
+        ],
+        "score": null,
+        "terminalNodeId": "reject"
+      },
+      "flowId": "m2v1_20261028_mf_24",
+      "checksum": "sha256:728b8497386971143728e28ec6e4b6d13d822d7912e49115feed0ca6093f8664"
+    },
+    {
+      "id": "MF-25",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_25",
+      "checksum": "sha256:0343f992d6553490bffc18848e089347d185c7a057f5a89bc9e5d937201875cd"
+    },
+    {
+      "id": "MF-26",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_26",
+      "checksum": "sha256:dcf3b00ba0292efe7b55086d557e8e69d2b49cca983fea18f2b236b137b61fb6"
+    },
+    {
+      "id": "MF-27",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 1,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_27",
+      "checksum": "sha256:6248ffda5f33aea7123ed27624ac41c7855c2b6491e125aec680da11b83c943f"
+    },
+    {
+      "id": "MF-28",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_28",
+      "checksum": "sha256:4ef81361d261d47f742f5ea026ec6f9bf85560cda76d2575aebd2518a553f9c5"
+    },
+    {
+      "id": "MF-29",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 1,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_29",
+      "checksum": "sha256:e27e3f1ba4881b5a7f08b10b67ef5e2e529a026ec11773bbb1ef200947b8111a"
+    },
+    {
+      "id": "MF-30",
+      "status": "PASS",
+      "httpStatus": 200,
+      "actualPosts": 0,
+      "clientAttempts": 0,
+      "decision": {
+        "decisionCode": "REVIEW",
+        "reasonCodes": [
+          "FACT_RESOLUTION_FAILED"
+        ],
+        "score": null,
+        "terminalNodeId": "data_review"
+      },
+      "flowId": "m2v1_20261028_mf_30",
+      "checksum": "sha256:bad5b69492d744266ddfda9815ac0904e3c5b295a7fde9f9b85d4f0baf5ae162"
+    },
+    {
+      "id": "MS-01",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-FACT-CONFIG",
+      "issues": [
+        {
+          "code": "OR-FACT-CONFIG",
+          "severity": "ERROR",
+          "message": "Invalid object leaf path",
+          "pointer": "/path",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-02",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-FACT-CONFIG",
+      "issues": [
+        {
+          "code": "OR-FACT-CONFIG",
+          "severity": "ERROR",
+          "message": "Invalid object leaf path",
+          "pointer": "/path",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-03",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-FACT-CONFIG",
+      "issues": [
+        {
+          "code": "OR-FACT-CONFIG",
+          "severity": "ERROR",
+          "message": "Unknown Provider reference",
+          "pointer": "/binding/providerId",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-04",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-FACT-CONFIG",
+      "issues": [
+        {
+          "code": "OR-FACT-CONFIG",
+          "severity": "ERROR",
+          "message": "connectTimeoutMillis exceeds readTimeoutMillis",
+          "pointer": "/connectTimeoutMillis",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-05",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-FACT-CONFIG",
+      "issues": [
+        {
+          "code": "OR-FACT-CONFIG",
+          "severity": "ERROR",
+          "message": "Fact paths cannot overlap",
+          "pointer": "/path",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-06",
+      "status": "PASS",
+      "httpStatus": 409,
+      "code": "OR-FACT-IDENTITY",
+      "issues": [
+        {
+          "code": "OR-FACT-IDENTITY",
+          "severity": "ERROR",
+          "message": "Field cannot change",
+          "pointer": "/document/type",
+          "stageId": null,
+          "nodeId": null,
+          "itemId": null
+        }
+      ]
+    },
+    {
+      "id": "MS-07",
+      "status": "PASS",
+      "httpStatus": 409,
+      "code": "OR-REVISION-CONFLICT",
+      "issues": []
+    },
+    {
+      "id": "MS-08",
+      "status": "PASS",
+      "httpStatus": 400,
+      "code": "OR-REQUEST-INVALID",
+      "issues": []
+    }
+  ],
+  "extraHTTP": [
+    {
+      "id": "MT-01-HTTP",
+      "status": "PASS",
+      "paths": 5,
+      "uses": 10,
+      "reorderedPointersAndStableIDs": true
+    },
+    {
+      "id": "MT-02-presence-HTTP",
+      "status": "PASS",
+      "m1Hit": false,
+      "m2Hit": true,
+      "posts": 1
+    },
+    {
+      "id": "MT-02-hints-short-circuit-HTTP",
+      "status": "PASS",
+      "typeConflictDiagnostic": true,
+      "missingBranchNotEvaluated": true
+    },
+    {
+      "id": "MT-03-HTTP",
+      "status": "PASS",
+      "providerOrder": [
+        "aaa",
+        "zzz"
+      ],
+      "actualPosts": 1,
+      "mappingReadsOriginalOnly": true,
+      "unboundHasNoCall": true
+    },
+    {
+      "id": "MT-08-numeric-HTTP-DB",
+      "status": "PASS",
+      "decimal39": true,
+      "bigint": true,
+      "digits128Accepted": true,
+      "digits129Rejected": true,
+      "exponent1000Accepted": true,
+      "exponent1001Rejected": true
+    },
+    {
+      "id": "MT-08-body-HTTP",
+      "status": "PASS",
+      "acceptedBytes": 1048576,
+      "rejectedBytes": 1048577
+    },
+    {
+      "id": "MT-04-full-body-HTTP",
+      "status": "PASS",
+      "providerTimeoutMillis": 300,
+      "bodyDelayMillis": 800,
+      "terminal": "data_review",
+      "lateResponseDoesNotChangeWireResult": true
+    },
+    {
+      "id": "MT-04-overload-HTTP",
+      "status": "PASS",
+      "configuredMaxInFlight": 2,
+      "parallelAccepted": 2,
+      "rejectedWithoutCall": 1,
+      "recoveredNextRequest": true
+    }
+  ],
+  "connectHTTP": {
+    "id": "MT-04-connect-timeout-HTTP",
+    "status": "PASS",
+    "connectBudgetMillis": 100,
+    "readBudgetMillis": 1500,
+    "actualCallMillis": 138,
+    "sharedRequestBudgetMillis": 3000,
+    "terminal": "data_review",
+    "controlledCondition": "Linux INPUT TCP SYN DROP, port19095 only",
+    "javaContainer": "openrule-m2-v1-java-connect-20261028",
+    "packetCounters": "Chain INPUT (policy ACCEPT 12 packets, 900 bytes)\n    pkts      bytes target     prot opt in     out     source               destination         \n       1       60 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:19095 flags:0x02/0x02\n"
+  },
+  "browserCases": {
+    "MF-01": {
+      "status": "PASS",
+      "observed": "真实HTTP三字段一次POST、APPROVE/15",
+      "evidence": "mf01-dom.txt; mf01-before.json; mf01-after.json; report-visual-browser.txt"
+    },
+    "MF-02": {
+      "status": "PASS",
+      "observed": "完整输入无上游请求、APPROVE/15",
+      "evidence": "mf02-dom.txt; mf02-before.json; mf02-after.json"
+    },
+    "MF-04": {
+      "status": "PASS",
+      "observed": "null由CALLER保留、REVIEW及Terminal",
+      "evidence": "mf04-dom.txt; mf04-before.json; mf04-after.json"
+    },
+    "MF-05": {
+      "status": "PASS",
+      "observed": "partial缺失、REVIEW及Terminal",
+      "evidence": "mf05-dom.txt; mf05-before.json; mf05-after.json"
+    },
+    "MF-06": {
+      "status": "PASS",
+      "observed": "Provider超时、REVIEW及Terminal",
+      "evidence": "mf06-dom.txt; mf06-before.json; mf06-after.json"
+    },
+    "MF-08": {
+      "status": "PASS",
+      "observed": "错误类型、REVIEW",
+      "evidence": "mf08-dom.txt; mf08-before.json; mf08-after.json"
+    },
+    "MF-09": {
+      "status": "PASS",
+      "observed": "总deadline 504，上游一次，未进入Core",
+      "evidence": "mf09-dom.txt; mf09-network.txt; mf09-before.json; mf09-after.json"
+    },
+    "MF-10": {
+      "status": "PASS",
+      "observed": "浏览器Mock APPROVE/15，上游0；SecretResolver内部次数另计",
+      "evidence": "mf10-dom.txt; mf10-before.json; mf10-after.json"
+    },
+    "MF-12": {
+      "status": "PASS",
+      "observed": "停用SKIPPED、REVIEW、上游0",
+      "evidence": "restrictions-browser.txt"
+    },
+    "MF-15": {
+      "status": "PASS",
+      "observed": "禁真实模拟SKIPPED、REVIEW、上游0",
+      "evidence": "restrictions-browser.txt"
+    },
+    "MF-18": {
+      "status": "PASS",
+      "observed": "输入金额字符串ABORT，无decision",
+      "evidence": "mf18-dom.txt"
+    },
+    "MF-19": {
+      "status": "PASS",
+      "observed": "Mock TIMEOUT、REVIEW及Terminal，上游0",
+      "evidence": "mf19-dom.txt; mf19-before.json; mf19-after.json"
+    },
+    "MF-21": {
+      "status": "PASS",
+      "observed": "默认M1缺失事实REVIEW，不触上游",
+      "evidence": "mf21-dom.txt; mf21-before.json; mf21-after.json"
+    },
+    "MF-22": {
+      "status": "PASS",
+      "observed": "默认M1完整输入APPROVE/15，不触上游",
+      "evidence": "m1-full-dom.txt; m1-full-before.json; m1-full-after.json"
+    },
+    "MS-06": {
+      "status": "PASS",
+      "observed": "已有字段类型在UI禁用",
+      "evidence": "guard-browser-rerun.txt"
+    },
+    "MS-07": {
+      "status": "PASS",
+      "observed": "Provider CAS 409保留本地输入",
+      "evidence": "provider-cas-browser.txt"
+    },
+    "MT-08-vue": {
+      "status": "PASS",
+      "observed": "大整数和39位小数常量、Mock保存刷新及Mock报告",
+      "evidence": "provider-precision-browser.txt; precision-mock-browser.txt"
+    },
+    "MT-09-projection": {
+      "status": "PASS",
+      "observed": "真实响应敏感和未知输入不回显、输出脱敏、trace一致",
+      "evidence": "redaction-stale-browser-rerun.txt"
+    },
+    "MT-10-config-cas": {
+      "status": "PASS",
+      "observed": "真实CAS 409保留输入",
+      "evidence": "provider-cas-browser.txt"
+    },
+    "MT-10-save-lost": {
+      "status": "PASS",
+      "observed": "真PUT后丢响应，自动GET确认，后续保存成功",
+      "evidence": "provider-lost-rerun.txt"
+    },
+    "MT-10-save-late": {
+      "status": "PASS",
+      "observed": "真PUT A响应延迟，输入B后续保存为B",
+      "evidence": "provider-late-browser.txt"
+    },
+    "MT-10-unsaved": {
+      "status": "PASS",
+      "observed": "未保存禁映射测试、路由保护并保留输入",
+      "evidence": "guard-browser-rerun.txt"
+    },
+    "MT-10-stale": {
+      "status": "PASS",
+      "observed": "修改输入标注旧结果过时",
+      "evidence": "redaction-stale-browser-rerun.txt"
+    },
+    "MT-10-result-late": {
+      "status": "PASS",
+      "observed": "真实响应先完成后延迟；期间修改 facts，旧结果到达标记过时",
+      "evidence": "result-late-browser.txt; ../playwright/m2-v1-result-late.png"
+    },
+    "MT-10-failed-old-result": {
+      "status": "PASS",
+      "observed": "真实成功后修改输入，下一次传输失败，旧结果明确保持过时",
+      "evidence": "result-failure-browser.txt; ../playwright/m2-v1-result-failure.png"
+    },
+    "MT-11-order": {
+      "status": "PASS",
+      "observed": "UI 15/75，45改5保存刷新35，v1/v2发布和LIVE版本隔离",
+      "evidence": "order-browser.txt"
+    },
+    "MT-11-editor-cas-save-publish-lost": {
+      "status": "PASS",
+      "observed": "双标签CAS、真保存/发布丢响应各一次后GET确认",
+      "evidence": "editor-faults-rerun.txt"
+    },
+    "MT-11-error-location": {
+      "status": "PASS",
+      "observed": "反序无效bin和并行冲突的真实校验指针及node/item ID正确，点击定位后焦点分别为value和outputKey",
+      "evidence": "extra-browser-locations.txt; ../playwright/m2-v1-reordered-bin-location.png; ../playwright/m2-v1-reordered-conflict-location.png"
+    },
+    "V-three-viewport": {
+      "status": "PASS",
+      "observed": "事实/Provider/试运行/真实报告采集1440x900、1920x1080、640x900，实际DPR 1；桌面及窄屏人工抽查。试运行采用约定Flow输入页，与原型独立三栏实验室结构不同；非像素相同声明。",
+      "evidence": "report-visual-browser.txt; *-viewport.txt; ../playwright/m2-v1-*.png"
+    }
+  },
+  "existingFilesChanged": [
+    {
+      "root": "/Users/ycr/IdeaProjects/Sandbox/open-rule",
+      "path": "output/m2-b2/restart-evidence.json"
+    },
+    {
+      "root": "/Users/ycr/IdeaProjects/Sandbox/open-rule",
+      "path": "output/m2-b2/restart-java.log"
+    },
+    {
+      "root": "/Users/ycr/IdeaProjects/Sandbox/open-rule",
+      "path": "output/m2-b2/seed-demo.log"
+    }
+  ],
+  "restart": {
+    "mainResources": 9,
+    "browserResources": 15,
+    "executions": 3,
+    "checks": [
+      "M1 LIVE old75",
+      "M1 LIVE new35",
+      "M2 LIVE HTTP15"
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-editor-cas-rerun.png",
+      "pngWidth": 1280,
+      "pngHeight": 720,
+      "sha256": "7c3a0d466e54fc1a89b9ff93f7ee9d258b8afc828a02f41ee573df9e21067290"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-editor-cas.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "d91e1456449e75517268a65e18019c37a9524e29ee4a6926830fc77474f97404"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-editor-publish-lost-rerun.png",
+      "pngWidth": 1280,
+      "pngHeight": 720,
+      "sha256": "4579d045ac9938b296d5d7a1d70d3c7f847e0dec4f7802516b2c42aafd78a415"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-editor-publish-lost.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "7f38cab27ed0f335f88c5223dcbd8e65c39b19a90384fbd92ad545bba162b5fe"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-fact-identity.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "8c27e295dd186e1f478e0ee5fd51021ea2172aeb049b3a536a6d98fe3c0eaad6"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-facts-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "c67e2aa602776ca47f46c84d15f4dcbc67961038c7d1ac2fb0e4ccdbf2f219f3"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-facts-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "2dbffc77aa5b38dd386bebb9a9f0a6cb6f1f04b78387fb3d0473f61a4c5ba9cf"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-facts-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "15fa78115f0881c31f06da33a0db50efb22735cb494886c27673d9488e6d4d8d"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-mf12.png",
+      "pngWidth": 1440,
+      "pngHeight": 3138,
+      "sha256": "ccbcc1541972341ff3f4423ab503e90ce6e714afba65bf5c73ce6d70b6c20917"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-mf15.png",
+      "pngWidth": 1440,
+      "pngHeight": 3138,
+      "sha256": "e684d2033f85fdab04dd8bc803aacabecbcd4e85bc364a09ba828cd31bb4e595"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-order-result-15.png",
+      "pngWidth": 1440,
+      "pngHeight": 2320,
+      "sha256": "d3d40bc26b075ebfa46779b29a5362e90e67cd9aad19929deee8f86c49b3c7bc"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-order-result-35.png",
+      "pngWidth": 1440,
+      "pngHeight": 2320,
+      "sha256": "cdc5ecb12e4f6ce21f3a358e98f18384a2ed41eac407f77a6106979f640fa971"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-order-result-75.png",
+      "pngWidth": 1440,
+      "pngHeight": 2320,
+      "sha256": "641eb73cec4daef846848c0949e8b643c7e273229cd694bea12507f350145eca"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-order-score-45-to-5.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "a3968bba1a107f568a5fd4e2be670071eeeecf65ecb86bd50692abe960b01991"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-precision-mock-report.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "ad299cb71b423e82e60866cd5633841f8f30cdf73fedf5d77a52c9cc23a36696"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-facts-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "760fa1655181f9e72de0fca176e681fcd3f21550df7c5cd9c0215d053e947506"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-facts-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "237f32ab32faded2871ca66998fa3ad144cf9b98711fc54564bbf74dd60524c5"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-facts-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "5f8cb42ddd481a0a7e073b795d6e10b7616fbf8165df8b8adebf54b96095d2f8"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-providers-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "ed96bd319884a9641a87a52438758f20f76b9edac82c2a7a828997dd2245de7f"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-providers-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "a612d0e5237d5061afdb09d56dc4ccd8e0705a6278e8e9500c607bb9966c3551"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-providers-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "f2ef45de565be1e56593f039d13a3a871b0ec14a8c6057e73891b44799b349fb"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-simulate-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "c04b24c059e8530f3e38d3b3c5d6f85ae76a682bc6236731f5268016c11a1fc4"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-simulate-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "e48b8429f1081a9aadcc0e751bd59ffef4f02623cd94b50f9316a257c80d7644"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-prototype-simulate-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "6f2d018a83157b851f94a1bf9e97bcee1d74ac62983f8159d86a516371c80c2e"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-provider-cas.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "152dcfb901031e456f08bdfadb53f347c1a4ae3775a43142c6acbafa57f44c24"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-provider-late.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "746f0d122752d321cf0311166e01a43989c7400d1fe1f82fa6d03ab31f0d419f"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-provider-lost-rerun.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "4573fd3b18692022cc512b223a73fb5bdce40f79c188cc1b7af7b76babf5d73f"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-provider-precision.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "1846ea169f9896a62db32ea93d7a2fc7a33bb4c3ea3b83f48e07e3421b1004b1"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-providers-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "cdf87e3c3fe34537e773d12ce0f1e933c38185f43414191296b1957498d6a440"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-providers-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "1093363e37232d44b4cb23fc5913a924aec93b1bf949b95e964de5c17a1b4322"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-providers-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "7f21b9541344e90eefce101e09d90a1e5168550028d61769e46013f25935d099"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-reordered-bin-location.png",
+      "pngWidth": 1280,
+      "pngHeight": 720,
+      "sha256": "5015edd90d1577392c957649b910c063957fa3f1c599303081cd385b8da6c58f"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-reordered-conflict-location.png",
+      "pngWidth": 1280,
+      "pngHeight": 720,
+      "sha256": "1deeb87ef642dc61ee9ab2cd305939ddc53f994233dd740b9ac426fe47baca2c"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-report-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "bbf0392c53b875301058fdb7c440b515a761cbe79378785a1b4405e9c720ad01"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-report-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "6ea2910e1f23b27124106262a4eda725fb091348f70f481881991186a6490631"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-report-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "409971fdf931326a6142cc834f6270201df6d53bff93113d722372694d1bab3c"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-report-stale-redacted.png",
+      "pngWidth": 1440,
+      "pngHeight": 3137,
+      "sha256": "e0f209108161a2f7209c9c6220d654bc5773d51e4093ba51f7ca323611790e3e"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-result-failure.png",
+      "pngWidth": 1280,
+      "pngHeight": 3137,
+      "sha256": "20a3dfe6ffb996dd07c2018b1db70f84c428226241e14159e1e2b4b2335e1937"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-result-late.png",
+      "pngWidth": 1280,
+      "pngHeight": 3137,
+      "sha256": "8636c15c7c6dd0ce458a6f92cd761f487e126727b6949186d78b1b446f8c9b8c"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-simulation-1440x900.png",
+      "pngWidth": 1440,
+      "pngHeight": 900,
+      "sha256": "2c900cc5f67b180566e7f9b3938e0fe05c902302361ccb09e2144630e245c06f"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-simulation-1920x1080.png",
+      "pngWidth": 1920,
+      "pngHeight": 1080,
+      "sha256": "b93c64e0b496936e0354c48ce6d71272e0d5d1443c993ab37e19576ded064ba7"
+    },
+    {
+      "path": "/Users/ycr/IdeaProjects/Sandbox/openrule-studio/output/playwright/m2-v1-simulation-640x900.png",
+      "pngWidth": 640,
+      "pngHeight": 900,
+      "sha256": "c51e608ed694f0bb59d0185ea0162f0e277055e4b08e01faea6232d3b8410785"
+    }
+  ],
+  "mockProductionIsolation": {
+    "status": "PASS",
+    "STUDIO_CONTRACT_MOCK": "1",
+    "productionBundleHasContractControl": false
+  },
+  "result": {
+    "Studio M2": "PASS",
+    "MF": 30,
+    "MS": 8,
+    "MT": 11,
+    "M1_OA": 19,
+    "M1_OA_HTTP_EXECUTIONS": 38,
+    "M1_ST": 13,
+    "mandatoryFAIL": 0,
+    "mandatoryBLOCKED": 0,
+    "mandatoryNOT_RUN": 0
+  },
+  "finalContract": "m2-contract-final.log",
+  "sourceManifest": "source-manifest.json",
+  "environment": "environment.json",
+  "proofChecks": {
+    "reportLinks": true,
+    "initialProductionSourcesUnchanged": true,
+    "frozenM1AssetsUnchanged": true,
+    "allSourcesMatchManifest": true,
+    "indexEmpty": true,
+    "HEADsUnchanged": true
+  }
+}

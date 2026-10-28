@@ -1,0 +1,956 @@
+{
+  "openapi": "3.1.0",
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "info": {
+    "title": "OpenRule Studio M2 fact resolution supplement",
+    "version": "0.1.0-d0",
+    "description": "Proposed additive endpoints; M1 OpenAPI remains unchanged. No authentication scheme invented; existing host/gateway boundary applies."
+  },
+  "paths": {
+    "/api/v2/admin/facts": {
+      "get": {
+        "operationId": "listFacts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "CALLER",
+                "PROVIDER"
+              ]
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createFact",
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/FactDocument"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/facts/{factId}": {
+      "parameters": [
+        {
+          "name": "factId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getFact",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactResource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateFact",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/FactUpdate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/fact-providers": {
+      "get": {
+        "operationId": "listProviders",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ProviderPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createProvider",
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ProviderResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/ProviderDocument"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/fact-providers/{providerId}": {
+      "parameters": [
+        {
+          "name": "providerId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getProvider",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ProviderResource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateProvider",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ProviderResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/ProviderUpdate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/fact-providers/{providerId}/mock-tests": {
+      "parameters": [
+        {
+          "name": "providerId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "testProviderMock",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/MockTestResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded/configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exhausted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/MockTestRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}/required-facts": {
+      "parameters": [
+        {
+          "name": "flowId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        },
+        {
+          "name": "version",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Revision"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getRequiredFacts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/RequiredFactsResource"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/admin/flows/{flowId}/versions/{version}/fact-simulations": {
+      "parameters": [
+        {
+          "name": "flowId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        },
+        {
+          "name": "version",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Revision"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "simulateWithFacts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactExecutionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded/configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exhausted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/FactSimulationRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/flows/{flowId}/versions/{version}/fact-executions": {
+      "parameters": [
+        {
+          "name": "flowId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Id"
+          }
+        },
+        {
+          "name": "version",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "schema/m2.schema.json#/$defs/Revision"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "executeWithFacts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/FactExecutionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request/configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, identity or lifecycle conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Technical execution failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Overloaded/configuration store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request deadline exhausted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "schema/m2.schema.json#/$defs/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "schema/m2.schema.json#/$defs/FactExecutionRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
